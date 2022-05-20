@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/diabetesmonitorapp/static/css/main.e6c13ad2.css",
+    "main.js": "/diabetesmonitorapp/static/js/main.eb86d5fe.js",
+    "index.html": "/diabetesmonitorapp/index.html",
+    "main.e6c13ad2.css.map": "/diabetesmonitorapp/static/css/main.e6c13ad2.css.map",
+    "main.eb86d5fe.js.map": "/diabetesmonitorapp/static/js/main.eb86d5fe.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.e6c13ad2.css",
+    "static/js/main.eb86d5fe.js"
+  ]
+}
