@@ -2,7 +2,6 @@ import React, { Component, Suspense, useState, useEffect } from 'react'
 import { HashRouter, Route, Routes } from 'react-router-dom'
 import './scss/style.scss'
 import MessengerCustomerChat from 'react-messenger-customer-chat';
-
 const loading = (
   <div className="pt-3 text-center">
     <div className="sk-spinner sk-spinner-pulse"></div>
