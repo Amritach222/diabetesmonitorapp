@@ -51,7 +51,7 @@ const AppHeader = ({ updateUser }) => {
               <CIcon icon={cilBell} size="lg" />
             </CNavLink>
           </CNavItem>
-          <CNavItem>
+          {/* <CNavItem>
             <CNavLink>
               <CButton color="secondary">
                 <Link to="/login" style={{ textDecoration: 'none', color: 'black' }}>
@@ -59,8 +59,8 @@ const AppHeader = ({ updateUser }) => {
                 </Link>
               </CButton>
             </CNavLink>
-          </CNavItem>
-          <CNavItem>
+          </CNavItem> */}
+          {/* <CNavItem>
             <CNavLink href="#">
               <CButton color="secondary">
                 <Link to="/register" style={{ textDecoration: 'none', color: 'black' }}>
@@ -68,7 +68,7 @@ const AppHeader = ({ updateUser }) => {
                 </Link>
               </CButton>
             </CNavLink>
-          </CNavItem>
+          </CNavItem> */}
         </CHeaderNav>
         <CHeaderNav className="ms-3">
           <AppHeaderDropdown updateUser={updateUser} />

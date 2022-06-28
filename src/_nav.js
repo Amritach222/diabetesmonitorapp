@@ -3,15 +3,15 @@ import CIcon from '@coreui/icons-react'
 import {
   cilBell,
   cilCalculator,
-  cilChartPie,
-  cilCursor,
-  cilDrop,
-  cilNotes,
-  cilPencil,
+  // cilChartPie,
+  // cilCursor,
+  // cilDrop,
+  // cilNotes,
+  // cilPencil,
   cilPlus,
   cilAudioSpectrum,
   cilSpeedometer,
-  cilStar,
+  // cilStar,
 } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
 import diabetesLogo from './assets/images/diabetes/blood-test.png'
@@ -24,7 +24,6 @@ const _nav = [
     icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
     badge: {
       color: 'info',
-      text: 'NEW',
     },
   },
   {
@@ -87,31 +86,33 @@ const _nav = [
     ],
   },
   {
-    component: CNavGroup,
+    component: CNavItem,
     name: 'About Us',
-    icon: <CIcon icon={cilBell} customClassName="nav-icon" />,
-    items: [
-      {
-        component: CNavItem,
-        name: 'Alerts',
-        to: '/notifications/alerts',
-      },
-      {
-        component: CNavItem,
-        name: 'Badges',
-        to: '/notifications/badges',
-      },
-      {
-        component: CNavItem,
-        name: 'Modal',
-        to: '/notifications/modals',
-      },
-      {
-        component: CNavItem,
-        name: 'Toasts',
-        to: '/notifications/toasts',
-      },
-    ],
+    to: '/About Us',
+    icon: <CIcon icon={cilBell} customClassName="nav-icon"/>
+
+    // items: [
+    //   {
+    //     component: CNavItem,
+    //     name: 'Alerts',
+    //     to: '/notifications/alerts',
+    //   },
+    //   {
+    //     component: CNavItem,
+    //     name: 'Badges',
+    //     to: '/notifications/badges',
+    //   },
+    //   {
+    //     component: CNavItem,
+    //     name: 'Modal',
+    //     to: '/notifications/modals',
+    //   },
+    //   {
+    //     component: CNavItem,
+    //     name: 'Toasts',
+    //     to: '/notifications/toasts',
+    //   },
+    // ],
   },
   {
     component: CNavItem,

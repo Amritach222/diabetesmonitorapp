@@ -1,5 +1,5 @@
 import React, { useState } from 'react'
-import { Link } from 'react-router-dom'
+import { Link ,useNavigate} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {
   CButton,
@@ -19,6 +19,7 @@ import { cilLockLocked, cilUser } from '@coreui/icons'
 import Axios from 'axios'
 
 const Login = ({ updateUser }) => {
+  const navigate = useNavigate();
   const [userLogin, setuserLogin] = useState({
     email: '',
     password: '',
@@ -32,26 +33,36 @@ const Login = ({ updateUser }) => {
     const name = event.target.name
     const value = event.target.value
     setuserLogin({ ...userLogin, [name]: value })
-    console.log(name, value)
+    // console.log(name, value)
   }
 
   const loginUser = async (e) => {
+    // <Link to='/' />
     e.preventDefault()
     const { email, password } = userLogin
     // console.log(username)
 
-    Axios.post('http://localhost:3001/login', {
+    Axios.post('http://localhost:3001/api/users/login', {
       email: email,
       password: password,
     })
       .then((res) => {
+        //handle error
+        // console.log(res)
+        if(res.data.success===0)
+        {
+          alert(res.data.data)
+        }
         //handle success
-        alert(res.data)
-        if (res.data === 'Invalid username and password !!') {
-          window.history.push('/login')
+        if (res.data.success===1) {
+          alert(res.data.data);
+        
+          updateUser(userLogin);
+          navigate('/dashboard')
+         
         } else {
-          updateUser(userLogin)
-          window.history.push('/')
+         
+         
         }
 
         console.log(res)
@@ -63,6 +74,7 @@ const Login = ({ updateUser }) => {
   }
 
   return (
+    
     <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
       <CContainer>
         <CRow className="justify-content-center">
@@ -104,6 +116,7 @@ const Login = ({ updateUser }) => {
                           Login
                         </CButton>
                       </CCol>
+                       
                       <CCol xs={6} className="text-right">
                         <CButton color="link" className="px-0">
                           Forgot password?
@@ -117,12 +130,11 @@ const Login = ({ updateUser }) => {
                 <CCardBody className="text-center">
                   <div>
                     <h2>Sign up</h2>
-                    <p>
-                      Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                      tempor incididunt ut labore et dolore magna aliqua.
+                    <p style={{fontSize:"20px",font:"bold"}}>
+                    I didnot choose Diabetes but i can choose how i react to it.
                     </p>
                     <Link to="/register">
-                      <CButton color="primary" className="mt-3" active tabIndex={-1}>
+                      <CButton color="primary" className="mt-3" active tabIndex={-1} style={{border:"0.5px solid white", borderRadius:"10px"}}>
                         Register Now!
                       </CButton>
                     </Link>

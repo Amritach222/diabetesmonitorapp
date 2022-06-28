@@ -14,7 +14,6 @@ import { cilBell, cilLockLocked, cilSettings, cilUser } from '@coreui/icons'
 import CIcon from '@coreui/icons-react'
 
 import avatar8 from './../../assets/images/avatars/8.jpg'
-const logout = {}
 const AppHeaderDropdown = ({ updateUser }) => {
   AppHeaderDropdown.propTypes = {
     updateUser: PropTypes.number.isRequired,
@@ -26,7 +25,7 @@ const AppHeaderDropdown = ({ updateUser }) => {
       </CDropdownToggle>
       <CDropdownMenu className="pt-0" placement="bottom-end">
         <CDropdownHeader className="bg-light fw-semibold py-2">Account</CDropdownHeader>
-        <CDropdownItem href="#">
+        <CDropdownItem href="http://localhost:3000/#/updates">
           <CIcon icon={cilBell} className="me-2" />
           Updates
           <CBadge color="info" className="ms-2">
@@ -34,16 +33,16 @@ const AppHeaderDropdown = ({ updateUser }) => {
           </CBadge>
         </CDropdownItem>
         <CDropdownHeader className="bg-light fw-semibold py-2">Settings</CDropdownHeader>
-        <CDropdownItem href="#">
+        <CDropdownItem href="http://localhost:3000/#/profile">
           <CIcon icon={cilUser} className="me-2" />
           Profile
         </CDropdownItem>
-        <CDropdownItem href="#">
+        <CDropdownItem href="http://localhost:3000/#/settings">
           <CIcon icon={cilSettings} className="me-2" />
           Settings
         </CDropdownItem>
         <CDropdownDivider />
-        <CDropdownItem href="/login">
+        <CDropdownItem href="http://localhost:3000/#/login">
           <CIcon
             icon={cilLockLocked}
             className="me-2"

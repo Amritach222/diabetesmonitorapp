@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import {
-  CButton,
+  // CButton,
   CCard,
   CCardBody,
   CCol,
@@ -12,25 +12,33 @@ import {
   CRow,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
-import { cilLockLocked, cilUser } from '@coreui/icons'
+// import { cilLockLocked, cilUser } from '@coreui/icons'
 import { Link } from 'react-router-dom'
 import Axios from 'axios'
+ import { ToastContainer, toast } from 'react-toastify';
+
+import 'react-toastify/dist/ReactToastify.css';
+
 
 const Register = () => {
   //creating a state which stores registeration information in an object
   const [userRegistration, setuserRegistration] = useState({
     username: '',
+    age:'',
+    weight:'',
+    gender:'',
     email: '',
     password: '',
     cpassword: '',
   })
-  const [records, setRecords] = useState([])
+ 
+  // const [records, setRecords] = useState([])
 
   const handleInput = (event) => {
     const name = event.target.name
     const value = event.target.value
     setuserRegistration({ ...userRegistration, [name]: value })
-    console.log(name, value)
+    // console.log(name, value)
   }
 
   //handlesubmit to store user inputs in object....
@@ -47,11 +55,15 @@ const Register = () => {
   //sending form data om submit click....
   const registerUser = async (e) => {
     e.preventDefault()
-    const { username, email, password, cpassword } = userRegistration
+    // toast.configure()
+    const { username, age, weight, gender,email, password, cpassword } = userRegistration
     // console.log(userRegistration)
     // console.log(password)
-    Axios.post('http://localhost:3001/register', {
+    Axios.post('http://localhost:3001/api/users/', {
       username: username,
+      age:age,
+      weight:weight,
+      gender:gender,
       email: email,
       password: password,
       cpassword: cpassword,
@@ -59,14 +71,60 @@ const Register = () => {
       .then((res) => {
         //handle success
         console.log(res)
+        if(res.data.success===1)
+        {
+          // alert("Registration Successful")
+          toast.success("Registration Successful", {
+            toastId: "customId",
+            
+          });
+        }
+
+
+        Axios.post('http://localhost:3001/api/users/userDetails', {
+          username: username,
+          age:age,
+          weight:weight,
+          gender:gender,
+          email: email,
+          password: password,
+          cpassword: cpassword,
+        })
+          .then((res) => {
+            //handle success
+            console.log(res)
+            if(res.data.success===1)
+            {
+              console.log("User Details Table Created")
+            }
+           
+          })
+          .catch((res) => {
+            //handle error
+            console.log(res)
+            if(res.data.success===0)
+            {
+              console.log("User Details Table Not Created")
+            }
+    
+          })
+
+       
       })
       .catch((res) => {
         //handle error
         console.log(res)
+        if(res.data.success===0)
+        {
+          alert("Registration Unsuccessful")
+        }
+        
+
       })
   }
   return (
     <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
+     
       <CContainer>
         <CRow className="justify-content-center">
           <CCol md={9} lg={7} xl={6}>
@@ -76,9 +134,7 @@ const Register = () => {
                   <h1>Register</h1>
                   <p className="text-medium-emphasis">Create your account</p>
                   <CInputGroup className="mb-3">
-                    <CInputGroupText>
-                      <CIcon icon={cilUser} />
-                    </CInputGroupText>
+                   
                     <CFormInput
                       placeholder="Username"
                       name="username"
@@ -88,8 +144,46 @@ const Register = () => {
                       onChange={handleInput}
                     />
                   </CInputGroup>
+
                   <CInputGroup className="mb-3">
-                    <CInputGroupText>@</CInputGroupText>
+                   
+                    <CFormInput
+                      placeholder="Age"
+                      name="age"
+                      id="age"
+                      autoComplete="off"
+                      value={userRegistration.age}
+                      onChange={handleInput}
+                    />
+                  </CInputGroup>
+
+                  <CInputGroup className="mb-3">
+                    
+                    <CFormInput
+                      placeholder="Weight"
+                      name="weight"
+                      id="weight"
+                      autoComplete="off"
+                      value={userRegistration.weight}
+                      onChange={handleInput}
+                    />
+                  </CInputGroup>
+
+                  <CInputGroup className="mb-3">
+                   
+                    <CFormInput
+                      placeholder="Gender"
+                      name="gender"
+                      id="gender"
+                      autoComplete="off"
+                      value={userRegistration.gender}
+                      onChange={handleInput}
+                    />
+                  </CInputGroup>
+
+
+                  <CInputGroup className="mb-3">
+                   
                     <CFormInput
                       placeholder="Email"
                       name="email"
@@ -100,9 +194,7 @@ const Register = () => {
                     />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
-                    <CInputGroupText>
-                      <CIcon icon={cilLockLocked} />
-                    </CInputGroupText>
+                   
                     <CFormInput
                       type="password"
                       name="password"
@@ -114,9 +206,7 @@ const Register = () => {
                     />
                   </CInputGroup>
                   <CInputGroup className="mb-4">
-                    <CInputGroupText>
-                      <CIcon icon={cilLockLocked} />
-                    </CInputGroupText>
+                   
                     <CFormInput
                       type="password"
                       name="cpassword"
@@ -138,6 +228,7 @@ const Register = () => {
                       style={{ backgroundColor: 'lightgreen' }}
                     />
                   </CInputGroup>
+                 
                 </CForm>
                 <p className="d-flex justify-content-center">
                   Already have an account ?
@@ -150,6 +241,7 @@ const Register = () => {
           </CCol>
         </CRow>
       </CContainer>
+      <ToastContainer position="top-center" autoClose={1000}/>
     </div>
   )
 }
