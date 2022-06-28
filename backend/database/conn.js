@@ -1,10 +1,10 @@
 const mysql = require("mysql");
 const con=mysql.createConnection({
-    host:"localhost",
-    user:"root",
-    password:"",
-    database:"sugar tracker",
-    port:3306
+    host:process.env.DB_HOST,
+    user:process.env.DB_USER,
+    password:process.env.DB_PASS,
+    database:process.env.MYSQL_DATABASE,
+    port:process.env.DB_PORT
 });
 
 con.connect((err)=>
@@ -15,4 +15,4 @@ con.connect((err)=>
 });
 
 module.exports.con=con;
-console.log(con);
+// console.log(con);

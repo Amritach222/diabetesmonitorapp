@@ -3,7 +3,7 @@ import AddDetails from './views/add details/AddDetails'
 
 const Dashboard = React.lazy(() => import('./views/dashboard/Dashboard'))
 
-const Charts = React.lazy(() => import('./views/charts/Charts'))
+// const Charts = React.lazy(() => import('./views/charts/Charts'))
 
 // Notifications
 const Alerts = React.lazy(() => import('./views/notifications/alerts/Alerts'))

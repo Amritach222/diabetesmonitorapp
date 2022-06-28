@@ -1,4 +1,4 @@
-import React, { Component, Suspense, useState, useEffect } from 'react'
+import React, { Suspense, useState, useEffect } from 'react'
 import { HashRouter, Route, Routes } from 'react-router-dom'
 import './scss/style.scss'
 import MessengerCustomerChat from 'react-messenger-customer-chat';
@@ -32,15 +32,18 @@ function App() {
     <HashRouter>
       <Suspense fallback={loading}>
         <Routes>
-          {/* <Route exact path="/" name="Login Page" element={<Login updateUser={updateUser} />} /> */}
-           <Route exact path="/" element={<DefaultLayout />} />
+          <Route exact path="/" name="Login Page" element={<Login updateUser={updateUser} />} />
+          {/* <Route exact path="/" element={<DefaultLayout />} /> */}
+
+
           <Route
             exact
             path="/login"
             name="Login Page"
             element={<Login updateUser={updateUser} />}
           />
-          <Route exact path="/register" name="Register Page" element={<Register />} />
+          <Route exact path="/register" name="Register Page" element={<Register/>} />
+
           <Route exact path="/404" name="Page 404" element={<Page404 />} />
           <Route exact path="/500" name="Page 500" element={<Page500 />} />
           <Route path="*" name="Home" element={<DefaultLayout updateUser={updateUser} />} />

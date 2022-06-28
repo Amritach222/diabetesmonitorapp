@@ -5,7 +5,6 @@ const AddDetails = () => {
   //creating a state which stores registeration information in an object
   const [userDetails, setuserDetails] = useState({
     userSugar: '',
-    userWeight: '',
     userMeal: '',
     userLaunch: '',
     userDinner: '',
@@ -16,30 +15,67 @@ const AddDetails = () => {
     const name = event.target.name
     const value = event.target.value
     setuserDetails({ ...userDetails, [name]: value })
-    console.log(name, value)
+    // console.log(name, value)
   }
 
-  //sending form data om submit click....
-  const addDetails = async (e) => {
+  //sending form data on submit click....
+  const addDetails = async (e) => { 
     e.preventDefault()
-    const { userSugar, userWeight, userMeal, userLaunch, userDinner, userExercise } = userDetails
-
-    Axios.post('http://localhost:3001/addDetails', {
-      userSugar: userSugar,
-      userWeight: userWeight,
-      userMeal: userMeal,
-      userLaunch: userLaunch,
-      userDinner: userDinner,
-      userExercise: userExercise,
+    console.log("Submit running ")
+    let username='';
+    let userData=JSON.parse(localStorage.getItem('MyUser'))
+    const email=userData.email;
+    console.log(email)
+    if(email!=null && email!='' && email!=undefined){
+    Axios.put('http://localhost:3001/api/users/getuser',{
+     email:email
+    },{
+      headers:{
+        'Access-control-allow-origin':'*',
+        'Content-type':'application/json; charset=utf-8'
+      }
+    }).then((res)=>
+    {
+      if(res.data.success == 1){
+      // console.log("response good")
+      console.log(res.data.data.name)
+      username=res.data.data.name;
+      const { userSugar, userMeal, userLaunch, userDinner, userExercise } = userDetails
+      Axios.post( 'http://localhost:3001/api/userDetails',{
+        sugar_level: userSugar,
+        morning_meal: userMeal,
+        launch: userLaunch,
+        dinner: userDinner,
+        exercise_time: userExercise,
+        username:username
+      })
+        .then((res) => {
+          //handle success
+          if(res.data.success==1)
+          {
+            
+            alert("Submitted Successfully");
+          }
+          else
+          {
+            alert("Not Submitted")
+          }
+        })
+        .catch((res) => {
+          //handle error
+          console.log(res)
+        })
+    }
+    }).catch((res)=>
+    {
+      console.log(res)
     })
-      .then((res) => {
-        //handle success
-        console.log(res)
-      })
-      .catch((res) => {
-        //handle error
-        console.log(res)
-      })
+  }
+  else{
+    console.log("email  not obtained")
+  }
+    
+   
   }
 
   return (
@@ -68,21 +104,7 @@ const AddDetails = () => {
             Blood Sugar Level
           </label>
         </div>
-
-        <div className="form-outline mb-4">
-          <input
-            type="text"
-            id="userWeight"
-            name="userWeight"
-            className="form-control"
-            autoComplete="off"
-            value={userDetails.userWeight}
-            onChange={handleInput}
-          />
-          <label className="form-label" htmlFor="form5Example2">
-            Your Weight
-          </label>
-        </div>
+        
 
         <div className="form-outline mb-4">
           <input
