@@ -22,9 +22,6 @@ const _nav = [
     name: 'Dashboard',
     to: '/dashboard',
     icon: <CIcon icon={cilSpeedometer} customClassName="nav-icon" />,
-    badge: {
-      color: 'info',
-    },
   },
   {
     component: CNavTitle,
@@ -40,6 +37,12 @@ const _nav = [
     component: CNavItem,
     name: 'Show Activity',
     to: '/showActivity',
+    icon: <CIcon icon={cilAudioSpectrum} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Your Doctor',
+    to: '/doctor',
     icon: <CIcon icon={cilAudioSpectrum} customClassName="nav-icon" />,
   },
   {
