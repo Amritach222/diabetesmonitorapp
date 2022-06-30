@@ -1,4 +1,4 @@
-const {create,login, userDetails, getUsername}=require("./user.service")
+const {create,login, userDetails, getUsername,getuser,update_user}=require("./user.service")
 
 const {genSaltSync,hashSync}=require("bcrypt");
 module.exports={
@@ -7,7 +7,7 @@ module.exports={
         const body=req.body;
         // const salt=genSaltSync(10);
         // body.password=hashSync("bikey",salt);
-      
+
         create(body,(err,results)=>
         {
             if(err)
@@ -27,13 +27,13 @@ module.exports={
                 data:results
             })
         })
-        
+
 
     },
     loginUser:(req,res)=>
     {
         const body=req.body;
-        login(body.email,(err,results)=>
+        login(body,(err,results)=>
         {
             console.log(results)
 if(err)
@@ -69,7 +69,7 @@ else
     createUserDetails:(req,res)=>
     {
         const body=req.body;
-      
+
         userDetails(body,(err,results)=>
         {
             if(err)
@@ -87,7 +87,7 @@ else
                 data:results
             })
         })
-        
+
 
     },
 
@@ -112,10 +112,57 @@ else
                 data:results[0]
             })
         })
-        
-
-    }
 
 
-   
+    },
+  // get userinfo for profile
+  creategetuserinfo:(req,res)=>
+  {
+    const id=req.body.id;
+    getuser(id,(err,results)=>
+    {
+      if(err)
+      {
+        console.log(err)
+        return res.status(500).json(
+          {
+            success:0,
+            message:'Database connection error'
+          }
+        )
+      }
+      return res.status(200).json({
+        success:1,
+        data:results[0]
+      })
+    })
+
+
+  },
+  updateuserinfo:(req,res)=>
+  {
+    const data=req.body;
+    update_user(data,(err,results)=>
+    {
+      if(err)
+      {
+        console.log(err)
+        return res.status(500).json(
+          {
+            success:0,
+            message:'Database connection error'
+          }
+        )
+      }
+      return res.status(200).json({
+        success:1,
+        message:"Successfully Updated"
+      })
+    })
+
+
+  }
+
+
+
 }

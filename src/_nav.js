@@ -10,7 +10,7 @@ import {
   // cilPencil,
   cilPlus,
   cilAudioSpectrum,
-  cilSpeedometer,
+  cilSpeedometer, cilPregnant, cilCheck, cilApple,
   // cilStar,
 } from '@coreui/icons'
 import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
@@ -43,7 +43,13 @@ const _nav = [
     component: CNavItem,
     name: 'Your Doctor',
     to: '/doctor',
-    icon: <CIcon icon={cilAudioSpectrum} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilCheck} customClassName="nav-icon" />,
+  },
+  {
+    component: CNavItem,
+    name: 'Predict  Your Result',
+    to: '/diabetes_prediction',
+    icon: <CIcon icon={cilApple} customClassName="nav-icon" />,
   },
   {
     component: CNavGroup,
