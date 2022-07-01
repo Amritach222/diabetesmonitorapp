@@ -59,68 +59,82 @@ const Register = () => {
     const { username, age, weight, gender,email, password, cpassword } = userRegistration
     // console.log(userRegistration)
     // console.log(password)
-    Axios.post('http://localhost:3001/api/users/', {
-      username: username,
-      age:age,
-      weight:weight,
-      gender:gender,
-      email: email,
-      password: password,
-      cpassword: cpassword,
-    })
-      .then((res) => {
-        //handle success
-        console.log(res)
-        if(res.data.success===1)
-        {
-          // alert("Registration Successful")
-          toast.success("Registration Successful", {
-            toastId: "customId",
-            
-          });
-        }
 
-
-        Axios.post('http://localhost:3001/api/users/userDetails', {
-          username: username,
-          age:age,
-          weight:weight,
-          gender:gender,
-          email: email,
-          password: password,
-          cpassword: cpassword,
+Axios.get('http://localhost:3001/api/users/userValidation/').then((res)=>
+{
+  if(res.data.success===1)
+  {
+    let userdata=res.data.data;
+    const user = userdata.filter((item)=>item.name==username);
+    if(user.length){
+      alert("User already exist")
+    }
+    else{
+      Axios.post('http://localhost:3001/api/users/', {
+        username: username,
+        age:age,
+        weight:weight,
+        gender:gender,
+        email: email,
+        password: password,
+        cpassword: cpassword,
+      })
+        .then((res) => {
+          //handle success
+          console.log(res)
+          if(res.data.success===1)
+          {
+            // alert("Registration Successful")
+            toast.success("Registration Successful", {
+              toastId: "customId",
+              
+            });
+          }
+  
+  
+          Axios.post('http://localhost:3001/api/users/userDetails', {
+            username: username,
+            age:age,
+            weight:weight,
+            gender:gender,
+            email: email,
+            password: password,
+            cpassword: cpassword,
+          })
+            .then((res) => {
+              //handle success
+              console.log(res)
+              if(res.data.success===1)
+              {
+                console.log("User Details Table Created")
+              }
+             
+            })
+            .catch((res) => {
+              //handle error
+              console.log(res)
+              if(res.data.success===0)
+              {
+                console.log("User Details Table Not Created")
+              }
+      
+            })
+  
+         
         })
-          .then((res) => {
-            //handle success
-            console.log(res)
-            if(res.data.success===1)
-            {
-              console.log("User Details Table Created")
-            }
-           
-          })
-          .catch((res) => {
-            //handle error
-            console.log(res)
-            if(res.data.success===0)
-            {
-              console.log("User Details Table Not Created")
-            }
-    
-          })
-
-       
-      })
-      .catch((res) => {
-        //handle error
-        console.log(res)
-        if(res.data.success===0)
-        {
-          alert("Registration Unsuccessful")
-        }
-        
-
-      })
+        .catch((res) => {
+          //handle error
+          console.log(res)
+          if(res.data.success===0)
+          {
+            alert("Registration Unsuccessful")
+          }
+          
+  
+        })
+    }
+  }
+})
   }
   return (
     <div className="bg-light min-vh-100 d-flex flex-row align-items-center">

@@ -54,7 +54,8 @@
     "react-router-dom": "^6.3.0",
     "react-toastify": "^9.0.5",
     "redux": "4.2.0",
-    "simplebar-react": "^2.3.7"
+    "simplebar-react": "^2.3.7",
+    "util": "^0.12.4"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.16.4",

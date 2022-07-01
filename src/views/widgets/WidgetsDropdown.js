@@ -1,4 +1,5 @@
-import React from 'react'
+import React , {useEffect,useState} from 'react'
+import Axios from 'axios'
 import {
   CRow,
   CCol,
@@ -14,6 +15,82 @@ import { CChartBar, CChartLine } from '@coreui/react-chartjs'
 // import { cilArrowBottom, cilArrowTop, cilOptions } from '@coreui/icons'
 
 const WidgetsDropdown = () => {
+  const [totalEntry, setTotalentry] = useState(0)
+  const [sugarlevel, setSugarlevel] = useState(0)
+  const [exercisedays, setExercisedays] = useState(0)
+  let userData=JSON.parse(localStorage.getItem('MyUser'))
+  const email=userData.email;
+  useEffect(()=>
+  {
+    Axios.put( 'http://localhost:3001/api/users/getuser/',{
+      email:email
+       })
+       .then((res) => {
+         //handle success
+         if(res.data.success==1)
+         {
+          //  console.log("getting username")
+          // console.log(res.data.data.name)
+          const username=res.data.data.name;
+
+          Axios.put( 'http://localhost:3001/api/userDetails//getDetails/',{
+            username:username
+           })
+           .then((res) => {
+             //handle success
+             if(res.data.data)
+             {
+               
+               console.log(res.data.data)
+               let user_details=res.data.data;
+
+
+               //Counting total user entries
+let user_details_count= user_details.length;
+setTotalentry(user_details_count);
+
+              //Fetching and counting total insulin entries of recent one month
+             const sugar_level = user_details.filter((item)=>
+             item.sugar_level
+
+             );
+             const sugar_level_count=sugar_level.length;
+             setSugarlevel(sugar_level_count);
+
+
+             //Fetching and counting total exercise entries of last one month
+
+             const exercise_days = user_details.filter((item)=>
+             item.exercise_time
+
+             );
+             const exercise_days_count=exercise_days.length;
+             setExercisedays(exercise_days_count);
+
+              }
+              else
+              {
+                console.log("Fetching Error")
+              }
+            })
+            .catch((res) => {
+              //handle error
+              console.log(res)
+            })
+          }
+          else
+          {
+            alert("usernameNot Obtained")
+          }
+        })
+        .catch((res) => {
+          //handle error
+          console.log(res)
+        })
+       
+  },[])
+
+
   return (
     <CRow className="d-flex justify-content-between">
       <CCol style={{ width: '33.33%' }} sm={6} lg={3}>
@@ -22,7 +99,7 @@ const WidgetsDropdown = () => {
           color="primary"
           value={
             
-             12
+            totalEntry
              
            
           }
@@ -93,7 +170,7 @@ const WidgetsDropdown = () => {
           className="mb-4"
           color="info"
           value={
-            10
+            sugarlevel
           }
           title="Your Sugar Entries"
           
@@ -237,7 +314,7 @@ const WidgetsDropdown = () => {
           color="danger"
           value={
             
-              16
+            exercisedays
           
           }
           title="Your Exercise Days"

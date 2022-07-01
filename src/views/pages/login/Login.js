@@ -56,16 +56,23 @@ const Login = ({ updateUser }) => {
         //handle success
         if (res.data.success===1) {
           alert(res.data.data);
-        
+          Axios.put('http://localhost:3001/api/users/userbyemail',
+            {email:email}).then((res)=>{
+              if(res.data.data){
+                const id=res.data.data.id;
+                console.log("data", res.data.data)
+                  localStorage.setItem('userId',id);
+              }
+              else{
+                console.log("data Not received")
+              }
+          }). catch((error)=>{
+            console.log("Server error", error)
+          })
           updateUser(userLogin);
           navigate('/dashboard')
-         
-        } else {
-         
-         
-        }
 
-        console.log(res)
+        }
       })
       .catch((res) => {
         //handle error
@@ -74,7 +81,7 @@ const Login = ({ updateUser }) => {
   }
 
   return (
-    
+
     <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
       <CContainer>
         <CRow className="justify-content-center">
@@ -116,7 +123,7 @@ const Login = ({ updateUser }) => {
                           Login
                         </CButton>
                       </CCol>
-                       
+
                       <CCol xs={6} className="text-right">
                         <CButton color="link" className="px-0">
                           Forgot password?

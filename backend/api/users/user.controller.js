@@ -1,7 +1,35 @@
-const {create,login, userDetails, getUsername}=require("./user.service")
+const {create,login, userDetails, getUsername,getUserid,getUserdetails,usernameValidation}=require("./user.service")
 
-const {genSaltSync,hashSync}=require("bcrypt");
+// const {genSaltSync,hashSync}=require("bcrypt");
 module.exports={
+    createuserValidation:(req,res)=>
+    {
+        
+      
+        usernameValidation((err,results)=>
+        {
+            if(err)
+            {
+                console.log(err)
+                return res.status(500).json(
+                    {
+                        success:0,
+                        message:'Database connection error'
+                    }
+                )
+
+                // return body;
+            }
+            return res.status(200).json({
+                success:1,
+                data:results
+            })
+        })
+        
+
+    },
+
+    
     createUser:(req,res)=>
     {
         const body=req.body;
@@ -110,6 +138,57 @@ else
             return res.status(200).json({
                 success:1,
                 data:results[0]
+            })
+        })
+        
+
+    },
+
+    creategetid:(req,res)=>
+    {
+        const email=req.body.email;
+        console.log(req.body)
+        getUserid(email,(err,results)=>
+        {
+            if(err)
+            {
+                console.log(err)
+                return res.status(500).json(
+                    {
+                        success:0,
+                        message:'Database connection error'
+                    }
+                )
+            }
+            return res.status(200).json({
+                success:1,
+                data:results[0]
+            })
+        })
+        
+
+    },
+
+
+    creategetUserdetails:(req,res)=>
+    {
+        const body=req.body;
+        console.log(body)
+        getUserdetails(user_id,(err,results)=>
+        {
+            if(err)
+            {
+                console.log(err)
+                return res.status(500).json(
+                    {
+                        success:0,
+                        message:'Database connection error'
+                    }
+                )
+            }
+            return res.status(200).json({
+                success:1,
+                data:results
             })
         })
         
