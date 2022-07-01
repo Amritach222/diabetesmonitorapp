@@ -5,7 +5,7 @@ module.exports={
   {
       mysql.query("select * from usersignup",(err,results)=>
       {
-     
+
           if(err)
           {
          return callBack(err)
@@ -98,7 +98,7 @@ userDetails:(data,callBack)=>
     },
     getUserid:(email,callBack)=>
     {
-        
+
         let getUserid = `select id from usersignup where email=?`;
         mysql.query(getUserid,[email], (err, results)=> {
             if (err) {
@@ -114,7 +114,7 @@ userDetails:(data,callBack)=>
     //API for providing user details to front end for displaying in widget dropdown....
     getUserdetails:(user_id,callBack)=>
     {
-        
+
         let getDetails = `select * from usersignup where id=?`;
         mysql.query(getDetails,[user_id], (err, results)=> {
             if (err) {
