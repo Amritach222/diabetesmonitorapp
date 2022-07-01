@@ -11,19 +11,21 @@ import {
 } from '@coreui/react'
 import { getStyle } from '@coreui/utils'
 import { CChartBar, CChartLine } from '@coreui/react-chartjs'
+import data from "@coreui/coreui/js/src/dom/data";
 // import CIcon from '@coreui/icons-react'
 // import { cilArrowBottom, cilArrowTop, cilOptions } from '@coreui/icons'
 
 const WidgetsDropdown = () => {
+  let s_data=[]
   const [totalEntry, setTotalentry] = useState(0)
   const [sugarlevel, setSugarlevel] = useState(0)
   const [exercisedays, setExercisedays] = useState(0)
-  let userData=JSON.parse(localStorage.getItem('MyUser'))
-  const email=userData.email;
+  const [sugardata,setSugardata]=useState();
+  const userId=window.localStorage.getItem('userId')
   useEffect(()=>
   {
     Axios.put( 'http://localhost:3001/api/users/getuser/',{
-      email:email
+      id:userId
        })
        .then((res) => {
          //handle success
@@ -36,27 +38,32 @@ const WidgetsDropdown = () => {
           Axios.put( 'http://localhost:3001/api/userDetails//getDetails/',{
             username:username
            })
-           .then((res) => {
+           .then(async (res) => {
              //handle success
              if(res.data.data)
              {
-               
+
                console.log(res.data.data)
                let user_details=res.data.data;
 
 
                //Counting total user entries
-let user_details_count= user_details.length;
-setTotalentry(user_details_count);
+            let user_details_count= user_details.length;
+            setTotalentry(user_details_count);
 
               //Fetching and counting total insulin entries of recent one month
              const sugar_level = user_details.filter((item)=>
              item.sugar_level
-
              );
+             //using map function to set array data
+               user_details.map((item)=>{
+                 if(item.sugar_level){
+                   s_data.push(Math.round(parseInt(item.sugar_level)/5));
+                 }
+               })
+               await setSugardata(s_data)
              const sugar_level_count=sugar_level.length;
              setSugarlevel(sugar_level_count);
-
 
              //Fetching and counting total exercise entries of last one month
 
@@ -87,7 +94,7 @@ setTotalentry(user_details_count);
           //handle error
           console.log(res)
         })
-       
+
   },[])
 
 
@@ -98,10 +105,10 @@ setTotalentry(user_details_count);
           className="mb-4"
           color="primary"
           value={
-            
+
             totalEntry
-             
-           
+
+
           }
           title="Your Total Entries"
           chart={
@@ -173,21 +180,23 @@ setTotalentry(user_details_count);
             sugarlevel
           }
           title="Your Sugar Entries"
-          
-          
+
+
           chart={
             <CChartLine
               className="mt-3 mx-3"
               style={{ height: '70px' }}
               data={{
-                labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                // labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                labels: sugardata,
                 datasets: [
                   {
-                    label: 'My First dataset',
+                    label: 'My sugar level indicator',
                     backgroundColor: 'transparent',
                     borderColor: 'rgba(255,255,255,.55)',
                     pointBackgroundColor: getStyle('--cui-info'),
-                    data: [1, 18, 9, 17, 34, 22, 11],
+                    data:sugardata
+                    // data: [1, 18, 9, 17, 34, 22, 11],
                   },
                 ],
               }}
@@ -313,12 +322,12 @@ setTotalentry(user_details_count);
           className="mb-4"
           color="danger"
           value={
-            
+
             exercisedays
-          
+
           }
           title="Your Exercise Days"
-         
+
           chart={
             <CChartBar
               className="mt-3 mx-3"
