@@ -61,6 +61,7 @@ login:(data,callBack)=>
 
 userDetails:(data,callBack)=>
     {
+      console.log(data)
         let createTable = `create table if not exists ${data.username}_table(
             id int primary key auto_increment,
             sugar_level varchar(255)not null,
@@ -80,11 +81,12 @@ userDetails:(data,callBack)=>
             })
     },
 
-    getUsername:(email,callBack)=>
+    getUsername:(id,callBack)=>
     {
 
-        let getUser = `select name from usersignup where email=?`;
-        mysql.query(getUser,[email], (err, results, fields)=> {
+      console.log(id)
+        let getUser = `select name from usersignup where id=?`;
+        mysql.query(getUser,[id], (err, results)=> {
             if (err) {
           return callBack(err)
             }
@@ -123,7 +125,7 @@ userDetails:(data,callBack)=>
             return callBack(null,results)
            }
             })
-    }
+    },
   getuser:(id,callBack)=>
   {
     let getUser = `select * from usersignup where id=?`;

@@ -23,22 +23,17 @@ const AddDetails = () => {
     e.preventDefault()
     console.log("Submit running ")
     let username='';
-    let userData=JSON.parse(localStorage.getItem('MyUser'))
-    const email=userData.email;
-    console.log(email)
-    if(email!=null && email!='' && email!=undefined){
+    let id=localStorage.getItem('userId')
+    // console.log(id)
+    
     Axios.put('http://localhost:3001/api/users/getuser',{
-     email:email
-    },{
-      headers:{
-        'Access-control-allow-origin':'*',
-        'Content-type':'application/json; charset=utf-8'
-      }
+     id:id
+    
     }).then((res)=>
     {
       if(res.data.success == 1){
       // console.log("response good")
-      console.log(res.data.data.name)
+      console.log(res.data)
       username=res.data.data.name;
       const { userSugar, userMeal, userLaunch, userDinner, userExercise } = userDetails
       Axios.post( 'http://localhost:3001/api/userDetails',{
@@ -70,11 +65,6 @@ const AddDetails = () => {
     {
       console.log(res)
     })
-  }
-  else{
-    console.log("email  not obtained")
-  }
-    
    
   }
 

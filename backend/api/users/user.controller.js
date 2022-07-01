@@ -123,9 +123,9 @@ else
 
     creategetuser:(req,res)=>
     {
-        const email=req.body.email;
+        const id=req.body.id;
         console.log(req.body)
-        getUsername(email,(err,results)=>
+        getUsername(id,(err,results)=>
         {
             if(err)
             {
