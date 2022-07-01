@@ -1,10 +1,37 @@
-const {addDetails,getDetails}=require("./userDetails.service")
+const {doctor,getDoctorDetails}=require("./doctor.service")
+
 module.exports={
-    createAddDetails:(req,res)=>
+    createDoctor:(req,res)=>
     {
-        const  body=req.body;
-            console.log(body.sugar_level)
-        addDetails(body,(err,results)=>
+        const body=req.body;
+        console.log(body)
+        doctor(body,(err,results)=>
+        {
+            if(err)
+            {
+                console.log(err)
+                return res.status(500).json(
+                    {
+                        success:0,
+                        message:'Database connection error'
+                    }
+                )
+
+            }
+            return res.status(200).json({
+                success:1,
+                data:results
+            })
+        })
+        
+
+    },
+
+    creategetDoctor:(req,res)=>
+    {
+        const user_id=req.body.user_id;
+        console.log(req.body)
+        getDoctorDetails(user_id,(err,results)=>
         {
             if(err)
             {
@@ -23,28 +50,6 @@ module.exports={
         })
         
 
-    },
-
-    createGetDetails:(req,res)=>
-    {
-        console.log(req.body);
-        getDetails(req.body.username,(err,results)=>
-        {
-            if(err)
-            {
-                console.log(err)
-                return res.status(500).json(
-                    {
-                        success:0,
-                        message:'Database connection error'
-                    }
-                )
-            }
-            return res.status(200).json({
-                success:1,
-                data:results
-            })
-        })
     }
 
 }

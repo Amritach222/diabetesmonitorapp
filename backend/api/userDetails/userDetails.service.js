@@ -13,5 +13,19 @@ addDetails:(data,callBack)=>
    } else
     return callBack(null,results)
    })
+},
+
+getDetails:(username,callBack)=>
+{
+    
+    mysql.query(`select * from ${username}_table`,
+   (err,results)=>
+   {
+       if(err)
+   {
+  return callBack(err)
+   } else
+    return callBack(null,results)
+   })
 }
 }
