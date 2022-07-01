@@ -12,6 +12,7 @@ import {
   CFormTextarea
 } from "@coreui/react";
 import './doctor.scss'
+import doctor_image from './regular-checkups_banner.jpg'
 const doctor={
   name: " Amrit Acharya",
   email: "amritach222@gmail.com",
@@ -22,7 +23,7 @@ const Doctor =()=>{
   const [validated, setValidated] = useState(false)
 
   useEffect(()=>{
-      setDisplayClass(false)
+      setDisplayClass(doctor)
     },
     [doctor]
   )
@@ -53,7 +54,6 @@ const Doctor =()=>{
               label="Enter Name"
               required
             />
-
           </div>
           <div className="email_container">
             <CFormInput
@@ -81,7 +81,7 @@ const Doctor =()=>{
           </CCard>
         {/* This class for  showing doctor detail*/}
         <CCard style={{ width: '18rem' }} className={!displayclass?'doctorform':''}>
-          <CCardImage orientation="top" src="/images/react.jpg" />
+          <CCardImage orientation="top" src={doctor_image} />
           <CCardBody>
             <CCardTitle>{displayclass.name}</CCardTitle>
             <CCardText>
