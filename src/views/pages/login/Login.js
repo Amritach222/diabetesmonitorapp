@@ -56,10 +56,11 @@ const Login = ({ updateUser }) => {
         //handle success
         if (res.data.success===1) {
           alert(res.data.data);
-          Axios.put('http://localhost:3001/api/users/getprofile',
+          Axios.put('http://localhost:3001/api/users/userbyemail',
             {email:email}).then((res)=>{
               if(res.data.data){
                 const id=res.data.data.id;
+                console.log("data", res.data.data)
                   localStorage.setItem('userId',id);
               }
               else{
@@ -71,12 +72,7 @@ const Login = ({ updateUser }) => {
           updateUser(userLogin);
           navigate('/dashboard')
 
-        } else {
-
-
         }
-
-        console.log(res)
       })
       .catch((res) => {
         //handle error

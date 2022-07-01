@@ -1,4 +1,4 @@
-const {create,login, userDetails, getUsername,getuser,update_user}=require("./user.service")
+const {create,login, userDetails, getUsername,getuser,update_user, getuserByemail}=require("./user.service")
 
 const {genSaltSync,hashSync}=require("bcrypt");
 module.exports={
@@ -139,9 +139,42 @@ else
 
 
   },
+  // Get user by email
+  getusebyemail:(req,res)=>
+  {
+    const email=req.body.email;
+    getuserByemail(email,(err,results)=>
+    {
+      if(err)
+      {
+        console.log(err)
+        return res.status(500).json(
+          {
+            success:0,
+            message:'Database connection error'
+          }
+        )
+      }
+      return res.status(200).json({
+        success:1,
+        data:results[0]
+      })
+    })
+
+
+  },
+// Update user profile
   updateuserinfo:(req,res)=>
   {
-    const data=req.body;
+    const req_data=req.body;
+    const data={
+        id:req_data.id,
+        username:req_data.username,
+        age:req_data.age,
+        weight:req_data.weight,
+        email:req_data.email,
+        image:req.file.path,
+    }
     update_user(data,(err,results)=>
     {
       if(err)
@@ -162,7 +195,5 @@ else
 
 
   }
-
-
 
 }

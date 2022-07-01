@@ -91,6 +91,20 @@ userDetails:(data,callBack)=>
       }
     })
   },
+  // get user by email
+  getuserByemail:(email,callBack)=>
+  {
+    let getUser = `select * from usersignup where email=?`;
+    mysql.query(getUser,[email], (err, results, fields)=> {
+      if (err) {
+        return callBack(err)
+      }
+      else
+      {
+        return callBack(null,results)
+      }
+    })
+  },
   // Update user with profile image  for image upload we use multer library
   update_user:(data,callBack)=>
   {
