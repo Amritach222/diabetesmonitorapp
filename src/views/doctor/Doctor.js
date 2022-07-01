@@ -38,24 +38,12 @@ const Doctor =()=>{
   //   setdoctorDetails({doctorPhone:e.target.value})
   // }
 
-  let userData=JSON.parse(localStorage.getItem('MyUser'))
-    const email=userData.email;
+  let id=localStorage.getItem('userId')
 
   useEffect(()=>
   {
-    Axios.put( 'http://localhost:3001/api/users/getUserid/',{
-      email:email
-       })
-       .then((res) => {
-         //handle success
-         if(res.data.success==1)
-         {
-          //  console.log("getting user_id")
-          // console.log(res.data.data.id)
-          const user_id=res.data.data.id;
-
           Axios.put( 'http://localhost:3001/api/doctors/getDoctor/',{
-            user_id:user_id
+            user_id:id
            })
            .then((res) => {
              //handle success
@@ -77,16 +65,6 @@ const Doctor =()=>{
               //handle error
               console.log(res)
             })
-          }
-          else
-          {
-            alert("User_id Not Obtained")
-          }
-        })
-        .catch((res) => {
-          //handle error
-          console.log(res)
-        })
        
   },[doctorDetails])
 
@@ -109,23 +87,11 @@ const Doctor =()=>{
       const { doctorName, doctorEmail,doctorPhone} = doctorDetails
       console.log(doctorDetails)
 
-
-      Axios.put( 'http://localhost:3001/api/users/getUserid/',{
-        email:email
-         })
-         .then((res) => {
-           //handle success
-           if(res.data.success==1)
-           {
-             console.log("getting user_id")
-            console.log(res.data.data.id)
-            const user_id=res.data.data.id;
-
             Axios.post( 'http://localhost:3001/api/doctors/',{
               doctorName,
               doctorEmail,
               doctorPhone,
-              user_id:user_id
+              user_id:id
              })
              .then((res) => {
                //handle success
@@ -146,16 +112,6 @@ const Doctor =()=>{
                 //handle error
                 console.log(res)
               })
-            }
-            else
-            {
-              alert("User_id Not Obtained")
-            }
-          })
-          .catch((res) => {
-            //handle error
-            console.log(res)
-          })
 
         setValidated(true)
       }
@@ -218,10 +174,10 @@ const Doctor =()=>{
         <CCard style={{ width: '18rem' }} className={!displayclass?'doctorform':''}>
           <CCardImage orientation="top" src={doctor_image} />
           <CCardBody>
-            <CCardTitle>{doctor.name}</CCardTitle>
+            <CCardTitle>{displayclass.name}</CCardTitle>
             <CCardText>
-              Email:{' '+doctor.email} <br/>
-              Phone: {' '+doctor.phone}
+              Email:{' '+displayclass.email} <br/>
+              Phone: {' '+displayclass.phone}
             </CCardText>
             <CButton href="#">Contact</CButton>
           </CCardBody>
