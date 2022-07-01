@@ -1,4 +1,5 @@
-const {createUser,loginUser, createUserDetails,creategetuser,creategetuserinfo,getusebyemail,updateuserinfo}=require('./user.controller')
+
+const {createUser,loginUser, createUserDetails,creategetuser,creategetuserinfo,getusebyemail,updateuserinfo,creategetid,creategetUserdetails,createuserValidation}=require('./user.controller')
 const router=require('express').Router();
 const multer= require("multer");
 const storage=multer.diskStorage({
@@ -29,11 +30,15 @@ var upload=multer({
 })
 
 router.post("/",createUser);
+router.get("/userValidation",createuserValidation);
 router.post("/login",loginUser);
 router.post("/userDetails",createUserDetails);
 router.put("/getuser",creategetuser);
 router.put("/getprofile",creategetuserinfo);
+router.put("/getUserid",creategetid)
+router.put("/getUserdetails",creategetUserdetails)
 router.post("/updateuser",upload.single('profileImage'), updateuserinfo);
 router.put('/userbyemail', getusebyemail);
 
 module.exports=router;
+

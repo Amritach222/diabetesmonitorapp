@@ -42,6 +42,8 @@ import {
   // cilPeople,
   cilUser,
   cilUserFemale,
+  cilPencil,
+  cilColorBorder
 } from '@coreui/icons'
 
 // import avatar1 from 'src/assets/images/avatars/1.jpg'
@@ -267,7 +269,7 @@ const Dashboard = () => {
       launch: 'Pizza',
       Dinner: 'Rice and Dal',
       exercise: `${20} min`,
-    }
+    },
   ]
 
   return (
@@ -278,7 +280,7 @@ const Dashboard = () => {
           <CRow>
             <CCol sm={5}>
               <h4 id="traffic" className="card-title mb-0">
-   Food Analysis
+                Food Analysis
               </h4>
               <div className="small text-medium-emphasis">June - July 2022</div>
             </CCol>
@@ -503,31 +505,21 @@ const Dashboard = () => {
                     <CTableHeaderCell className="text-center">Launch</CTableHeaderCell>
                     <CTableHeaderCell>Dinner</CTableHeaderCell>
                     <CTableHeaderCell>Exercise</CTableHeaderCell>
+                    <CTableHeaderCell>Action</CTableHeaderCell>
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
                   {userTable.map((item, index) => (
                     <CTableRow v-for="item in tableItems" key={index}>
-                      <CTableDataCell className="text-center">
-                      {item.id}
-                      </CTableDataCell>
+                      <CTableDataCell className="text-center">{item.id}</CTableDataCell>
+                      <CTableDataCell>{item.sugarLevel}</CTableDataCell>
+                      <CTableDataCell className="text-center">{item.weight}</CTableDataCell>
+                      <CTableDataCell>{item.morMeal}</CTableDataCell>
+                      <CTableDataCell className="text-center">{item.launch}</CTableDataCell>
+                      <CTableDataCell>{item.Dinner}</CTableDataCell>
+                      <CTableDataCell>{item.exercise}</CTableDataCell>
                       <CTableDataCell>
-                        {item.sugarLevel}
-                      </CTableDataCell>
-                      <CTableDataCell className="text-center">
-                        {item.weight}
-                      </CTableDataCell>
-                      <CTableDataCell>
-                        {item.morMeal}
-                      </CTableDataCell>
-                      <CTableDataCell className="text-center">
-                       {item.launch}
-                      </CTableDataCell>
-                      <CTableDataCell>
-                       {item.Dinner}
-                      </CTableDataCell>
-                      <CTableDataCell>
-                       {item.exercise}
+                     
                       </CTableDataCell>
                     </CTableRow>
                   ))}

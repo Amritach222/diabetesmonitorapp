@@ -1,8 +1,24 @@
 const mysql=require("../../database/conn").con;
 module.exports={
+
+  usernameValidation:(callBack)=>
+  {
+      mysql.query("select * from usersignup",(err,results)=>
+      {
+     
+          if(err)
+          {
+         return callBack(err)
+          } else
+           return callBack(null,results)
+  })},
+
 create:(data,callBack)=>
 {
    //create method definition
+
+
+//query runnning after registartion validated for unique username to exist or create
    mysql.query("INSERT INTO usersignup (name,age,weight,gender,email,password,cpassword) VALUES(?,?,?,?,?,?,?)",
    [data.username,data.age, data.weight,data.gender,data.email,data.password,data.cpassword],
    (err,results)=>
@@ -78,6 +94,36 @@ userDetails:(data,callBack)=>
            }
             })
     },
+    getUserid:(email,callBack)=>
+    {
+        
+        let getUserid = `select id from usersignup where email=?`;
+        mysql.query(getUserid,[email], (err, results)=> {
+            if (err) {
+          return callBack(err)
+            }
+           else
+           {
+            return callBack(null,results)
+           }
+            })
+    },
+
+    //API for providing user details to front end for displaying in widget dropdown....
+    getUserdetails:(user_id,callBack)=>
+    {
+        
+        let getDetails = `select * from usersignup where id=?`;
+        mysql.query(getDetails,[user_id], (err, results)=> {
+            if (err) {
+          return callBack(err)
+            }
+           else
+           {
+            return callBack(null,results)
+           }
+            })
+    }
   getuser:(id,callBack)=>
   {
     let getUser = `select * from usersignup where id=?`;
