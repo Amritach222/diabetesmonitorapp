@@ -1,19 +1,7 @@
 import React from 'react'
 import CIcon from '@coreui/icons-react'
-import {
-  cilBell,
-  cilCalculator,
-  // cilChartPie,
-  // cilCursor,
-  // cilDrop,
-  // cilNotes,
-  // cilPencil,
-  cilPlus,
-  cilAudioSpectrum,
-  cilSpeedometer, cilPregnant, cilCheck, cilApple,
-  // cilStar,
-} from '@coreui/icons'
-import { CNavGroup, CNavItem, CNavTitle } from '@coreui/react'
+import {cilApple, cilAudioSpectrum, cilBell, cilCalculator, cilCheck, cilPlus, cilSpeedometer,} from '@coreui/icons'
+import {CNavGroup, CNavItem, CNavTitle} from '@coreui/react'
 import diabetesLogo from './assets/images/diabetes/blood-test.png'
 
 const _nav = [
@@ -35,8 +23,8 @@ const _nav = [
   },
   {
     component: CNavItem,
-    name: 'Show Activity',
-    to: '/showActivity',
+    name: 'My Activities',
+    to: '/activities',
     icon: <CIcon icon={cilAudioSpectrum} customClassName="nav-icon" />,
   },
   {

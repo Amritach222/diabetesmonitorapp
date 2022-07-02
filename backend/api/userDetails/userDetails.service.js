@@ -66,4 +66,22 @@ getDetails:(username,callBack)=>
 
       })
   },
+  // Api creation for updating meal detail
+  getUserActivity:(username,callBack)=>
+  {
+    const query=`SELECT * FROM ${username}_table`
+    mysql.query(query,
+      [],
+      (err,results)=>
+      {
+        if(err)
+        {
+          return callBack(err)
+        }
+        else{
+          return callBack(null,results);
+        }
+
+      })
+  },
 }
