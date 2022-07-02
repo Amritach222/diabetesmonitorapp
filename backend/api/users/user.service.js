@@ -1,11 +1,9 @@
 const mysql=require("../../database/conn").con;
 module.exports={
-
   usernameValidation:(callBack)=>
   {
-      mysql.query("select * from usersignup",(err,results)=>
+      mysql.query("select * from usersignup",[],(err,results)=>
       {
-
           if(err)
           {
          return callBack(err)
@@ -147,6 +145,7 @@ userDetails:(data,callBack)=>
       if (err) {
         return callBack(err)
       }
+
       else
       {
         return callBack(null,results)

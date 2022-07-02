@@ -12,8 +12,7 @@ import {
   CImage
 } from "@coreui/react";
 import {toast, ToastContainer} from 'react-toastify'
-import p_image from './pexels-tomé-louro-1666779.jpg'
-import {cilAudioSpectrum, cilPencil} from "@coreui/icons";
+import { cilPencil} from "@coreui/icons";
 import CIcon from "@coreui/icons-react";
 import Axios from "axios";
 // Import toastify css file
@@ -44,8 +43,6 @@ const Profile =()=>{
     },[]
   )
   const [validated, setValidated] = useState(false)
-  // change image state
-  const [image, setImage]=useState(p_image)
   const handleSubmit = async (event) => {
     event.preventDefault()
     const userId=window.localStorage.getItem('userId')
@@ -138,6 +135,7 @@ const changeProfileImage=(e)=>{
                 label="Username"
                 onChange={(e)=>{changeUsername(e)}}
                 required
+                disabled
               />
               </div>
               <div className="age_container">

@@ -31,7 +31,7 @@ const Register = () => {
     password: '',
     cpassword: '',
   })
- 
+
   // const [records, setRecords] = useState([])
 
   const handleInput = (event) => {
@@ -62,12 +62,14 @@ const Register = () => {
 
 Axios.get('http://localhost:3001/api/users/userValidation/').then((res)=>
 {
+  console.log("Getting data from database")
   if(res.data.success===1)
   {
     let userdata=res.data.data;
-    const user = userdata.filter((item)=>item.name==username);
-    if(user.length){
-      alert("User already exist")
+    const db_user = userdata.filter((item)=>item.name==username);
+    const db_email=userdata.filter((item)=>item.email==email)
+    if(db_user.length || db_email.length){
+      alert("User already exist Change Email/username")
     }
     else{
       Axios.post('http://localhost:3001/api/users/', {
@@ -87,11 +89,11 @@ Axios.get('http://localhost:3001/api/users/userValidation/').then((res)=>
             // alert("Registration Successful")
             toast.success("Registration Successful", {
               toastId: "customId",
-              
+
             });
           }
-  
-  
+
+
           Axios.post('http://localhost:3001/api/users/userDetails', {
             username: username,
             age:age,
@@ -108,7 +110,7 @@ Axios.get('http://localhost:3001/api/users/userValidation/').then((res)=>
               {
                 console.log("User Details Table Created")
               }
-             
+
             })
             .catch((res) => {
               //handle error
@@ -117,10 +119,10 @@ Axios.get('http://localhost:3001/api/users/userValidation/').then((res)=>
               {
                 console.log("User Details Table Not Created")
               }
-      
+
             })
-  
-         
+
+
         })
         .catch((res) => {
           //handle error
@@ -129,8 +131,8 @@ Axios.get('http://localhost:3001/api/users/userValidation/').then((res)=>
           {
             alert("Registration Unsuccessful")
           }
-          
-  
+
+
         })
     }
   }
@@ -138,7 +140,7 @@ Axios.get('http://localhost:3001/api/users/userValidation/').then((res)=>
   }
   return (
     <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
-     
+      <ToastContainer position="top-center" autoClose={1000}/>
       <CContainer>
         <CRow className="justify-content-center">
           <CCol md={9} lg={7} xl={6}>
@@ -148,7 +150,7 @@ Axios.get('http://localhost:3001/api/users/userValidation/').then((res)=>
                   <h1>Register</h1>
                   <p className="text-medium-emphasis">Create your account</p>
                   <CInputGroup className="mb-3">
-                   
+
                     <CFormInput
                       placeholder="Username"
                       name="username"
@@ -160,7 +162,7 @@ Axios.get('http://localhost:3001/api/users/userValidation/').then((res)=>
                   </CInputGroup>
 
                   <CInputGroup className="mb-3">
-                   
+
                     <CFormInput
                       placeholder="Age"
                       name="age"
@@ -172,7 +174,7 @@ Axios.get('http://localhost:3001/api/users/userValidation/').then((res)=>
                   </CInputGroup>
 
                   <CInputGroup className="mb-3">
-                    
+
                     <CFormInput
                       placeholder="Weight"
                       name="weight"
@@ -184,7 +186,7 @@ Axios.get('http://localhost:3001/api/users/userValidation/').then((res)=>
                   </CInputGroup>
 
                   <CInputGroup className="mb-3">
-                   
+
                     <CFormInput
                       placeholder="Gender"
                       name="gender"
@@ -197,7 +199,7 @@ Axios.get('http://localhost:3001/api/users/userValidation/').then((res)=>
 
 
                   <CInputGroup className="mb-3">
-                   
+
                     <CFormInput
                       placeholder="Email"
                       name="email"
@@ -208,7 +210,7 @@ Axios.get('http://localhost:3001/api/users/userValidation/').then((res)=>
                     />
                   </CInputGroup>
                   <CInputGroup className="mb-3">
-                   
+
                     <CFormInput
                       type="password"
                       name="password"
@@ -220,7 +222,7 @@ Axios.get('http://localhost:3001/api/users/userValidation/').then((res)=>
                     />
                   </CInputGroup>
                   <CInputGroup className="mb-4">
-                   
+
                     <CFormInput
                       type="password"
                       name="cpassword"
@@ -242,7 +244,7 @@ Axios.get('http://localhost:3001/api/users/userValidation/').then((res)=>
                       style={{ backgroundColor: 'lightgreen' }}
                     />
                   </CInputGroup>
-                 
+
                 </CForm>
                 <p className="d-flex justify-content-center">
                   Already have an account ?
@@ -255,7 +257,6 @@ Axios.get('http://localhost:3001/api/users/userValidation/').then((res)=>
           </CCol>
         </CRow>
       </CContainer>
-      <ToastContainer position="top-center" autoClose={1000}/>
     </div>
   )
 }
