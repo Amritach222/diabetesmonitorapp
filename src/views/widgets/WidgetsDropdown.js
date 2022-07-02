@@ -31,8 +31,6 @@ const WidgetsDropdown = () => {
          //handle success
          if(res.data.success==1)
          {
-          //  console.log("getting username")
-          // console.log(res.data.data.name)
           const username=res.data.data.name;
 
           Axios.put( 'http://localhost:3001/api/userDetails//getDetails/',{
@@ -42,8 +40,6 @@ const WidgetsDropdown = () => {
              //handle success
              if(res.data.data)
              {
-
-               console.log(res.data.data)
                let user_details=res.data.data;
 
 
