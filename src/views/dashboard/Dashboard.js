@@ -6,10 +6,8 @@ import {
   CButtonGroup,
   CCard,
   CCardBody,
-  CCardFooter,
   CCardHeader,
   CCol, CFormInput, CImage, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle,
-  CProgress,
   CRow,
   CTable,
   CTableBody,
@@ -31,7 +29,6 @@ import {
   cilUser,
   cilUserFemale,
   cilPencil,
-  cilColorBorder, cilApple
 } from '@coreui/icons'
 import WidgetsDropdown from '../widgets/WidgetsDropdown'
 import Axios from "axios";
@@ -110,12 +107,7 @@ const Dashboard = () => {
     { title: 'Female', icon: cilUserFemale, value: 43 },
   ]
 
-  const progressGroupExample3 = [
-    { title: 'Organic Search', icon: cibGoogle, percent: 56, value: '191,235' },
-    { title: 'Facebook', icon: cibFacebook, percent: 15, value: '51,223' },
-    { title: 'Twitter', icon: cibTwitter, percent: 11, value: '37,564' },
-    { title: 'LinkedIn', icon: cibLinkedin, percent: 8, value: '27,319' },
-  ]
+
 const handlleEdit=(data,e)=>{
   setVisible(!visible)
   setId(data.id)
@@ -329,7 +321,7 @@ const handlleEdit=(data,e)=>{
           <CCard className="mb-4">
             <CCardHeader>Your recent activities</CCardHeader>
             <CCardBody>
-              <CTable align="middle" className="mb-0 border" hover responsive>
+              <CTable align="middle" className="mb-0 border" hover responsive style={{fontSize:'12px'}}>
                 <CTableHead color="light">
                   <CTableRow>
                     <CTableHeaderCell className="text-center">S.N</CTableHeaderCell>
@@ -346,11 +338,11 @@ const handlleEdit=(data,e)=>{
                     userTable.map((item, index) => (
                     <CTableRow v-for="item in tableItems" key={index}>
                       <CTableDataCell className="text-center">{index+1}</CTableDataCell>
-                      <CTableDataCell className="text-center" >{item.sugar_level}</CTableDataCell>
+                      <CTableDataCell className="text-center" >{item.sugar_level} mg/dL</CTableDataCell>
                       <CTableDataCell className="text-center">{item.morning_meal}</CTableDataCell>
                       <CTableDataCell className="text-center">{item.launch}</CTableDataCell>
                       <CTableDataCell className="text-center">{item.dinner}</CTableDataCell>
-                      <CTableDataCell className="text-center">{item.exercise_time}</CTableDataCell>
+                      <CTableDataCell className="text-center">{item.exercise_time}  minutes</CTableDataCell>
                       <CTableDataCell className="text-center text-primary" style={{cursor:'pointer'}} onClick={(e) =>{handlleEdit(item,e)} }><CIcon icon={cilPencil} /></CTableDataCell>
                       <CTableDataCell>
 

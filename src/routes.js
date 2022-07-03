@@ -13,6 +13,7 @@ const Toasts = React.lazy(() => import('./views/notifications/toasts/Toasts'))
 const Doctor =React.lazy(()=>import('./views/doctor/Doctor'))
 const Profile=React.lazy(()=>import('./views/profile/Profile'))
 const Prediction=React.lazy(()=>import('./views/Prediction/Prediction'))
+const Activity=React.lazy(()=>import('./views/activities/Activity'))
 const routes = [
   { path: '/', exact: true, name: 'Home' },
   { path: '/dashboard', name: 'Dashboard', element: Dashboard },
@@ -20,6 +21,7 @@ const routes = [
   { path: '/addDetails', name: 'Add Details', element: AddDetails },
   {path:'/doctor', name:'Doctor',element:Doctor},
   {path: '/profile', name:'Profile', element:Profile},
+  {path: '/activities', name:'My Activities', element:Activity},
   {path:'/diabetes_prediction',name:'Prediction',element:Prediction},
   { path: '/notifications', name: 'Notifications', element: Alerts, exact: true },
   { path: '/notifications/alerts', name: 'Alerts', element: Alerts },

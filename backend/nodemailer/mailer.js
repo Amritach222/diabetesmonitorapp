@@ -6,13 +6,6 @@ var transporter = nodemailer.createTransport({
     pass: 'aejgjkrwmnsyppfg'
   }
 });
-
-var mailOptions = {
-  from: 'visioncomputerworldd@gmail.com',
-  to: 'amritach222@gmail.com',
-  subject: 'Sending Email using Node.js',
-  text: `Welcome to the visioncomputer solution we are here to serve you.\n You can freely contact us for any query. \nWe are always ready to help you. Thank you for choosing us.`
-};
 function sendMail(mailOptions){
   transporter.sendMail(mailOptions, function(error, info){
     if (error) {
