@@ -18,22 +18,22 @@ const WidgetsDropdown = () => {
   const [totalEntry, setTotalentry] = useState(0)
   const [sugarlevel, setSugarlevel] = useState(0)
   const [exercisedays, setExercisedays] = useState(0)
-  let userData=JSON.parse(localStorage.getItem('MyUser'))
-  const email=userData.email;
+  let id=localStorage.getItem('userId')
+ 
   useEffect(()=>
   {
     Axios.put( 'http://localhost:3001/api/users/getuser/',{
-      email:email
+      user_id:id
        })
        .then((res) => {
          //handle success
          if(res.data.success==1)
          {
           //  console.log("getting username")
-          // console.log(res.data.data.name)
+          console.log(res)
           const username=res.data.data.name;
 
-          Axios.put( 'http://localhost:3001/api/userDetails//getDetails/',{
+          Axios.put( 'http://localhost:3001/api/userDetails/getDetails/',{
             username:username
            })
            .then((res) => {
