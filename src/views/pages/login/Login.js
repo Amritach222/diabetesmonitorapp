@@ -14,6 +14,8 @@ import {
   CInputGroupText,
   CRow,
 } from '@coreui/react'
+import TextField from '@mui/material/TextField'
+import Button from '@mui/material/Button'
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
 import Axios from 'axios'
@@ -83,49 +85,64 @@ const Login = ({ updateUser }) => {
   return (
 
     <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
-      <CContainer>
+      <CContainer >
         <CRow className="justify-content-center">
           <CCol md={8}>
-            <CCardGroup>
-              <CCard className="p-4">
+            <CCardGroup style={{boxShadow:"0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"}}>
+              <CCard className="p-4" >
                 <CCardBody>
                   <CForm>
                     <h1>Login</h1>
                     <p className="text-medium-emphasis">Sign In to your account</p>
                     <CInputGroup className="mb-3">
-                      <CInputGroupText>
-                        <CIcon icon={cilUser} />
-                      </CInputGroupText>
-                      <CFormInput
-                        name="email"
-                        placeholder="Email"
-                        autoComplete="off"
-                        value={userLogin.email}
-                        onChange={handleInput}
-                      />
+                      
+
+                      <TextField
+                      style={{ width: '100%' }}
+                      name="email"
+                      id="email"
+                      autoComplete="off"
+                      value={userLogin.email}
+                      onChange={handleInput}
+                      label="Email"
+                      type="email"
+                      variant="standard"
+                    />
                     </CInputGroup>
                     <CInputGroup className="mb-4">
-                      <CInputGroupText>
-                        <CIcon icon={cilLockLocked} />
-                      </CInputGroupText>
-                      <CFormInput
-                        name="password"
-                        type="password"
-                        placeholder="Password"
-                        autoComplete="off"
-                        value={userLogin.password}
-                        onChange={handleInput}
-                      />
+                     
+
+                      <TextField
+                      style={{ width: '100%' }}
+                      name="password"
+                      id="password"
+                      autoComplete="off"
+                      value={userLogin.password}
+                      onChange={handleInput}
+                      label="Password"
+                      type="password"
+                      variant="standard"
+                    />
                     </CInputGroup>
                     <CRow>
                       <CCol xs={6}>
-                        <CButton color="primary" className="px-4" onClick={loginUser}>
-                          Login
-                        </CButton>
+        
+
+                        <Button
+                      variant="contained"
+                      type="submit"
+                      onClick={loginUser}
+                    
+                    >Log in</Button>
                       </CCol>
 
                       <CCol xs={6} className="text-right">
-                        <CButton color="link" className="px-0">
+                        <CButton color="link" className="px-0"  style={{
+                      textDecoration: 'none',
+                      color: 'red',
+                      fontStyle: 'italic',
+                      marginLeft: '8px',
+                    }}>
                           Forgot password?
                         </CButton>
                       </CCol>
@@ -133,17 +150,15 @@ const Login = ({ updateUser }) => {
                   </CForm>
                 </CCardBody>
               </CCard>
-              <CCard className="text-white bg-primary py-5" style={{ width: '44%' }}>
+              <CCard className="text-black bg-gradient py-5" style={{ width: '44%',background:" #00a8e6"}}>
                 <CCardBody className="text-center">
                   <div>
                     <h2>Sign up</h2>
-                    <p style={{fontSize:"20px",font:"bold"}}>
-                    I didnot choose Diabetes but i can choose how i react to it.
+                    <p style={{fontSize:"1.2rem",fontFamily:"monospace"}}>
+                    I didnt choose Diabetes but i can choose how i react to it.
                     </p>
-                    <Link to="/register">
-                      <CButton color="primary" className="mt-3" active tabIndex={-1} style={{border:"0.5px solid white", borderRadius:"10px"}}>
-                        Register Now!
-                      </CButton>
+                    <Link to="/register" style={{ textDecoration: 'none'}}>
+                    <Button variant="contained">Register</Button>
                     </Link>
                   </div>
                 </CCardBody>

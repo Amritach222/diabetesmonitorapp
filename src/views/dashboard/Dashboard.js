@@ -30,6 +30,7 @@ import {
   cilUserFemale,
   cilPencil,
 } from '@coreui/icons'
+import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
 import WidgetsDropdown from '../widgets/WidgetsDropdown'
 import Axios from "axios";
 import {toast, ToastContainer} from 'react-toastify'
@@ -45,12 +46,6 @@ const  greens=require('./foodImages/leafy greens.jpg')
 const  nuts=require('./foodImages/Nuts.jpg')
 const  seeds=require('./foodImages/side-effects-of-flax-seeds.webp')
 const  strawberry=require('./foodImages/strawberry.jfif')
-// import avatar1 from 'src/assets/images/avatars/1.jpg'
-// import avatar2 from 'src/assets/images/avatars/2.jpg'
-// import avatar3 from 'src/assets/images/avatars/3.jpg'
-// import avatar4 from 'src/assets/images/avatars/4.jpg'
-// import avatar5 from 'src/assets/images/avatars/5.jpg'
-// import avatar6 from 'src/assets/images/avatars/6.jpg'
 const Dashboard = () => {
   const random = (min, max) => Math.floor(Math.random() * (max - min + 1) + min)
   const [user,setUser]=useState();
@@ -105,6 +100,106 @@ const Dashboard = () => {
   const progressGroupExample2 = [
     { title: 'Male', icon: cilUser, value: 53 },
     { title: 'Female', icon: cilUserFemale, value: 43 },
+  ]
+  const progressGroupExample3 = [
+    { title: 'Organic Search', icon: cibGoogle, percent: 56, value: '191,235' },
+    { title: 'Facebook', icon: cibFacebook, percent: 15, value: '51,223' },
+    { title: 'Twitter', icon: cibTwitter, percent: 11, value: '37,564' },
+    { title: 'LinkedIn', icon: cibLinkedin, percent: 8, value: '27,319' },
+  ]
+
+  
+  const userTable = [
+    {
+      id: 1,
+      sugarLevel: 100,
+      weight: `${60} kg`,
+      morMeal: 'Tea with Donaut',
+      launch: 'Pizza',
+      Dinner: 'Rice and Dal',
+      exercise: `${20} min`,
+    },
+    {
+      id: 2,
+      sugarLevel: 100,
+      weight: `${60} kg`,
+      morMeal: 'Tea with Donaut',
+      launch: 'Pizza',
+      Dinner: 'Rice and Dal',
+      exercise: `${20} min`,
+    },
+    {
+      id: 3,
+      sugarLevel: 100,
+      weight: `${60} kg`,
+      morMeal: 'Tea with Donaut',
+      launch: 'Pizza',
+      Dinner: 'Rice and Dal',
+      exercise: `${20} min`,
+    },
+    {
+      id: 4,
+      sugarLevel: 100,
+      weight: `${60} kg`,
+      morMeal: 'Tea with Donaut',
+      launch: 'Pizza',
+      Dinner: 'Rice and Dal',
+      exercise: `${20} min`,
+    },
+    {
+      id: 5,
+      sugarLevel: 100,
+      weight: `${60} kg`,
+      morMeal: 'Tea with Donaut',
+      launch: 'Pizza',
+      Dinner: 'Rice and Dal',
+      exercise: `${20} min`,
+    },
+    {
+      id: 6,
+      sugarLevel: 100,
+      weight: `${60} kg`,
+      morMeal: 'Tea with Donaut',
+      launch: 'Pizza',
+      Dinner: 'Rice and Dal',
+      exercise: `${20} min`,
+    },
+    {
+      id: 7,
+      sugarLevel: 100,
+      weight: `${60} kg`,
+      morMeal: 'Tea with Donaut',
+      launch: 'Pizza',
+      Dinner: 'Rice and Dal',
+      exercise: `${20} min`,
+    },
+    {
+      id: 8,
+      sugarLevel: 100,
+      weight: `${60} kg`,
+      morMeal: 'Tea with Donaut',
+      launch: 'Pizza',
+      Dinner: 'Rice and Dal',
+      exercise: `${20} min`,
+    },
+    {
+      id: 9,
+      sugarLevel: 100,
+      weight: `${60} kg`,
+      morMeal: 'Tea with Donaut',
+      launch: 'Pizza',
+      Dinner: 'Rice and Dal',
+      exercise: `${20} min`,
+    },
+    {
+      id: 10,
+      sugarLevel: 100,
+      weight: `${60} kg`,
+      morMeal: 'Tea with Donaut',
+      launch: 'Pizza',
+      Dinner: 'Rice and Dal',
+      exercise: `${20} min`,
+    },
   ]
 
 
@@ -344,13 +439,11 @@ const handlleEdit=(data,e)=>{
                       <CTableDataCell className="text-center">{item.dinner}</CTableDataCell>
                       <CTableDataCell className="text-center">{item.exercise_time}  minutes</CTableDataCell>
                       <CTableDataCell className="text-center text-primary" style={{cursor:'pointer'}} onClick={(e) =>{handlleEdit(item,e)} }><CIcon icon={cilPencil} /></CTableDataCell>
-                      <CTableDataCell>
-
-                      </CTableDataCell>
                     </CTableRow>
                   ))}
                 </CTableBody>
               </CTable>
+      
             </CCardBody>
             <CModal alignment="center" visible={visible} onClose={() => setVisible(false)}>
               <CModalHeader>

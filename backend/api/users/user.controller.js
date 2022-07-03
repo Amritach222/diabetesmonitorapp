@@ -119,7 +119,7 @@ else
 
     creategetuser:(req,res)=>
     {
-        const id=req.body.id;
+        const id=req.body.user_id;
         console.log(req.body)
         getUsername(id,(err,results)=>
         {
