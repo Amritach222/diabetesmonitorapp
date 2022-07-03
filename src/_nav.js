@@ -1,6 +1,15 @@
 import React from 'react'
 import CIcon from '@coreui/icons-react'
-import {cilApple, cilAudioSpectrum, cilBell, cilCalculator, cilCheck, cilPlus, cilSpeedometer,} from '@coreui/icons'
+import {
+  cilApple,
+  cilAudioSpectrum,
+  cilBell,
+  cilCalculator,
+  cilCheck, cilDescription,
+  cilMedicalCross, cilNoteAdd,
+  cilPlus, cilSearch,
+  cilSpeedometer,
+} from '@coreui/icons'
 import {CNavGroup, CNavItem, CNavTitle} from '@coreui/react'
 import diabetesLogo from './assets/images/diabetes/blood-test.png'
 
@@ -19,25 +28,25 @@ const _nav = [
     component: CNavItem,
     name: 'Add Details',
     to: '/addDetails',
-    icon: <CIcon icon={cilPlus} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilNoteAdd} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
     name: 'My Activities',
     to: '/activities',
-    icon: <CIcon icon={cilAudioSpectrum} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilDescription} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
     name: 'Your Doctor',
     to: '/doctor',
-    icon: <CIcon icon={cilCheck} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilMedicalCross} customClassName="nav-icon" />,
   },
   {
     component: CNavItem,
     name: 'Predict  Your Result',
     to: '/diabetes_prediction',
-    icon: <CIcon icon={cilApple} customClassName="nav-icon" />,
+    icon: <CIcon icon={cilSearch} customClassName="nav-icon" />,
   },
   {
     component: CNavGroup,
@@ -115,7 +124,7 @@ const _nav = [
     component: CNavItem,
     name: 'Privacy and Policy',
     to: '/privacy and policy',
-    icon: <CIcon icon={cilCalculator} customClassName="nav-icon" />,
+    // icon: <CIcon icon={cilCalculator} customClassName="nav-icon" />,
   },
 ]
 
