@@ -44,10 +44,8 @@ const Register = () => {
     cpassword: '',
   })
 
+
   const [displayError, setdisplayerror] = useState('');
-
-  
-
   const handleInput = (event) => {
     const name = event.target.name
     const value = event.target.value
@@ -158,6 +156,7 @@ else{
                     console.log('User Details Table Not Created')
                   }
                 })
+
             })
             .catch((res) => {
               //handle error
@@ -176,9 +175,9 @@ else{
   }
 }
   return (
-    <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
-      
+    <div className="bg-light min-vh-100 d-flex flex-row align-items-center"> 
       <CContainer >
+
         <CRow className="justify-content-center">
           <CCol md={8}>
             <CCardGroup style={{boxShadow:"0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19)"}}>
@@ -220,8 +219,7 @@ else{
                       variant="standard"
                     />
                   </CInputGroup>
-                 
-
+        
 </div>
                   
 <div className='d-flex'>
@@ -241,10 +239,7 @@ else{
                       onChange={handleInput}
                     />
                   </CInputGroup>
-                
-
-
-
+              
                   <CInputGroup className="mb-1 ms-1">
                     <TextField
                       style={{ width: '100%' }}
@@ -280,13 +275,13 @@ else{
                   </CInputGroup>
 
                   
-
                   <CInputGroup className="mb-1">
                     <TextField
                       style={{ width: '100%' }}
                       label="email"
                       type="email"
                       variant="standard"
+
                       name="email"
                       id="email"
                       autoComplete="off"
@@ -294,8 +289,6 @@ else{
                       onChange={handleInput}
                     />
                   </CInputGroup>
-                 
-
                   <CInputGroup className="mb-1">
                     <TextField
                       style={{ width: '100%' }}
@@ -319,6 +312,7 @@ else{
                     <TextField
                       style={{ width: '100%' }}
                       label="confirm password"
+
                       type="password"
                       variant="standard"
                       name="cpassword"
@@ -342,6 +336,7 @@ else{
                     </Button>
                   </CInputGroup>
 <span className='text-danger ms-1'>{displayError}</span>
+
 
                 </CForm>
                 <p className="d-flex justify-content-center">
@@ -372,7 +367,6 @@ else{
           </CCol>
         </CRow>
       </CContainer>
-      <ToastContainer position="top-center" autoClose={1000} />
     </div>
   )
 }

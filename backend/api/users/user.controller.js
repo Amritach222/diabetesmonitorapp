@@ -6,32 +6,28 @@ const {create,login, userDetails, getUsername,getuser,update_user, getuserByemai
 module.exports={
     createuserValidation:(req,res)=>
     {
-        
-      console.log(req)
         usernameValidation((err,results)=>
         {
             if(err)
             {
-                console.log(err)
+              console.log(err)
                 return res.status(500).json(
                     {
                         success:0,
                         message:'Database connection error'
                     }
                 )
-
-                // return body;
             }
             return res.status(200).json({
                 success:1,
                 data:results
             })
         })
-        
+
 
     },
 
-    
+
     createUser:(req,res)=>
     {
         const body=req.body;
@@ -165,14 +161,13 @@ else
                 data:results[0]
             })
         })
-        
+
 
     },
     creategetUserdetails:(req,res)=>
     {
-        const body=req.body;
-        console.log(body)
-        getUserdetails(user_id,(err,results)=>
+        const id=req.body.id;
+        getUserdetails(id,(err,results)=>
         {
             if(err)
             {
@@ -215,7 +210,7 @@ else
 
 
   },
-  // Get user by email
+  // Get user by email to store id to localstorage
   getusebyemail:(req,res)=>
   {
     const email=req.body.email;

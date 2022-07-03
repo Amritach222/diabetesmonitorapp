@@ -1,4 +1,4 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 
 import {
   // CAvatar,
@@ -6,10 +6,8 @@ import {
   CButtonGroup,
   CCard,
   CCardBody,
-  CCardFooter,
   CCardHeader,
-  CCol,
-  CProgress,
+  CCol, CFormInput, CImage, CModal, CModalBody, CModalFooter, CModalHeader, CModalTitle,
   CRow,
   CTable,
   CTableBody,
@@ -22,39 +20,65 @@ import { CChartLine } from '@coreui/react-chartjs'
 import { getStyle, hexToRgba } from '@coreui/utils'
 import CIcon from '@coreui/icons-react'
 import {
-  // cibCcAmex,
-  // cibCcApplePay,
-  // cibCcMastercard,
-  // cibCcPaypal,
-  // cibCcStripe,
-  // cibCcVisa,
   cibGoogle,
   cibFacebook,
   cibLinkedin,
-  // cifBr,
-  // cifEs,
-  // cifFr,
-  // cifIn,
-  // cifPl,
-  // cifUs,
+
   cibTwitter,
   cilCloudDownload,
-  // cilPeople,
   cilUser,
   cilUserFemale,
   cilPencil,
-  cilColorBorder
 } from '@coreui/icons'
 import DriveFileRenameOutlineIcon from '@mui/icons-material/DriveFileRenameOutline';
-import Pagination from '@mui/material/Pagination'
-
-
-
 import WidgetsDropdown from '../widgets/WidgetsDropdown'
-
+import Axios from "axios";
+import {toast, ToastContainer} from 'react-toastify'
+// Import toastify css file
+import 'react-toastify/dist/ReactToastify.css';
+const beans=require('./foodImages/beans.jpg')
+const  brocouli=require('./foodImages/broccoli-florets.webp')
+const  eggs=require('./foodImages/Brown-eggs.webp')
+const  fish=require('./foodImages/fattyfish.webp')
+const  garlic=require('./foodImages/garlic-benefits-for-heart.jpg')
+const  yogurt=require('./foodImages/greek-yogurt-social.jpg')
+const  greens=require('./foodImages/leafy greens.jpg')
+const  nuts=require('./foodImages/Nuts.jpg')
+const  seeds=require('./foodImages/side-effects-of-flax-seeds.webp')
+const  strawberry=require('./foodImages/strawberry.jfif')
 const Dashboard = () => {
   const random = (min, max) => Math.floor(Math.random() * (max - min + 1) + min)
+  const [user,setUser]=useState();
+  const [id,setId]=useState();
+  const [userTable,setUserTable]=useState([])
+  const [visible, setVisible] = useState(false)
+  const [updateData,setUpdateData]=useState({})
+  // set datas
+  const [sugar,setSugar]=useState('')
+  const [breakfast,setBreakfast]=useState('')
+  const [lunch,setLunch]=useState('')
+  const [dinner,setDinner]=useState('')
+  const [etime,setEtime]=useState('')
+  useEffect( ()=>{
+    let userId=localStorage.getItem('userId')
+     Axios.put('http://localhost:3001/api/users/getUserdetails',
+      {id:userId}).then((res)=>{
+        if(res.data.data){
+          const username=res.data.data[0].name
+          setUser(username)
+            Axios.put('http://localhost:3001/api/userDetails/getTenDetails/',{
+              username:username
+            }).then((res)=>{
+              if (res.data.data){
+                setUserTable(res.data.data.reverse())
+              }
+            })
 
+        }
+    }).catch((error)=>{
+      console.log("Error Occured",error)
+    })
+  },[visible])
   const progressExample = [
     { title: 'Visits', value: '29.703 Users', percent: 40, color: 'success' },
     { title: 'Unique', value: '24.093 Users', percent: 20, color: 'info' },
@@ -77,7 +101,6 @@ const Dashboard = () => {
     { title: 'Male', icon: cilUser, value: 53 },
     { title: 'Female', icon: cilUserFemale, value: 43 },
   ]
-
   const progressGroupExample3 = [
     { title: 'Organic Search', icon: cibGoogle, percent: 56, value: '191,235' },
     { title: 'Facebook', icon: cibFacebook, percent: 15, value: '51,223' },
@@ -179,8 +202,60 @@ const Dashboard = () => {
     },
   ]
 
+
+const handlleEdit=(data,e)=>{
+  setVisible(!visible)
+  setId(data.id)
+  setSugar(data.sugar_level)
+  setBreakfast(data.morning_meal)
+  setLunch(data.launch)
+  setDinner(data.dinner)
+  setEtime(data.exercise_time)
+}
+
+// defining  onchage handler
+  const changeSuagr=(e)=>{
+    setSugar(e.target.value)
+  }
+  const changeBreakfast=(e)=>{
+    setBreakfast(e.target.value)
+  }
+  const chageLunch=(e)=>{
+    setLunch(e.target.value)
+  }
+  const chageDinner=(e)=>{
+    setDinner(e.target.value)
+  }
+  const chageExerciseTime=(e)=>{
+    setEtime(e.target.value)
+  }
+  // update data to the database
+  const submitData=()=>{
+    Axios.put('http://localhost:3001/api/userDetails/updateMealInfo/',
+      {
+        user:user,
+        sugar:sugar,
+        breakfast:breakfast,
+        lunch:lunch,
+        dinner:dinner,
+        etime:etime,
+        id:id
+      }).then((res)=>{
+        if (res.data.success===1){
+          setVisible(false)
+          toast("Successfully Updated");
+          // window.location.reload(true)
+        }
+        else{
+          alert("error occured")
+        }
+    }).catch((error)=>{
+      console.log("Error occured", error)
+    })
+  }
   return (
     <>
+      <ToastContainer/>
       <WidgetsDropdown />
       <CCard className="mb-4">
         <CCardBody>
@@ -294,150 +369,168 @@ const Dashboard = () => {
             }}
           />
         </CCardBody>
-        <CCardFooter>
-          <CRow xs={{ cols: 1 }} md={{ cols: 5 }} className="text-center">
-            {progressExample.map((item, index) => (
-              <CCol className="mb-sm-2 mb-0" key={index}>
-                <div className="text-medium-emphasis">{item.title}</div>
-                <strong>
-                  {item.value} ({item.percent}%)
-                </strong>
-                <CProgress thin className="mt-2" color={item.color} value={item.percent} />
-              </CCol>
-            ))}
-          </CRow>
-        </CCardFooter>
       </CCard>
 
       {/* <WidgetsBrand withCharts /> */}
 
       <CRow>
         <CCol xs>
+          <CCard className="mb-4 p-3">
+          <div className="container">
+            <p id="traffic" className="card-title mb-0">
+              Best foods for people living with diabetes
+            </p>
+            <hr/>
+            <div className=" my-2 d-flex justify-content-around">
+              <div className='image_container d-flex flex-wrap justify-content-around'>
+              <div className="foodImage mx-1"><CImage rounded src={beans} width={200} height={200} /></div>
+              <div className="foodImage mx-1"><CImage rounded src={brocouli} width={200} height={200} /></div>
+              <div className="foodImage mx-1"><CImage rounded src={greens} width={200} height={200} /></div>
+            </div>
+            </div>
+            <div className="d-flex justify-content-around">
+              <div className='image_container d-flex flex-wrap justify-content-around'>
+              <div className="foodImage mx-1"><CImage rounded src={eggs} width={200} height={200} /></div>
+              <div className="foodImage mx-1"><CImage rounded src={garlic} width={200} height={200} /></div>
+              <div className="foodImage mx-1"><CImage rounded src={yogurt} width={200} height={200} /></div>
+              <div className="foodImage mx-1"><CImage rounded src={fish} width={200} height={200} /></div>
+            </div>
+            </div>
+            <div className="my-2 d-flex justify-content-around">
+              <div className='image_container d-flex flex-wrap justify-content-around'>
+              <div className="foodImage mx-1"><CImage rounded src={nuts} width={200} height={200} /></div>
+              <div className="foodImage mx-1"><CImage rounded src={seeds} width={200} height={200} /></div>
+              <div className="foodImage mx-1"><CImage rounded src={strawberry} width={200} height={200} /></div>
+              </div>
+            </div>
+          </div>
+
+
+          </CCard>
+        </CCol>
+      </CRow>
+      {/* <WidgetsBrand withCharts /> */}
+
+      <CRow>
+        <CCol xs>
           <CCard className="mb-4">
-            <CCardHeader>Food Recomendation</CCardHeader>
+            <CCardHeader>Your recent activities</CCardHeader>
             <CCardBody>
-              <CRow>
-                <CCol xs={12} md={6} xl={6}>
-                  <CRow>
-                    <CCol sm={6}>
-                      <div className="border-start border-start-4 border-start-info py-1 px-3">
-                        <div className="text-medium-emphasis small">New Clients</div>
-                        <div className="fs-5 fw-semibold">9,123</div>
-                      </div>
-                    </CCol>
-                    <CCol sm={6}>
-                      <div className="border-start border-start-4 border-start-danger py-1 px-3 mb-3">
-                        <div className="text-medium-emphasis small">Recurring Clients</div>
-                        <div className="fs-5 fw-semibold">22,643</div>
-                      </div>
-                    </CCol>
-                  </CRow>
-
-                  <hr className="mt-0" />
-                  {progressGroupExample1.map((item, index) => (
-                    <div className="progress-group mb-4" key={index}>
-                      <div className="progress-group-prepend">
-                        <span className="text-medium-emphasis small">{item.title}</span>
-                      </div>
-                      <div className="progress-group-bars">
-                        <CProgress thin color="info" value={item.value1} />
-                        <CProgress thin color="danger" value={item.value2} />
-                      </div>
-                    </div>
-                  ))}
-                </CCol>
-
-                <CCol xs={12} md={6} xl={6}>
-                  <CRow>
-                    <CCol sm={6}>
-                      <div className="border-start border-start-4 border-start-warning py-1 px-3 mb-3">
-                        <div className="text-medium-emphasis small">Pageviews</div>
-                        <div className="fs-5 fw-semibold">78,623</div>
-                      </div>
-                    </CCol>
-                    <CCol sm={6}>
-                      <div className="border-start border-start-4 border-start-success py-1 px-3 mb-3">
-                        <div className="text-medium-emphasis small">Organic</div>
-                        <div className="fs-5 fw-semibold">49,123</div>
-                      </div>
-                    </CCol>
-                  </CRow>
-
-                  <hr className="mt-0" />
-
-                  {progressGroupExample2.map((item, index) => (
-                    <div className="progress-group mb-4" key={index}>
-                      <div className="progress-group-header">
-                        <CIcon className="me-2" icon={item.icon} size="lg" />
-                        <span>{item.title}</span>
-                        <span className="ms-auto fw-semibold">{item.value}%</span>
-                      </div>
-                      <div className="progress-group-bars">
-                        <CProgress thin color="warning" value={item.value} />
-                      </div>
-                    </div>
-                  ))}
-
-                  <div className="mb-5"></div>
-
-                  {progressGroupExample3.map((item, index) => (
-                    <div className="progress-group" key={index}>
-                      <div className="progress-group-header">
-                        <CIcon className="me-2" icon={item.icon} size="lg" />
-                        <span>{item.title}</span>
-                        <span className="ms-auto fw-semibold">
-                          {item.value}{' '}
-                          <span className="text-medium-emphasis small">({item.percent}%)</span>
-                        </span>
-                      </div>
-                      <div className="progress-group-bars">
-                        <CProgress thin color="success" value={item.percent} />
-                      </div>
-                    </div>
-                  ))}
-                </CCol>
-              </CRow>
-
-              <br />
-
-              <CCardHeader>Your Activity</CCardHeader>
-
-              <CTable align="middle" className="mb-0 border" hover responsive>
+              <CTable align="middle" className="mb-0 border" hover responsive style={{fontSize:'12px'}}>
                 <CTableHead color="light">
                   <CTableRow>
                     <CTableHeaderCell className="text-center">S.N</CTableHeaderCell>
-                    <CTableHeaderCell>Sugar Level</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">Weight</CTableHeaderCell>
-                    <CTableHeaderCell>Morning Meal</CTableHeaderCell>
-                    <CTableHeaderCell className="text-center">Launch</CTableHeaderCell>
-                    <CTableHeaderCell>Dinner</CTableHeaderCell>
-                    <CTableHeaderCell>Exercise</CTableHeaderCell>
-                    <CTableHeaderCell>Action</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">Sugar Level</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">Break Fast</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">Lunch</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">Dinner</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">Exercise Time</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">Action</CTableHeaderCell>
                   </CTableRow>
                 </CTableHead>
                 <CTableBody>
-                  {userTable.map((item, index) => (
+                  {
+                    userTable.map((item, index) => (
                     <CTableRow v-for="item in tableItems" key={index}>
-                      <CTableDataCell className="text-center">{item.id}</CTableDataCell>
-                      <CTableDataCell>{item.sugarLevel}</CTableDataCell>
-                      <CTableDataCell className="text-center">{item.weight}</CTableDataCell>
-                      <CTableDataCell>{item.morMeal}</CTableDataCell>
+                      <CTableDataCell className="text-center">{index+1}</CTableDataCell>
+                      <CTableDataCell className="text-center" >{item.sugar_level} mg/dL</CTableDataCell>
+                      <CTableDataCell className="text-center">{item.morning_meal}</CTableDataCell>
                       <CTableDataCell className="text-center">{item.launch}</CTableDataCell>
-                      <CTableDataCell>{item.Dinner}</CTableDataCell>
-                      <CTableDataCell>{item.exercise}</CTableDataCell>
-                      <CTableDataCell><DriveFileRenameOutlineIcon/></CTableDataCell>
-                      <CTableDataCell>
-                     
-                      </CTableDataCell>
+                      <CTableDataCell className="text-center">{item.dinner}</CTableDataCell>
+                      <CTableDataCell className="text-center">{item.exercise_time}  minutes</CTableDataCell>
+                      <CTableDataCell className="text-center text-primary" style={{cursor:'pointer'}} onClick={(e) =>{handlleEdit(item,e)} }><CIcon icon={cilPencil} /></CTableDataCell>
                     </CTableRow>
                   ))}
                 </CTableBody>
               </CTable>
-              <div  className="mt-3 d-flex justify-content-center">
-
-                  <Pagination count={Infinity} variant="outlined" color="primary"  />
-              </div>
+      
             </CCardBody>
+            <CModal alignment="center" visible={visible} onClose={() => setVisible(false)}>
+              <CModalHeader>
+                <CModalTitle>Update your meal detail</CModalTitle>
+              </CModalHeader>
+              <CModalBody>
+                  <div className="update_meal_container">
+                      <div className="form_row d-flex justify-content-between">
+                        <div className="sugar_container">
+                        <CFormInput
+                          value={sugar}
+                          contentEditable={true}
+                          type="number"
+                          name="username"
+                          feedbackValid="Looks good!"
+                          id="validationCustom01"
+                          label="Sugar level"
+                          required
+                          onChange={(e)=>{changeSuagr(e)}}
+                        />
+                        </div>
+                        <div className="breakfast_container ms-3">
+                        <CFormInput
+                          value={breakfast}
+                          contentEditable={true}
+                          type="text"
+                          name="username"
+                          feedbackValid="Looks good!"
+                          id="validationCustom01"
+                          label="Breakfast"
+                          required
+                          onChange={(e)=>{changeBreakfast(e)}}
+                        />
+                        </div>
+                      </div>
+                      <div className="form_row d-flex justify-content-between">
+                        <div className="sugar_container">
+                          <CFormInput
+                            value={lunch}
+                            contentEditable={true}
+                            type="text"
+                            name="username"
+                            feedbackValid="Looks good!"
+                            id="validationCustom01"
+                            label="Lunch"
+                            required
+                            onChange={(e)=>{chageLunch(e)}}
+                          />
+                        </div>
+                        <div className="breakfast_container ms-3">
+                          <CFormInput
+                            value={dinner}
+                            contentEditable={true}
+                            type="text"
+                            name="username"
+                            feedbackValid="Looks good!"
+                            id="validationCustom01"
+                            label="Dinner"
+                            required
+                            onChange={(e)=>{chageDinner(e)}}
+                          />
+                        </div>
+                      </div>
+                      <div className="form_row d-flex">
+                        <div className="breakfast_container">
+                          <CFormInput
+                            value={etime}
+                            contentEditable={true}
+                            type="number"
+                            name="username"
+                            feedbackValid="Looks good!"
+                            id="validationCustom01"
+                            label="Exercise time"
+                            required
+                            onChange={(e)=>{chageExerciseTime(e)}}
+                          />
+                        </div>
+                      </div>
+                  </div>
+              </CModalBody>
+              <CModalFooter>
+                <CButton color="secondary" onClick={() => setVisible(false)}>
+                  Close
+                </CButton>
+                <CButton color="primary" onClick={submitData}>Save changes</CButton>
+              </CModalFooter>
+            </CModal>
           </CCard>
         </CCol>
       </CRow>

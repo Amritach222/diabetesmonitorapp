@@ -38,7 +38,7 @@ router.put("/getprofile",creategetuserinfo);
 router.put("/getUserid",creategetid)
 router.put("/getUserdetails",creategetUserdetails)
 router.post("/updateuser",upload.single('profileImage'), updateuserinfo);
-router.put('/userbyemail', getusebyemail);
+router.put('/userbyemail', getusebyemail);// this is to store id to localstorage using email
 
 module.exports=router;
 
