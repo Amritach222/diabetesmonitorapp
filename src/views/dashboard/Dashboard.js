@@ -108,100 +108,6 @@ const Dashboard = () => {
     { title: 'LinkedIn', icon: cibLinkedin, percent: 8, value: '27,319' },
   ]
 
-  
-  const userTable = [
-    {
-      id: 1,
-      sugarLevel: 100,
-      weight: `${60} kg`,
-      morMeal: 'Tea with Donaut',
-      launch: 'Pizza',
-      Dinner: 'Rice and Dal',
-      exercise: `${20} min`,
-    },
-    {
-      id: 2,
-      sugarLevel: 100,
-      weight: `${60} kg`,
-      morMeal: 'Tea with Donaut',
-      launch: 'Pizza',
-      Dinner: 'Rice and Dal',
-      exercise: `${20} min`,
-    },
-    {
-      id: 3,
-      sugarLevel: 100,
-      weight: `${60} kg`,
-      morMeal: 'Tea with Donaut',
-      launch: 'Pizza',
-      Dinner: 'Rice and Dal',
-      exercise: `${20} min`,
-    },
-    {
-      id: 4,
-      sugarLevel: 100,
-      weight: `${60} kg`,
-      morMeal: 'Tea with Donaut',
-      launch: 'Pizza',
-      Dinner: 'Rice and Dal',
-      exercise: `${20} min`,
-    },
-    {
-      id: 5,
-      sugarLevel: 100,
-      weight: `${60} kg`,
-      morMeal: 'Tea with Donaut',
-      launch: 'Pizza',
-      Dinner: 'Rice and Dal',
-      exercise: `${20} min`,
-    },
-    {
-      id: 6,
-      sugarLevel: 100,
-      weight: `${60} kg`,
-      morMeal: 'Tea with Donaut',
-      launch: 'Pizza',
-      Dinner: 'Rice and Dal',
-      exercise: `${20} min`,
-    },
-    {
-      id: 7,
-      sugarLevel: 100,
-      weight: `${60} kg`,
-      morMeal: 'Tea with Donaut',
-      launch: 'Pizza',
-      Dinner: 'Rice and Dal',
-      exercise: `${20} min`,
-    },
-    {
-      id: 8,
-      sugarLevel: 100,
-      weight: `${60} kg`,
-      morMeal: 'Tea with Donaut',
-      launch: 'Pizza',
-      Dinner: 'Rice and Dal',
-      exercise: `${20} min`,
-    },
-    {
-      id: 9,
-      sugarLevel: 100,
-      weight: `${60} kg`,
-      morMeal: 'Tea with Donaut',
-      launch: 'Pizza',
-      Dinner: 'Rice and Dal',
-      exercise: `${20} min`,
-    },
-    {
-      id: 10,
-      sugarLevel: 100,
-      weight: `${60} kg`,
-      morMeal: 'Tea with Donaut',
-      launch: 'Pizza',
-      Dinner: 'Rice and Dal',
-      exercise: `${20} min`,
-    },
-  ]
-
 
 const handlleEdit=(data,e)=>{
   setVisible(!visible)
@@ -443,7 +349,7 @@ const handlleEdit=(data,e)=>{
                   ))}
                 </CTableBody>
               </CTable>
-      
+
             </CCardBody>
             <CModal alignment="center" visible={visible} onClose={() => setVisible(false)}>
               <CModalHeader>

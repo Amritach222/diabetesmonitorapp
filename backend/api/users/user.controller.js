@@ -1,5 +1,5 @@
 
-const {create,login, userDetails, getUsername,getuser,update_user, getuserByemail,getUserid,getUserdetails,usernameValidation}=require("./user.service")
+const {create,login, userDetails, getUsername,getuser,update_user, getuserByemail,getUserid,getUserdetails, updatePassword,usernameValidation}=require("./user.service")
 
 
 // const {genSaltSync,hashSync}=require("bcrypt");
@@ -247,6 +247,30 @@ else
         image:req.file.path,
     }
     update_user(data,(err,results)=>
+    {
+      if(err)
+      {
+        console.log(err)
+        return res.status(500).json(
+          {
+            success:0,
+            message:'Database connection error'
+          }
+        )
+      }
+      return res.status(200).json({
+        success:1,
+        message:"Successfully Updated"
+      })
+    })
+
+
+  },
+  // Update user profile
+  updatePassword:(req,res)=>
+  {
+    const data=req.body;
+    updatePassword(data,(err,results)=>
     {
       if(err)
       {

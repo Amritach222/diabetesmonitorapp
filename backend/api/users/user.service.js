@@ -150,6 +150,21 @@ userDetails:(data,callBack)=>
         return callBack(null,results)
       }
     })
+  },
+  // Change password from here
+  updatePassword:(data,callBack)=>
+  {
+    let update_query = `UPDATE usersignup SET password=? WHERE id=?`;
+    mysql.query(update_query,[data.password,data.id],
+      (err, results, fields)=> {
+        if (err) {
+          return callBack(err)
+        }
+        else
+        {
+          return callBack(null,results)
+        }
+      })
   }
 
 }
