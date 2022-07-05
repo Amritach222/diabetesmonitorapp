@@ -50,7 +50,7 @@ const Doctor =()=>{
              //handle success
              if(res.data.data)
              {
-               
+
               // console.log("Fetching Doctor Details")
               // console.log(res.data.data)
               const doctor_details=res.data.data
@@ -66,7 +66,7 @@ const Doctor =()=>{
               //handle error
               console.log(res)
             })
-       
+
   },[doctorDetails])
 
 
@@ -78,15 +78,16 @@ const Doctor =()=>{
   }
   const handleSubmit = (event) => {
     const form = event.currentTarget
-    
     if (form.checkValidity() === false) {
-      
+
       event.stopPropagation();
       event.preventDefault();
     }
     else
     {
       const { doctorName, doctorEmail,doctorPhone} = doctorDetails
+
+
       console.log(doctorDetails)
       
 if(doctorPhone.length < 10)
@@ -96,9 +97,6 @@ if(doctorPhone.length < 10)
 }
     else
     {
-
-    
-
             Axios.post( 'http://localhost:3001/api/doctors/',{
               doctorName,
               doctorEmail,
@@ -126,10 +124,20 @@ if(doctorPhone.length < 10)
               })
             }}
 
+
+          } else {
+            alert("Not Submitted")
+          }
+        })
+        .catch((res) => {
+          //handle error
+          console.log(res)
+        })
+    }
         setValidated(true)
       }
 
-  
+
   return (
       <div>
         <CCard className={displayclass?'doctorform p-5':'p-5'}>

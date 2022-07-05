@@ -19,6 +19,7 @@ import Axios from "axios";
 import 'react-toastify/dist/ReactToastify.css';
 const Profile =()=>{
   //setprofile
+  const [fullname,setFullname]=useState('')
   const [username,setUsername]=useState('')
   const [age,setAge]=useState('')
   const [weight,setWeight]=useState('')
@@ -32,6 +33,7 @@ const Profile =()=>{
           const image_path=res.data.data.image
           let path=image_path.substr(7); // Removing 'public/' from image url
           setFile({preview:'http://localhost:3001/'+path})
+          setFullname(res.data.data.fullname)
           setUsername(res.data.data.name);
           setAge(res.data.data.age)
           setWeight(res.data.data.weight)
@@ -60,24 +62,25 @@ const Profile =()=>{
       event.preventDefault()
       event.stopPropagation()
     }
+    else {
       setUsername(event.target.username.value)
       setAge(event.target.age.value)
       setWeight(event.target.weight.value)
       setEmail(event.target.email.value)
-    console.log(age)
-    await Axios.post('http://localhost:3001/api/users/updateuser',
-      formData
-    ).then((res)=>{
-      if (res.data.message){
+      console.log(age)
+      await Axios.post('http://localhost:3001/api/users/updateuser',
+        formData
+      ).then((res) => {
+        if (res.data.message) {
 
-        toast(res.data.message);
-      }
-      else{
-        console.log("something went wrong")
-      }
-    }).catch((err)=>{
-      console.log("error occured",err.message)
-    })
+          toast(res.data.message);
+        } else {
+          console.log("something went wrong")
+        }
+      }).catch((err) => {
+        console.log("error occured", err.message)
+      })
+    }
     setValidated(true)
   }
   const changeUsername=(e)=>{
@@ -106,10 +109,11 @@ const changeProfileImage=(e)=>{
         <CCardBody>
 
           <div className="card_container d-flex justify-content-around flex-wrap">
-            <div className="card_container_left mt-4">
-          <div className="position-relative" >
+            <div className="card_container_left mt-4  ">
+          <div className="position-relative mb-2" >
             <CImage rounded src={file.preview} width={200} height={200} />
           </div>
+              <p className="ms-5"><b>{fullname}</b></p>
             </div>
             <div className="card_container_right">
               <div className="d-flex align-items-center ms-1">

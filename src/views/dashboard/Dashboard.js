@@ -244,7 +244,7 @@ const handlleEdit=(data,e)=>{
                   ))}
                 </CTableBody>
               </CTable>
-      
+
             </CCardBody>
             <CModal alignment="center" visible={visible} onClose={() => setVisible(false)}>
               <CModalHeader>

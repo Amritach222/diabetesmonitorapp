@@ -1,5 +1,5 @@
 
-const {create,login, userDetails, getUsername,getuser,update_user, getuserByemail,getUserid,getUserdetails,usernameValidation}=require("./user.service")
+const {create,login, userDetails, getUsername,getuser,update_user, getuserByemail,getUserid,getUserdetails, updatePassword,usernameValidation,deleteAccount}=require("./user.service")
 
 
 const {genSaltSync,hashSync}=require("bcrypt");
@@ -244,12 +244,14 @@ else
     const req_data=req.body;
     const data={
         id:req_data.id,
+        fullname:req.data.fullname,
         username:req_data.username,
         age:req_data.age,
         weight:req_data.weight,
         email:req_data.email,
         image:req.file.path,
     }
+    console.log(data)
     update_user(data,(err,results)=>
     {
       if(err)
@@ -265,6 +267,55 @@ else
       return res.status(200).json({
         success:1,
         message:"Successfully Updated"
+      })
+    })
+
+
+  },
+  // Update user profile
+  updatePassword:(req,res)=>
+  {
+    const data=req.body;
+    updatePassword(data,(err,results)=>
+    {
+      if(err)
+      {
+        console.log(err)
+        return res.status(500).json(
+          {
+            success:0,
+            message:'Database connection error'
+          }
+        )
+      }
+      return res.status(200).json({
+        success:1,
+        message:"Successfully Updated"
+      })
+    })
+
+
+  },
+  // Delete User account
+  deleteAccount:(req,res)=>
+  {
+    const data=req.body;
+    console.log(data.username)
+    deleteAccount(data,(err,results)=>
+    {
+      if(err)
+      {
+        console.log(err)
+        return res.status(500).json(
+          {
+            success:0,
+            message:'Database connection error'
+          }
+        )
+      }
+      return res.status(200).json({
+        success:1,
+        message:results
       })
     })
 

@@ -15,7 +15,7 @@ const Profile=React.lazy(()=>import('./views/profile/Profile'))
 const Prediction=React.lazy(()=>import('./views/Prediction/Prediction'))
 const Privacy=React.lazy(()=> import('./views/privacypolicy/privacy'))
 const AboutUs=React.lazy(()=> import('./views/aboutus/Aboutus'))
-
+const Settings = React.lazy(()=>import('./views/settings/Settings'))
 
 const Activity=React.lazy(()=>import('./views/activities/Activity'))
 
@@ -26,6 +26,7 @@ const routes = [
   { path: '/addDetails', name: 'Add Details', element: AddDetails },
   {path:'/doctor', name:'Doctor',element:Doctor},
   {path: '/profile', name:'Profile', element:Profile},
+  {path: '/settings', name:'Setting', element:Settings},
   {path: '/activities', name:'My Activities', element:Activity},
   {path:'/diabetes_prediction',name:'Prediction',element:Prediction},
   { path: '/notifications', name: 'Notifications', element: Alerts, exact: true },

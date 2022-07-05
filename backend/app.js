@@ -29,7 +29,7 @@ cron.schedule('00 58 21 * * *', () => {
   })
 // mail option object
    mailOptions = {
-    from: 'visioncomputerworldd@gmail.com',
+    from: 'sugartrackers@gmail.com',
     to: emails,
     subject: 'Reminder to upload your meal !',
     html:'<!DOCTYPE html>\n' +
