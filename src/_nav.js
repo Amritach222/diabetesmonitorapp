@@ -124,7 +124,7 @@ const _nav = [
     component: CNavItem,
     name: 'Privacy and Policy',
     to: '/privacyandpolicy',
-    icon: <CIcon icon={cilCalculator} customClassName="nav-icon" />,
+
 
   },
 ]

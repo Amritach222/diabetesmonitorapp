@@ -17,11 +17,18 @@ import data from "@coreui/coreui/js/src/dom/data";
 
 const WidgetsDropdown = () => {
   let s_data=[]
+  let exercise_data=[]
+  let entry_date_sugar=[]
+  let edate=[]
   const [totalEntry, setTotalentry] = useState(0)
   const [sugarlevel, setSugarlevel] = useState(0)
   const [exercisedays, setExercisedays] = useState(0)
+  const [sugardata,setSugardata]=useState([])
+  const [s_date,setS_date]=useState([])
+  const [exercisedata,setExerciseData]=useState([])
+  const [e_date,setEdate]=useState([])
   let id=localStorage.getItem('userId')
- 
+
   useEffect(()=>
   {
     Axios.put( 'http://localhost:3001/api/users/getuser/',{
@@ -32,7 +39,6 @@ const WidgetsDropdown = () => {
          if(res.data.success==1)
          {
           const username=res.data.data.name;
-
           Axios.put( 'http://localhost:3001/api/userDetails/getDetails/',{
             username:username
            })
@@ -52,12 +58,33 @@ const WidgetsDropdown = () => {
              item.sugar_level
              );
              //using map function to set array data
-               user_details.map((item)=>{
+               user_details.reverse().map((item,index)=>{
                  if(item.sugar_level){
+                   if(index<=6){
                    s_data.push(Math.round(parseInt(item.sugar_level)/5));
+                     entry_date_sugar.push(item.date);
+                   }
                  }
-               })
+               }
+
+               )
                await setSugardata(s_data)
+              await setS_date(entry_date_sugar)
+               //using map function to set array data for exercise time
+               user_details.map((item,index)=>{
+                   if(item.exercise_time){
+                     if(index<=6){
+                       console.log(item.exercise_time)
+                       exercise_data.push(parseInt(item.exercise_time));
+                       edate.push(item.date);
+                     }
+                   }
+                 }
+
+               )
+               console.log(exercise_data)
+               await setExerciseData(exercise_data)
+               await setEdate(edate)
              const sugar_level_count=sugar_level.length;
              setSugarlevel(sugar_level_count);
 
@@ -103,8 +130,6 @@ const WidgetsDropdown = () => {
           value={
 
             totalEntry
-
-
           }
           title="Your Total Entries"
           chart={
@@ -184,10 +209,10 @@ const WidgetsDropdown = () => {
               style={{ height: '70px' }}
               data={{
                 // labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
-                labels: sugardata,
+                labels: s_date,
                 datasets: [
                   {
-                    label: 'My sugar level indicator',
+                    label: 'Entry date',
                     backgroundColor: 'transparent',
                     borderColor: 'rgba(255,255,255,.55)',
                     pointBackgroundColor: getStyle('--cui-info'),
@@ -329,30 +354,13 @@ const WidgetsDropdown = () => {
               className="mt-3 mx-3"
               style={{ height: '70px' }}
               data={{
-                labels: [
-                  'January',
-                  'February',
-                  'March',
-                  'April',
-                  'May',
-                  'June',
-                  'July',
-                  'August',
-                  'September',
-                  'October',
-                  'November',
-                  'December',
-                  'January',
-                  'February',
-                  'March',
-                  'April',
-                ],
+                labels: e_date,
                 datasets: [
                   {
-                    label: 'My First dataset',
+                    label: 'Exercise time in minutes on date ',
                     backgroundColor: 'rgba(255,255,255,.2)',
                     borderColor: 'rgba(255,255,255,.55)',
-                    data: [78, 81, 80, 45, 34, 12, 40, 85, 65, 23, 12, 98, 34, 84, 67, 82],
+                    data: exercisedata,
                     barPercentage: 0.6,
                   },
                 ],

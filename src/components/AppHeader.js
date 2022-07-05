@@ -1,7 +1,6 @@
 import React from 'react'
 import { NavLink, Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
-import PropTypes from 'prop-types'
 import {
   CContainer,
   CHeader,
@@ -17,12 +16,9 @@ import CIcon from '@coreui/icons-react'
 import { cilBell, cilMenu } from '@coreui/icons'
 import { AppBreadcrumb } from './index'
 import { AppHeaderDropdown } from './header/index'
-import { logo } from 'src/assets/brand/logo'
 
-const AppHeader = ({ updateUser }) => {
-  AppHeader.propTypes = {
-    updateUser: PropTypes.number.isRequired,
-  }
+
+const AppHeader = () => {
   const dispatch = useDispatch()
   const sidebarShow = useSelector((state) => state.sidebarShow)
 
@@ -49,9 +45,9 @@ const AppHeader = ({ updateUser }) => {
         </CHeaderNav>
         <CHeaderNav className="d-flex justify-content-center align-items-center">
           <CNavItem>
-            <CNavLink href="">
-              <CIcon icon={cilBell} size="lg" />
-            </CNavLink>
+            {/*<CNavLink href="">*/}
+            {/*  <CIcon icon={cilBell} size="lg" />*/}
+            {/*</CNavLink>*/}
           </CNavItem>
           {/* <CNavItem>
             <CNavLink>
@@ -73,7 +69,7 @@ const AppHeader = ({ updateUser }) => {
           </CNavItem> */}
         </CHeaderNav>
         <CHeaderNav className="ms-3">
-          <AppHeaderDropdown updateUser={updateUser} />
+          <AppHeaderDropdown  />
         </CHeaderNav>
       </CContainer>
       <CHeaderDivider />

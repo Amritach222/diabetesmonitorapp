@@ -25,7 +25,7 @@ create:(data,callBack)=>
    {
   return callBack(err)
    } else
-    return callBack(null,results)
+    return callBack(null,"deleted")
    })
 },
 
@@ -139,8 +139,8 @@ userDetails:(data,callBack)=>
   // Update user with profile image  for image upload we use multer library
   update_user:(data,callBack)=>
   {
-    let update_query = `UPDATE usersignup SET name=?, age=?, weight=?, email=?, image=? WHERE id=?`;
-    mysql.query(update_query,[data.username, data.age,data.weight, data.email, data.image, data.id],
+    let update_query = `UPDATE usersignup SET fullname=?, name=?, age=?, weight=?, email=?, image=? WHERE id=?`;
+    mysql.query(update_query,[data.fullname,data.username, data.age,data.weight, data.email, data.image, data.id],
       (err, results, fields)=> {
       if (err) {
         return callBack(err)
@@ -150,6 +150,48 @@ userDetails:(data,callBack)=>
         return callBack(null,results)
       }
     })
+  },
+  // Change password from here
+  updatePassword:(data,callBack)=>
+  {
+    let update_query = `UPDATE usersignup SET password=? WHERE id=?`;
+    mysql.query(update_query,[data.password,data.id],
+      (err, results, fields)=> {
+        if (err) {
+          return callBack(err)
+        }
+        else
+        {
+          return callBack(null,results)
+        }
+      })
+  },
+
+
+  // Delete user account
+  deleteAccount:(data,callBack)=>
+  {
+    let delete_user_query = `DELETE FROM usersignup WHERE id=?`;
+    let delete_user_table = `DROP TABLE ${data.username}_table`;
+    mysql.query(delete_user_query,[data.id],
+      (err, results, fields)=> {
+        if (err) {
+          return callBack(err)
+        }
+        else
+        {
+          mysql.query(delete_user_table,[],
+            (err, results, fields)=> {
+              if (err) {
+                return callBack(err)
+              }
+              else
+              {
+                return callBack(null,results)
+              }
+            })
+        }
+      })
   }
 
 }

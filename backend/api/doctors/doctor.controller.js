@@ -1,4 +1,4 @@
-const {doctor,getDoctorDetails}=require("./doctor.service")
+const {doctor,getDoctorDetails,updateDoctor}=require("./doctor.service")
 
 module.exports={
     createDoctor:(req,res)=>
@@ -23,33 +23,56 @@ module.exports={
                 data:results
             })
         })
-        
+
 
     },
 
-    creategetDoctor:(req,res)=>
+  creategetDoctor:(req,res)=>
+  {
+    const user_id=req.body.user_id;
+    console.log(req.body)
+    getDoctorDetails(user_id,(err,results)=>
     {
-        const user_id=req.body.user_id;
-        console.log(req.body)
-        getDoctorDetails(user_id,(err,results)=>
-        {
-            if(err)
-            {
-                console.log(err)
-                return res.status(500).json(
-                    {
-                        success:0,
-                        message:'Database connection error'
-                    }
-                )
-            }
-            return res.status(200).json({
-                success:1,
-                data:results
-            })
-        })
-        
+      if(err)
+      {
+        console.log(err)
+        return res.status(500).json(
+          {
+            success:0,
+            message:'Database connection error'
+          }
+        )
+      }
+      return res.status(200).json({
+        success:1,
+        data:results
+      })
+    })
 
-    }
+
+  },
+  updateDoctor:(req,res)=>
+  {
+    const data=req.body;
+    updateDoctor(data,(err,results)=>
+    {
+      if(err)
+      {
+        console.log(err)
+        return res.status(500).json(
+          {
+            success:0,
+            message:'Database connection error'
+          }
+        )
+      }
+      return res.status(200).json({
+        success:1,
+        message:'Successfully Updated'
+      })
+    })
+
+
+  },
 
 }

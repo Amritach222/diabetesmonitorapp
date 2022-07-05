@@ -14,7 +14,7 @@ const privacy = () => {
         <br/>
         <h3 className='heading'>WE TAKE PRIVACY VERY SERIOUSLY</h3>
        <p> This Privacy Policy covers the information
-        we collect about you when you use our products or services, or otherwise interact with us.</p> 
+        we collect about you when you use our products or services, or otherwise interact with us.</p>
         <br/>
 <br/>
         <div>
@@ -74,7 +74,7 @@ For material changes that impact the collection, use, disclosure or retention of
 </div>
 <br/>
 <div>
-    
+
 
 <h6 className='heading'><b>Advertising and promotion</b></h6>
 <hr/>

@@ -22,7 +22,7 @@ const doctor={
 const Doctor =()=>{
   const [displayclass, setDisplayClass]=useState(false);
   const [validated, setValidated] = useState(false)
-  
+
   const [doctorDetails, setdoctorDetails] = useState({
     doctorName: '',
     doctorEmail: '',
@@ -49,7 +49,7 @@ const Doctor =()=>{
              //handle success
              if(res.data.data)
              {
-               
+
               // console.log("Fetching Doctor Details")
               // console.log(res.data.data)
               const doctor_details=res.data.data
@@ -65,7 +65,7 @@ const Doctor =()=>{
               //handle error
               console.log(res)
             })
-       
+
   },[doctorDetails])
 
 
@@ -77,46 +77,43 @@ const Doctor =()=>{
   }
   const handleSubmit = (event) => {
     const form = event.currentTarget
-    
-    
+
+
     if (form.checkValidity() === false) {
-      
+
       event.stopPropagation();
       event.preventDefault();
-    }
-      const { doctorName, doctorEmail,doctorPhone} = doctorDetails
+    }else {
+      const {doctorName, doctorEmail, doctorPhone} = doctorDetails
       console.log(doctorDetails)
 
-            Axios.post( 'http://localhost:3001/api/doctors/',{
-              doctorName,
-              doctorEmail,
-              doctorPhone,
-              user_id:id
-             })
-             .then((res) => {
-               //handle success
-               if(res.data.success==1)
-               {
-                 
-                //  alert("Submitted Successfully");
-                setDisplayClass({name:doctorName,email:doctorEmail,phone:doctorPhone})
+      Axios.post('http://localhost:3001/api/doctors/', {
+        doctorName,
+        doctorEmail,
+        doctorPhone,
+        user_id: id
+      })
+        .then((res) => {
+          //handle success
+          if (res.data.success == 1) {
 
-               
-                }
-                else
-                {
-                  alert("Not Submitted")
-                }
-              })
-              .catch((res) => {
-                //handle error
-                console.log(res)
-              })
+            //  alert("Submitted Successfully");
+            setDisplayClass({name: doctorName, email: doctorEmail, phone: doctorPhone})
 
+
+          } else {
+            alert("Not Submitted")
+          }
+        })
+        .catch((res) => {
+          //handle error
+          console.log(res)
+        })
+    }
         setValidated(true)
       }
 
-  
+
   return (
       <div>
         <CCard className={displayclass?'doctorform p-5':'p-5'}>
