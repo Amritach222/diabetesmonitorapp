@@ -22,7 +22,8 @@ const doctor={
 const Doctor =()=>{
   const [displayclass, setDisplayClass]=useState(false);
   const [validated, setValidated] = useState(false)
-
+  const [displayError, setdisplayerror] = useState('');
+  
   const [doctorDetails, setdoctorDetails] = useState({
     doctorName: '',
     doctorEmail: '',
@@ -77,28 +78,51 @@ const Doctor =()=>{
   }
   const handleSubmit = (event) => {
     const form = event.currentTarget
-
-
     if (form.checkValidity() === false) {
 
       event.stopPropagation();
       event.preventDefault();
-    }else {
-      const {doctorName, doctorEmail, doctorPhone} = doctorDetails
+    }
+    else
+    {
+      const { doctorName, doctorEmail,doctorPhone} = doctorDetails
+
+
       console.log(doctorDetails)
+      
+if(doctorPhone.length < 10)
+{
+  setdisplayerror('Must be a 10 digit number')
+  event.preventDefault();
+}
+    else
+    {
+            Axios.post( 'http://localhost:3001/api/doctors/',{
+              doctorName,
+              doctorEmail,
+              doctorPhone,
+              user_id:id
+             })
+             .then((res) => {
+               //handle success
+               if(res.data.success==1)
+               {
+                 
+                //  alert("Submitted Successfully");
+                setDisplayClass({name:doctorName,email:doctorEmail,phone:doctorPhone})
 
-      Axios.post('http://localhost:3001/api/doctors/', {
-        doctorName,
-        doctorEmail,
-        doctorPhone,
-        user_id: id
-      })
-        .then((res) => {
-          //handle success
-          if (res.data.success == 1) {
-
-            //  alert("Submitted Successfully");
-            setDisplayClass({name: doctorName, email: doctorEmail, phone: doctorPhone})
+               
+                }
+                else
+                {
+                  alert("Not Submitted")
+                }
+              })
+              .catch((res) => {
+                //handle error
+                console.log(res)
+              })
+            }}
 
 
           } else {
@@ -130,8 +154,8 @@ const Doctor =()=>{
              name='doctorName'
             value={doctorDetails.doctorName}
               type="text"
-              feedbackValid="Looks good!"
-              id="validationCustom01"
+              
+              
               label="Enter Name"
               required
               onChange={handleInput}
@@ -142,30 +166,34 @@ const Doctor =()=>{
             name='doctorEmail'
             value={doctorDetails.doctorEmail}
               type="email"
-              feedbackValid="Looks good!"
-              id="validationCustom02"
+              
+             
               label="Enter Email Address"
               required
               onChange={handleInput}
             />
           </div>
-          <div className="name_container">
+          <div className="phone_container mt-4">
             <CFormInput
              name='doctorPhone'
             value={doctorDetails.doctorPhone}
               type="number"
-              feedbackValid="Looks good!"
-              id="validationCustom03"
+              
+         
               label="Enter Phone number"
               required
               onChange={handleInput}
             />
+        <span className='text-danger ms-1'>{displayError}</span>
         </div>
+
         </div>
+        
         <div className="mb-3 float-end">
           <CButton color="primary" type="submit" variant="outline">Add Doctor</CButton>
         </div>
       </CForm>
+      
           </CCard>
         {/* This class for  showing doctor detail*/}
         <CCard style={{ width: '18rem' }} className={!displayclass?'doctorform':''}>

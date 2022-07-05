@@ -27,6 +27,7 @@ const WidgetsDropdown = () => {
   const [s_date,setS_date]=useState([])
   const [exercisedata,setExerciseData]=useState([])
   const [e_date,setEdate]=useState([])
+
   let id=localStorage.getItem('userId')
 
   useEffect(()=>
