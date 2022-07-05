@@ -23,7 +23,7 @@ const Doctor =()=>{
   const [displayclass, setDisplayClass]=useState(false);
   const [validated, setValidated] = useState(false)
   const [displayError, setdisplayerror] = useState('');
-  
+
   const [doctorDetails, setdoctorDetails] = useState({
     doctorName: '',
     doctorEmail: '',
@@ -86,10 +86,8 @@ const Doctor =()=>{
     else
     {
       const { doctorName, doctorEmail,doctorPhone} = doctorDetails
-
-
       console.log(doctorDetails)
-      
+
 if(doctorPhone.length < 10)
 {
   setdisplayerror('Must be a 10 digit number')
@@ -107,11 +105,11 @@ if(doctorPhone.length < 10)
                //handle success
                if(res.data.success==1)
                {
-                 
+
                 //  alert("Submitted Successfully");
                 setDisplayClass({name:doctorName,email:doctorEmail,phone:doctorPhone})
 
-               
+
                 }
                 else
                 {
@@ -122,21 +120,10 @@ if(doctorPhone.length < 10)
                 //handle error
                 console.log(res)
               })
-            }}
-
-
-          } else {
-            alert("Not Submitted")
-          }
-        })
-        .catch((res) => {
-          //handle error
-          console.log(res)
-        })
-    }
+            }
         setValidated(true)
       }
-
+}
 
   return (
       <div>
@@ -154,8 +141,8 @@ if(doctorPhone.length < 10)
              name='doctorName'
             value={doctorDetails.doctorName}
               type="text"
-              
-              
+
+
               label="Enter Name"
               required
               onChange={handleInput}
@@ -166,8 +153,8 @@ if(doctorPhone.length < 10)
             name='doctorEmail'
             value={doctorDetails.doctorEmail}
               type="email"
-              
-             
+
+
               label="Enter Email Address"
               required
               onChange={handleInput}
@@ -178,8 +165,8 @@ if(doctorPhone.length < 10)
              name='doctorPhone'
             value={doctorDetails.doctorPhone}
               type="number"
-              
-         
+
+
               label="Enter Phone number"
               required
               onChange={handleInput}
@@ -188,12 +175,12 @@ if(doctorPhone.length < 10)
         </div>
 
         </div>
-        
+
         <div className="mb-3 float-end">
           <CButton color="primary" type="submit" variant="outline">Add Doctor</CButton>
         </div>
       </CForm>
-      
+
           </CCard>
         {/* This class for  showing doctor detail*/}
         <CCard style={{ width: '18rem' }} className={!displayclass?'doctorform':''}>
