@@ -244,7 +244,6 @@ else
     const req_data=req.body;
     const data={
         id:req_data.id,
-        fullname:req.data.fullname,
         username:req_data.username,
         age:req_data.age,
         weight:req_data.weight,

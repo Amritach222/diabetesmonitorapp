@@ -17,8 +17,8 @@ create:(data,callBack)=>
 
 
 //query runnning after registartion validated for unique username to exist or create
-   mysql.query("INSERT INTO usersignup (fullname,name,age,weight,gender,email,password,cpassword) VALUES(?,?,?,?,?,?,?,?)",
-   [data.fullname,data.username,data.age, data.weight,data.gender,data.email,data.password,data.cpassword],
+   mysql.query("INSERT INTO usersignup (fullname,name,age,weight,gender,email,password) VALUES(?,?,?,?,?,?,?)",
+   [data.fullname,data.username,data.age, data.weight,data.gender,data.email,data.password],
    (err,results)=>
    {
        if(err)
@@ -143,8 +143,8 @@ userDetails:(data,callBack)=>
   // Update user with profile image  for image upload we use multer library
   update_user:(data,callBack)=>
   {
-    let update_query = `UPDATE usersignup SET fullname=?, name=?, age=?, weight=?, email=?, image=? WHERE id=?`;
-    mysql.query(update_query,[data.fullname,data.username, data.age,data.weight, data.email, data.image, data.id],
+    let update_query = `UPDATE usersignup SET  name=?, age=?, weight=?, email=?, image=? WHERE id=?`;
+    mysql.query(update_query,[data.username, data.age,data.weight, data.email, data.image, data.id],
       (err, results, fields)=> {
       if (err) {
         return callBack(err)

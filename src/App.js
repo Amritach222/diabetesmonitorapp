@@ -22,7 +22,6 @@ function App() {
 const id= localStorage.getItem("userId");
   useEffect(() => {
     setLoginUser(JSON.parse(localStorage.getItem('MyUser')))
-    console.log(id)
   }, [])
   const updateUser = (user) => {
     localStorage.setItem('MyUser', JSON.stringify(user))
@@ -32,25 +31,21 @@ const id= localStorage.getItem("userId");
     <div className='main_container'>
     <HashRouter>
       <Suspense fallback={loading}>
-        {id?<Routes>
-          <Route
+        <Routes>
+            <Route exact path="/" name="Login Page" element={<Login updateUser={updateUser} />} />
+              <Route
             exact
             path="/login"
             name="Login Page"
             element={<Login updateUser={updateUser} />}
-          />
-          <Route path="*" name="Home" element={<DefaultLayout updateUser={updateUser} />} />
-          <Route exact path="/404" name="Page 404" element={<Page404 />} />
-          <Route exact path="/500" name="Page 500" element={<Page500 />} />
+            />
+            <Route exact path="/register" name="Register Page" element={<Register/>} />
+            <Route exact path="/404" name="Page 404" element={<Page404 />} />
+            <Route exact path="/500" name="Page 500" element={<Page500 />} />
+            <Route path="*" name="Home" element={<DefaultLayout updateUser={updateUser} />} />
 
-        </Routes>:<Routes>
-          <Route exact path="/register" name="Register Page" element={<Register/>} />
-          <Route path="*" name="Home" element={<Login />} />
-          <Route exact path="/" name="Login Page" element={<Login updateUser={updateUser} />} />
+
         </Routes>
-
-        }
-
       </Suspense>
 
     </HashRouter>
