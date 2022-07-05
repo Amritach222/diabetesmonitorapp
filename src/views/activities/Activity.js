@@ -27,6 +27,7 @@ const Activity= ()=>{
   const [userTable,setUserTable]=useState([]);
   const [preview,setPreview]=useState(false)
   const [name, setName]=useState()
+
   useEffect(()=>{
     const userId= localStorage.getItem("userId")
       Axios.put('http://localhost:3001/api/users/getUserdetails',{
@@ -97,7 +98,7 @@ const Activity= ()=>{
       </div>
       <div className={!preview?'d-none':''}>
         <div className="button_class mb-2 float-end me-3">
-          <CButton className=""  color="info" variant="outline"><CIcon icon={cilCloudDownload} /> Download Report</CButton>
+          <CButton className="" onClick={()=>{generatePDF(userTable)}}  color="info" variant="outline"><CIcon icon={cilCloudDownload} /> Download Report</CButton>
         </div>
       <GeneratePDF preview={userTable}  name={name} />
       </div>

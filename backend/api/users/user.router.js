@@ -1,5 +1,5 @@
 
-const {createUser,loginUser, createUserDetails,creategetuser,creategetuserinfo,getusebyemail,updateuserinfo,creategetid,creategetUserdetails,createuserValidation, updatePassword}=require('./user.controller')
+const {createUser,loginUser, createUserDetails,creategetuser,creategetuserinfo,getusebyemail,updateuserinfo,creategetid,creategetUserdetails,createuserValidation, updatePassword, deleteAccount}=require('./user.controller')
 const router=require('express').Router();
 const multer= require("multer");
 const storage=multer.diskStorage({
@@ -40,6 +40,7 @@ router.put("/getUserdetails",creategetUserdetails)
 router.post("/updateuser",upload.single('profileImage'), updateuserinfo);
 router.put("/updatepassword", updatePassword);
 router.put('/userbyemail', getusebyemail);// this is to store id to localstorage using email
+router.put('/deleteaccount', deleteAccount);
 
 module.exports=router;
 

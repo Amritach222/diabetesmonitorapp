@@ -13,14 +13,14 @@ doctor:(data,callBack)=>
   return callBack(err)
    } else
     return callBack(null,results)
-   
+
    })
 },
 
 
 getDoctorDetails:(user_id,callBack)=>
 {
-    
+
     let getDoctor = `select * from doctor_table where user_id=?`;
     mysql.query(getDoctor,[user_id], (err, results)=> {
         if (err) {
@@ -31,5 +31,20 @@ getDoctorDetails:(user_id,callBack)=>
         return callBack(null,results[0])
        }
         })
-}
+},
+
+  updateDoctor:(data,callBack)=>
+  {
+
+    let query = `UPDATE doctor_table SET  name=? , email=?, phone=? WHERE user_id=?`;
+    mysql.query(query,[data.name, data.email, data.phone, data.id], (err, results)=> {
+      if (err) {
+        return callBack(err)
+      }
+      else
+      {
+        return callBack(null,results)
+      }
+    })
+  }
 }
