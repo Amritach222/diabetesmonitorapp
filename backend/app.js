@@ -9,6 +9,7 @@ var cron = require('node-cron');
 //cors provide a way for flowing informations among different platforms , say (react and node, mysql for here)
 const userRouter=require('./api/users/user.router');
 const addDetailsRouter=require('./api/userDetails/userDetails.router');
+const predictionDetailsRouter=require('./././api/prediction/prediction.router');
 // Create array of user mail ids
 const emails=[]
 
@@ -124,6 +125,7 @@ const APP_PORT=process.env.APP_PORT;
 app.use("/api/users",userRouter);
 app.use("/api/userDetails",addDetailsRouter);
 app.use("/api/doctors",doctorRouter);
+app.use("/api/prediction",predictionDetailsRouter);
 //listening to a server
 app.listen(APP_PORT,()=>
 {

@@ -2,7 +2,8 @@
 const {create,login, userDetails, getUsername,getuser,update_user, getuserByemail,getUserid,getUserdetails,usernameValidation}=require("./user.service")
 
 
-// const {genSaltSync,hashSync}=require("bcrypt");
+const {genSaltSync,hashSync}=require("bcrypt");
+const salt=genSaltSync(10);
 module.exports={
     createuserValidation:(req,res)=>
     {
@@ -31,8 +32,8 @@ module.exports={
     createUser:(req,res)=>
     {
         const body=req.body;
-        // const salt=genSaltSync(10);
-        // body.password=hashSync("bikey",salt);
+        body.password=hashSync(body.password,salt);
+        // console.log( body.password)
 
         create(body,(err,results)=>
         {
@@ -59,6 +60,8 @@ module.exports={
     loginUser:(req,res)=>
     {
         const body=req.body;
+        body.password=hashSync(body.password,salt);
+        console.log("body.password")
         login(body,(err,results)=>
         {
             console.log(results)
@@ -74,7 +77,8 @@ if(!results)
     })
 }
 
-if(body.password===results.password)
+if(body.password===results.password && body.email
+    ===results.email)
 {
     return res.json({
         success:1,

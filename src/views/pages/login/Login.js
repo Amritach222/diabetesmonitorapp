@@ -19,8 +19,11 @@ import Button from '@mui/material/Button'
 import CIcon from '@coreui/icons-react'
 import { cilLockLocked, cilUser } from '@coreui/icons'
 import Axios from 'axios'
+import login_image from "../../../assets/images/diabetes/loginAnimation.png"
+import healthyfood_image from "../../../assets/images/diabetes/healthy_food.jpg"
 
 const Login = ({ updateUser }) => {
+  const [displayError, setdisplayerror] = useState('');
   const navigate = useNavigate();
   const [userLogin, setuserLogin] = useState({
     email: '',
@@ -36,6 +39,7 @@ const Login = ({ updateUser }) => {
     const value = event.target.value
     setuserLogin({ ...userLogin, [name]: value })
     // console.log(name, value)
+    setdisplayerror("")
   }
 
   const loginUser = async (e) => {
@@ -43,6 +47,12 @@ const Login = ({ updateUser }) => {
     e.preventDefault()
     const { email, password } = userLogin
     // console.log(username)
+if(email == '' || password== '')
+{
+  setdisplayerror("Fields cannot be empty")
+}
+else
+{
 
     Axios.post('http://localhost:3001/api/users/login', {
       email: email,
@@ -53,13 +63,14 @@ const Login = ({ updateUser }) => {
         // console.log(res)
         if(res.data.success===0)
         {
-          alert(res.data.data)
+          const message=res.data.data;
+          setdisplayerror(`${message}`)
         }
         //handle success
         if (res.data.success===1) {
-          alert(res.data.data);
+          // alert(res.data.data);
           Axios.put('http://localhost:3001/api/users/userbyemail',
-            {email:email}).then((res)=>{
+            {email:email,password:password}).then((res)=>{
               if(res.data.data){
                 const id=res.data.data.id;
                 console.log("data", res.data.data)
@@ -81,6 +92,7 @@ const Login = ({ updateUser }) => {
         console.log(res)
       })
   }
+}
 
   return (
 
@@ -109,7 +121,7 @@ const Login = ({ updateUser }) => {
                       variant="standard"
                     />
                     </CInputGroup>
-                    <CInputGroup className="mb-4">
+                    <CInputGroup className="mb-1">
                      
 
                       <TextField
@@ -124,7 +136,10 @@ const Login = ({ updateUser }) => {
                       variant="standard"
                     />
                     </CInputGroup>
+
+
                     <CRow>
+                    <span className='text-danger ms-1 mb-3'>{displayError}</span>
                       <CCol xs={6}>
         
 
@@ -138,10 +153,11 @@ const Login = ({ updateUser }) => {
 
                       <CCol xs={6} className="text-right">
                         <CButton color="link" className="px-0"  style={{
-                      textDecoration: 'none',
-                      color: 'red',
+                      
+                      color: 'blue',
                       fontStyle: 'italic',
                       marginLeft: '8px',
+              
                     }}>
                           Forgot password?
                         </CButton>
@@ -150,9 +166,10 @@ const Login = ({ updateUser }) => {
                   </CForm>
                 </CCardBody>
               </CCard>
-              <CCard className="text-black bg-gradient py-5" style={{ width: '44%',background:" #00a8e6"}}>
-                <CCardBody className="text-center">
+              <CCard className="text-black bg-gradient py-5" style={{ width: '44%'}}>
+                <CCardBody className="text-center  d-flex justify-content-center align-items-center">
                   <div>
+                  <img src={login_image} alt="login"  style={{overflow:"hidden",height:"100%", width:"100%"}}/>
                     <h2>Sign up</h2>
                     <p style={{fontSize:"1.2rem",fontFamily:"monospace"}}>
                     I didnt choose Diabetes but i can choose how i react to it.

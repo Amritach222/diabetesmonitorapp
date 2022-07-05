@@ -118,13 +118,13 @@ else{
             gender: gender,
             email: email,
             password: password,
-            cpassword: cpassword,
+           
           })
             .then((res) => {
               //handle success
               console.log("res")
               if (res.data.success === 1) {
-                // alert("Registration Successful")
+                alert("Registration Successful")
                 // toast.success('Registration Successful', {
                 //   toastId: 'customId',
                 // })
@@ -140,7 +140,7 @@ else{
                 gender: gender,
                 email: email,
                 password: password,
-                cpassword: cpassword,
+                
               })
                 .then((res) => {
                   //handle success
@@ -359,7 +359,7 @@ else{
             </CCard>
               <CCard className="text-black bg-gradient py-5" style={{ width: '44%'}}>
                 <CCardBody className=" d-flex justify-content-center align-items-center">
-            <img src={register_image} alt="GIF"/>
+            <img src={register_image} alt="GIF"  style={{overflow:"hidden"}}/>
         
                 </CCardBody>
               </CCard>

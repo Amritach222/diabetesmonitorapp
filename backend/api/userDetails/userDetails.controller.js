@@ -1,9 +1,9 @@
-const {addDetails,getDetails,getFirstTenDetails,updateMealDetail,getUserActivity}=require("./userDetails.service")
+const {addDetails,getDetails,getFirstTenDetails,updateMealDetail,getUserActivity,getSubmissionDate}=require("./userDetails.service")
 module.exports={
     createAddDetails:(req,res)=>
     {
         const  body=req.body;
-            console.log(body.sugar_level)
+            console.log(body)
         addDetails(body,(err,results)=>
         {
             if(err)
@@ -109,6 +109,29 @@ module.exports={
       return res.status(200).json({
         success:1,
         data:results
+      })
+    })
+  },
+
+  getuserdetailsSubmissionDate:(req,res)=>
+  {
+    const body=req.body;
+    console.log(body)
+    getSubmissionDate(body,(err,results)=>
+    {
+      if(err)
+      {
+        console.log(err)
+        return res.status(500).json(
+          {
+            success:0,
+            message:'Database connection error'
+          }
+        )
+      }
+      return res.status(200).json({
+        success:1,
+        data:results[0]
       })
     })
   }

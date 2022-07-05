@@ -31,6 +31,7 @@ create:(data,callBack)=>
 
 login:(data,callBack)=>
 {
+  console.log(data.password)
     mysql.query("select * from usersignup where email=? && password=?",[data.email,data.password],(err,results)=>
     {
 
@@ -46,11 +47,14 @@ userDetails:(data,callBack)=>
       console.log(data)
         let createTable = `create table if not exists ${data.username}_table(
             id int primary key auto_increment,
-            sugar_level varchar(255)not null,
+            sugar_level varchar(255),
             morning_meal varchar(255)not null,
             launch varchar(255)not null,
             dinner varchar(255)not null,
-            exercise_time varchar(255)not null
+            exercise_time varchar(255),
+            health_issues varchar(1000)not null,
+            date varchar(255)not null
+
         )`;
         mysql.query(createTable, (err, results, fields)=> {
             if (err) {
