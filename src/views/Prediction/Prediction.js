@@ -29,7 +29,7 @@ const Prediction =()=>{
 
 
   const [predictionDetails, setpredictionDetails] = useState({
-   
+
     pregnancy: '',
     glucose: '',
     blood_pressure: '',
@@ -39,6 +39,8 @@ const Prediction =()=>{
     predegree_function: '',
   })
 const [displayError, setdisplayError] = useState('')
+const [age, setAge] = useState(null)
+const [predict, setPredict] = useState(null)
 
   const handleInput = (event) => {
     const name = event.target.name
@@ -50,42 +52,74 @@ const [displayError, setdisplayError] = useState('')
 
   const addPredictionDetails = async (e) => {
     e.preventDefault()
-    
-    const {pregnancy, glucose, blood_pressure, skin_thickness, insulin, bmi, predegree_function } = predictionDetails
-if(pregnancy===''&& glucose===''&& blood_pressure===''&& skin_thickness==='' && insulin==='' &&  bmi===''&& predegree_function==='')
+
+    const {pregnancies, glucose, bloodpressure, skinthickness, insulin, bmi, dpf } = predictionDetails
+if(pregnancies===''|| glucose===''|| bloodpressure===''|| skinthickness==='' || insulin==='' || bmi===''|| dpf==='')
 {
   setdisplayError('Please ! Fill your form')
 }
 else
 {
-
-
     let id = localStorage.getItem('userId')
-   Axios.post('http://localhost:3001/api/prediction/', {
-    user_id:id,
-            pregnancy: pregnancy,
-            glucose: glucose,
-            blood_pressure: blood_pressure,   
-            skin_thickness: skin_thickness,
-            insulin: insulin,
-            bmi: bmi,
-            predegree_function:predegree_function
+  Axios.put('http://localhost:3001/api/users/getprofile',
+    {id:id}).then((res)=>{
+      if(res.data.data){
+        setAge(res.data.data.age)
+        Axios.post('http://localhost:3001/api/prediction/', {
+          user_id:id,
+          pregnancy: pregnancies,
+          glucose: glucose,
+          blood_pressure: bloodpressure,
+          skin_thickness: skinthickness,
+          insulin: insulin,
+          bmi: bmi,
+          predegree_function:dpf
+        })
+          .then((res) => {
+            //handle success
+            console.log(res);
+            if (res.data.success === 1) {
+              const predictData=new FormData()
+              predictData.append("pregnancies",pregnancies)
+              predictData.append("glucose",glucose)
+              predictData.append("bloodpressure",bloodpressure)
+              predictData.append("skinthickness",skinthickness)
+              predictData.append("insulin",insulin)
+              predictData.append("bmi",bmi)
+              predictData.append("dpf",dpf)
+              predictData.append("age",age)
+              Axios.post('http://127.0.0.1:5000/predict',predictData).then((res)=>{
+                if(res){
+                  console.log("This is your result: ", res.data);
+                  if(res.data=='0'){
+                    setPredict(false)
+                  }
+                  if (res.data=='1'){
+                    setPredict(true)
+                  }
+                }else{
+                  console.log("Something went wrong!")
+                }
+              }).catch((err)=>{
+                console.log("Unable to predict",err)
+              })
+            }})
+
+          .catch((res) => {
+            //handle error
+            console.log(res)
+            if (res.data.success === 0) {
+              alert('Something went wrong')
+            }
           })
-            .then((res) => {
-              //handle success
-              console.log(res);
-              if (res.data.success === 1) {
-                
+      }
+      else {
+        console.log("Unable to get user age")
+      }
+  }).catch((error)=>{
+    console.log("Error in retrieving age",error)
+  })
 
-  }})
-
-            .catch((res) => {
-              //handle error
-              console.log(res)
-              if (res.data.success === 0) {
-                alert('Something went wrong')
-              }
-            })
         }}
 
 
@@ -102,17 +136,14 @@ else
           <h1>Predict Your Result</h1>
           <p className="text-medium-emphasis">See what your Diabetes condition is </p>
 
-
 <div className='d-flex'>
-
-
 <CInputGroup className="mb-1 me-1">
             <TextField
               style={{ width: '100%' }}
-              name="pregnancy"
+              name="pregnancies"
               id="pregnancy"
               autoComplete="off"
-              value={predictionDetails.pregnancy}
+              value={predictionDetails.pregnancies}
               onChange={handleInput}
               label="Pregnancy"
               type="number"
@@ -120,7 +151,7 @@ else
             />
           </CInputGroup>
 
-          
+
           <CInputGroup className="mb-1 ms-1">
             <TextField
               style={{ width: '100%' }}
@@ -143,33 +174,33 @@ else
               label="Bloodpressure"
               type="number"
               variant="standard"
-              name="blood_pressure"
+              name="bloodpressure"
               id="bloodpressure"
               autoComplete="off"
-              value={predictionDetails.blood_pressure}
+              value={predictionDetails.bloodpressure}
               onChange={handleInput}
             />
           </CInputGroup>
-      
+
           <CInputGroup className="mb-1 ms-1">
             <TextField
               style={{ width: '100%' }}
               label="Skinthickness"
               type="number"
               variant="standard"
-              name="skin_thickness"
+              name="skinthickness"
               id="skinthickness"
               autoComplete="off"
-              value={predictionDetails.skin_thickness}
+              value={predictionDetails.skinthickness}
               onChange={handleInput}
             />
           </CInputGroup>
-         
 
-      
+
+
 </div>
 
-<div className='d-flex'>    
+<div className='d-flex'>
           <CInputGroup className="mb-1 me-1">
             <TextField
               style={{ width: '100%' }}
@@ -204,15 +235,15 @@ else
               label="Diabetes Predegree Function"
               type="number"
               variant="standard"
-              name="predegree_function"
+              name="dpf"
               id="predegreefunction"
               autoComplete="off"
-              value={predictionDetails.predegree_function}
+              value={predictionDetails.dpf}
               onChange={handleInput}
             />
           </CInputGroup>
-         
-          
+
+
           <CInputGroup className="mb-2 align-center">
             <Button
               variant="contained"
@@ -226,15 +257,15 @@ else
 
 
         </CForm>
-       
-        
+
+
       </CCardBody>
     </CCard>
-      
     <CCard className="text-black bg-gradient py-5" style={{ width: '44%'}}>
+                  {predict?<p>OOps! You have diabetes</p>:<p>Congratulations ! you have not diabetes</p>}
                 <CCardBody className=" d-flex justify-content-center align-items-center">
             <img src={register_image} alt="GIF"  style={{overflow:"hidden"}}/>
-        
+
                 </CCardBody>
               </CCard>
 
