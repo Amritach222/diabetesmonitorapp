@@ -42,6 +42,7 @@ const Register = () => {
     email: '',
     password: '',
     cpassword: '',
+    haveDiabetes:''
   })
 
 
@@ -58,7 +59,7 @@ const Register = () => {
   const registerUser = async (e) => {
     e.preventDefault()
     
-    const { fullname,username, age, weight, gender, email, password, cpassword } = userRegistration
+    const { fullname,username, age, weight, gender, email, password, cpassword,haveDiabetes } = userRegistration
 
     //validation for email only
     const pattern = /[a-zA-Z0-9]+[\.]?([a-zA-Z0-9]+)?[\@][a-z]{3,9}[\.][a-z]{2,5}/g;
@@ -66,7 +67,7 @@ const Register = () => {
   //  console.log(result)
    
 
-    if(fullname==='' || username==='' || age==='' || weight==='' || gender==='' || email==='' || password==='' || cpassword===''){
+    if(fullname==='' || username==='' || age==='' || weight==='' || gender==='' || email==='' || password==='' || cpassword==='' || haveDiabetes=== ''){
       setdisplayerror(`Fields cant be empty`);
     }
     else{
@@ -118,6 +119,7 @@ else{
             gender: gender,
             email: email,
             password: password,
+            haveDiabetes:haveDiabetes
            
           })
             .then((res) => {
@@ -140,6 +142,7 @@ else{
                 gender: gender,
                 email: email,
                 password: password,
+                haveDiabetes:haveDiabetes
                 
               })
                 .then((res) => {
@@ -274,6 +277,7 @@ else{
                     </FormControl>
                   </CInputGroup>
 
+
                   
                   <CInputGroup className="mb-1">
                     <TextField
@@ -308,7 +312,7 @@ else{
 
                 
 
-                  <CInputGroup className="mb-4">
+                  <CInputGroup className="mb-1">
                     <TextField
                       style={{ width: '100%' }}
                       label="confirm password"
@@ -321,6 +325,23 @@ else{
                       value={userRegistration.cpassword}
                       onChange={handleInput}
                     />
+                  </CInputGroup>
+
+                  <CInputGroup className="mb-5">
+                    <FormControl style={{ marginBottom: '-20px', marginTop: '20px' }}>
+                      <FormLabel id="demo-row-radio-buttons-group-label">Are you a Diabetes Patient ?</FormLabel>
+                      <RadioGroup
+                        row
+                        aria-labelledby="demo-row-radio-buttons-group-label"
+                        name="haveDiabetes"
+                        value={userRegistration.haveDiabetes}
+                        onChange={handleInput}
+                      >
+                        <FormControlLabel value="Yes" control={<Radio />} label="Yes" />
+                        <FormControlLabel value="No" control={<Radio />} label="No" />
+                       
+                      </RadioGroup>
+                    </FormControl>
                   </CInputGroup>
 
                   

@@ -17,8 +17,8 @@ create:(data,callBack)=>
 
 
 //query runnning after registartion validated for unique username to exist or create
-   mysql.query("INSERT INTO usersignup (fullname,name,age,weight,gender,email,password) VALUES(?,?,?,?,?,?,?)",
-   [data.fullname,data.username,data.age, data.weight,data.gender,data.email,data.password],
+   mysql.query("INSERT INTO usersignup (fullname,name,age,weight,gender,email,password,haveDiabetes) VALUES(?,?,?,?,?,?,?,?)",
+   [data.fullname,data.username,data.age, data.weight,data.gender,data.email,data.password,data.haveDiabetes],
    (err,results)=>
    {
        if(err)
