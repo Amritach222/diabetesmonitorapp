@@ -68,7 +68,7 @@ router.put("/getUserid",creategetid)
 router.put("/getUserdetails",creategetUserdetails)
 router.post("/updateuser",upload.single('profileImage'), updateuserinfo);
 router.put("/updatepassword", updatePassword);
-router.put('/userbyemail', getusebyemail);// this is to store id to localstorage using email
+router.put('/userbyemail', getuserbyemail);// this is to store id to localstorage using email
 router.put('/deleteaccount', deleteAccount);
 router.put('/sendreport', updateReport);
 

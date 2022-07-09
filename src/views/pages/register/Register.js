@@ -367,7 +367,7 @@ else{
                     className="d-flex justify-content-center"
                     style={{
                       textDecoration: 'none',
-                      color: 'red',
+                      color: 'blue',
                       fontStyle: 'italic',
                       marginLeft: '8px',
                     }}

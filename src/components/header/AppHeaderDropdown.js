@@ -1,4 +1,5 @@
 import React from 'react'
+import {useNavigate} from 'react-router-dom'
 import PropTypes from 'prop-types'
 import {
   CAvatar,
@@ -18,8 +19,12 @@ const AppHeaderDropdown = ({ updateUser }) => {
   AppHeaderDropdown.propTypes = {
     updateUser: PropTypes.number.isRequired,
   }
+  const navigate = useNavigate();
   const logout=()=>{
-    window.localStorage.removeItem('userId')
+    window.localStorage.removeItem('userId');
+    window.localStorage.removeItem('MyUser');
+    navigate('/login')
+    
   }
   return (
     <CDropdown variant="nav-item">
@@ -37,13 +42,13 @@ const AppHeaderDropdown = ({ updateUser }) => {
           Settings
         </CDropdownItem>
         <CDropdownDivider />
-        <CDropdownItem href="http://localhost:3000/#/login">
+        <CDropdownItem href="http://localhost:3000/#/login"   onClick={() => {
+              logout()
+            }}>
           <CIcon
             icon={cilAccountLogout}
             className="me-2"
-            onClick={() => {
-              logout()
-            }}
+           
           />
           Logout
         </CDropdownItem>

@@ -39,14 +39,16 @@ create:(data,callBack)=>
 
 login:(password,email,callBack)=>
 {
-  console.log(password)
-    mysql.query("select * from usersignup where email=? && password=?",[email,password],(err,results)=>
+  console.log(data.password)
+    mysql.query("select * from usersignup where email=? && password=?",[data.email,data.password],(err,results)=>
+
     {
 
         if(err)
         {
        return callBack(err)
         } else
+       
          return callBack(null,results[0])
 })},
 

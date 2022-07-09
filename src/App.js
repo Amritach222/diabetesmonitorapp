@@ -2,6 +2,8 @@ import React, { Suspense, useState, useEffect } from 'react'
 import { HashRouter, Route, Routes } from 'react-router-dom'
 import './scss/style.scss'
 import MessengerCustomerChat from 'react-messenger-customer-chat';
+
+import Dashboard from './views/dashboard/Dashboard';
 const loading = (
   <div className="pt-3 text-center">
     <div className="sk-spinner sk-spinner-pulse"></div>
@@ -19,20 +21,36 @@ const Page500 = React.lazy(() => import('./views/pages/page500/Page500'))
 
 function App() {
   const [user, setLoginUser] = useState({})
-const id= localStorage.getItem("userId");
+  const id= localStorage.getItem("userId");
   useEffect(() => {
-    setLoginUser(JSON.parse(localStorage.getItem('MyUser')))
+    setLoginUser(JSON.parse(localStorage.getItem('userId')))
   }, [])
   const updateUser = (user) => {
-    localStorage.setItem('MyUser', JSON.stringify(user))
+    localStorage.setItem('userId', JSON.stringify(user))
     setLoginUser(user)
   }
+  
+  
+
   return (
     <div className='main_container'>
     <HashRouter>
       <Suspense fallback={loading}>
+      {
+        id?
         <Routes>
+            <Route exact path="/" name="Home" element={<DefaultLayout updateUser={updateUser} />} />
+            {/* <Route exact path="/register" name="Register Page" element={<Register/>} /> */}
+            <Route exact path="/404" name="Page 404" element={<Page404 />} />
+            <Route exact path="/500" name="Page 500" element={<Page500 />} />
+            <Route path="*" name="Home" element={<DefaultLayout updateUser={updateUser} />} />
+
+
+        </Routes>
+:
+<Routes>
             <Route exact path="/" name="Login Page" element={<Login updateUser={updateUser} />} />
+           
               <Route
             exact
             path="/login"
@@ -40,12 +58,12 @@ const id= localStorage.getItem("userId");
             element={<Login updateUser={updateUser} />}
             />
             <Route exact path="/register" name="Register Page" element={<Register/>} />
-            <Route exact path="/404" name="Page 404" element={<Page404 />} />
-            <Route exact path="/500" name="Page 500" element={<Page500 />} />
-            <Route path="*" name="Home" element={<DefaultLayout updateUser={updateUser} />} />
+            <Route path="*" name="Login Page" element={<Login updateUser={updateUser} />} />
 
 
         </Routes>
+
+      }
       </Suspense>
 
     </HashRouter>
