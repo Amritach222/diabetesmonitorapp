@@ -2,7 +2,7 @@
 const {create,login, userDetails, getUsername,getuser,update_user, getuserByemail,getUserid,getUserdetails, updatePassword,usernameValidation,deleteAccount}=require("./user.service")
 
 
-const {genSaltSync,hashSync}=require("bcrypt");
+const {genSaltSync,hashSync,compareSync}=require("bcrypt");
 const salt=genSaltSync(10);
 module.exports={
     createuserValidation:(req,res)=>
@@ -60,8 +60,7 @@ module.exports={
     loginUser:(req,res)=>
     {
         const body=req.body;
-        body.password=hashSync(body.password,salt);
-        console.log("body.password")
+        // console.log(body.password)
         login(body,(err,results)=>
         {
             console.log(results)
@@ -76,9 +75,8 @@ if(!results)
         data:"Invalid Email or Password"
     })
 }
-
-if(body.password===results.password && body.email
-    ===results.email)
+const result =compareSync(body.password,results.password)
+if(result)
 {
     return res.json({
         success:1,
@@ -215,7 +213,7 @@ else
 
   },
   // Get user by email to store id to localstorage
-  getusebyemail:(req,res)=>
+  getuserbyemail:(req,res)=>
   {
     const email=req.body.email;
     getuserByemail(email,(err,results)=>

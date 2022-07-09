@@ -63,7 +63,9 @@ else
         // console.log(res)
         if(res.data.success===0)
         {
+         
           const message=res.data.data;
+          console.log(res.data)
           setdisplayerror(`${message}`)
         }
         //handle success
@@ -75,6 +77,7 @@ else
                 const id=res.data.data.id;
                 console.log("data", res.data.data)
                   localStorage.setItem('userId',id);
+                  
               }
               else{
                 console.log("data Not received")
@@ -84,7 +87,6 @@ else
           })
           updateUser(userLogin);
           navigate('/dashboard')
-
         }
       })
       .catch((res) => {
@@ -93,9 +95,7 @@ else
       })
   }
 }
-
   return (
-
     <div className="bg-light min-vh-100 d-flex flex-row align-items-center">
       <CContainer >
         <CRow className="justify-content-center">
@@ -108,7 +108,6 @@ else
                     <p className="text-medium-emphasis">Sign In to your account</p>
                     <CInputGroup className="mb-3">
                       
-
                       <TextField
                       style={{ width: '100%' }}
                       name="email"
