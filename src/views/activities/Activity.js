@@ -1,4 +1,4 @@
-import React, {useEffect, useState,PureComponent} from 'react'
+import React, {useEffect, useState, PureComponent, useRef} from 'react'
 import {
   CButton,
   CCard, CCardBody, CForm, CFormInput,
@@ -11,11 +11,12 @@ import {
 } from "@coreui/react";
 import './activity.scss'
 import CIcon from "@coreui/icons-react";
-import {cilCloudDownload, cilSettings} from "@coreui/icons";
+import {cilCloudDownload, cilSend, cilSettings} from "@coreui/icons";
 import Axios from "axios";
 import jsPDF from 'jspdf'
 import GeneratePDF from '../../components/PDF/GeneratePDF'
 import 'jspdf-autotable'
+import emailjs from '@emailjs/browser'
 import * as PropTypes from "prop-types";
 
 function CDatePicker(props) {
@@ -27,7 +28,6 @@ const Activity= ()=>{
   const [userTable,setUserTable]=useState([]);
   const [preview,setPreview]=useState(false)
   const [name, setName]=useState()
-
   useEffect(()=>{
     const userId= localStorage.getItem("userId")
       Axios.put('http://localhost:3001/api/users/getUserdetails',{
@@ -57,7 +57,7 @@ const Activity= ()=>{
       var doc=new jsPDF();
       // Setting font
     // define the columns we want and their titles
-    const tableColumn = ["S.N", "Sugar Level", "Breakfast", "Lunch", "Dinner","Exercise Time", "Date"];
+    const tableColumn = ["S.N", "Sugar Level", "Breakfast", "Lunch", "Dinner","Exercise Time","Health Issues","Date"];
     // define an empty array of rows
     const tableRows = [];
     // for each ticket pass all its data into an array
@@ -69,6 +69,7 @@ const Activity= ()=>{
         item.launch,
         item.dinner,
         item.exercise_time+" minutes",
+        item.health_issues,
         item.date
       ];
       // push each item to the row
@@ -84,6 +85,32 @@ const Activity= ()=>{
     // we define the name of our PDF file.
     doc.save(`report_${dateStr}.pdf`);
   }
+
+  // function for Sending  pdf using mail to the doctor
+  const sendReport=()=>{
+    const id=localStorage.getItem('userId')
+    Axios.put( 'http://localhost:3001/api/doctors/getDoctor/',{
+      user_id:id
+    })
+      .then((res) => {
+        //handle success
+        if(res.data.data)
+        {
+      Axios.put('http://localhost:3001/api/users/sendreport',{id:id}).then((res)=>{
+        if(res.data.success==1){
+          alert("Successfully sent!")
+        }else{
+          alert("Unable to send email to your doctor")
+        }
+      })
+        }else{
+          alert("You have not added your doctor!")
+        }
+
+      }).catch((err)=>{
+        console.log("Error occured! "+err)
+    })
+  }
   const previewReport =()=>{
     setPreview(!preview)
   }
@@ -97,6 +124,9 @@ const Activity= ()=>{
         <CButton className="float-right" onClick={()=>{previewReport()}} color="dark" variant="outline"><CIcon icon={cilSettings} /> Generate Report</CButton>
       </div>
       <div className={!preview?'d-none':''}>
+        <div className="button_class mb-2 float-end me-3">
+          <CButton className="" onClick={()=>{sendReport(userTable)}}  color="success" variant="outline"><CIcon icon={cilSend} /> Send report to my doctor</CButton>
+        </div>
         <div className="button_class mb-2 float-end me-3">
           <CButton className="" onClick={()=>{generatePDF(userTable)}}  color="info" variant="outline"><CIcon icon={cilCloudDownload} /> Download Report</CButton>
         </div>
@@ -118,6 +148,7 @@ const Activity= ()=>{
             <CTableHeaderCell className="text-center">Lunch</CTableHeaderCell>
             <CTableHeaderCell className="text-center">Dinner</CTableHeaderCell>
             <CTableHeaderCell className="text-center">Exercise Time</CTableHeaderCell>
+            <CTableHeaderCell className="text-center">Health Issues</CTableHeaderCell>
             <CTableHeaderCell className="text-center">Date</CTableHeaderCell>
           </CTableRow>
         </CTableHead>
@@ -131,6 +162,7 @@ const Activity= ()=>{
                 <CTableDataCell className="text-center">{item.launch}</CTableDataCell>
                 <CTableDataCell className="text-center">{item.dinner}</CTableDataCell>
                 <CTableDataCell className="text-center">{item.exercise_time} minutes</CTableDataCell>
+                <CTableDataCell className="text-center">{item.health_issues}</CTableDataCell>
                 <CTableDataCell className="text-center text-primary" >{item.date}</CTableDataCell>
                 <CTableDataCell>
                 </CTableDataCell>

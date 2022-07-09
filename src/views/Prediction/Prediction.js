@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, {useEffect, useState} from 'react'
 import Box from '@mui/material/Box'
 import TextField from '@mui/material/TextField'
 
@@ -7,6 +7,8 @@ import FormControl from '@mui/material/FormControl'
 import FormLabel from '@mui/material/FormLabel'
 import Button from '@mui/material/Button'
 import register_image from "../../assets/images/diabetes/register.png"
+import happy from './Happy.jpg'
+import sad from './sad.jfif'
 import {
   // CButton,
   CCardGroup,
@@ -25,9 +27,7 @@ import { Link,Navigate,useNavigate } from 'react-router-dom'
 import Axios from 'axios'
 
 const Prediction =()=>{
-
-
-
+  let id = localStorage.getItem('userId')
   const [predictionDetails, setpredictionDetails] = useState({
 
     pregnancy: '',
@@ -41,7 +41,19 @@ const Prediction =()=>{
 const [displayError, setdisplayError] = useState('')
 const [age, setAge] = useState(null)
 const [predict, setPredict] = useState(null)
-
+useEffect(()=>{
+  Axios.put('http://localhost:3001/api/users/getprofile',
+    {id:id}).then((res)=>{
+    if(res.data.data){
+      setAge(res.data.data.age)
+}
+else {
+    console.log("Unable to get user age")
+  }
+}).catch((error)=>{
+  console.log("Error in retrieving age",error)
+})
+},[])
   const handleInput = (event) => {
     const name = event.target.name
     const value = event.target.value
@@ -60,11 +72,6 @@ if(pregnancies===''|| glucose===''|| bloodpressure===''|| skinthickness==='' || 
 }
 else
 {
-    let id = localStorage.getItem('userId')
-  Axios.put('http://localhost:3001/api/users/getprofile',
-    {id:id}).then((res)=>{
-      if(res.data.data){
-        setAge(res.data.data.age)
         Axios.post('http://localhost:3001/api/prediction/', {
           user_id:id,
           pregnancy: pregnancies,
@@ -112,13 +119,7 @@ else
               alert('Something went wrong')
             }
           })
-      }
-      else {
-        console.log("Unable to get user age")
-      }
-  }).catch((error)=>{
-    console.log("Error in retrieving age",error)
-  })
+
 
         }}
 
@@ -262,9 +263,20 @@ else
       </CCardBody>
     </CCard>
     <CCard className="text-black bg-gradient py-5" style={{ width: '44%'}}>
-                  {predict?<p>OOps! You have diabetes</p>:<p>Congratulations ! you have not diabetes</p>}
                 <CCardBody className=" d-flex justify-content-center align-items-center">
-            <img src={register_image} alt="GIF"  style={{overflow:"hidden"}}/>
+                  {predict===null?<p><img src={register_image} alt="GIF"  style={{overflow:"hidden"}} width={300} height={300}/></p>:<p></p>}
+                  {predict===true?
+                    <div className="">
+                    <p className="text-warning" style={{fontSize:'20px'}}
+                    >OOps! You have diabetes</p>
+                    <img src={sad} alt="GIF"  style={{overflow:"hidden"}} width={300} height={300}/>
+                    </div>:<p></p>}
+                  {predict===false?
+                    <div className="">
+                    <p className="text-success" style={{fontSize:'20px'}}>Congratulations! you have no diabetes</p>
+                    <img src={happy} alt="GIF"  style={{overflow:"hidden"}} width={300} height={300}/>
+                    </div>
+                    :<p></p>}
 
                 </CCardBody>
               </CCard>

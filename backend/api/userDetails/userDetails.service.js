@@ -2,7 +2,7 @@ const mysql=require("../../database/conn").con;
 module.exports={
 addDetails:(data,callBack)=>
 {
-    
+
     mysql.query(`INSERT INTO ${data.username}_table (sugar_level,morning_meal,launch,dinner,exercise_time,health_issues,date) VALUES(?,?,?,?,?,?,?)`,
     [data.sugar_level,data.morning_meal,data.launch,data.dinner,data.exercise_time,data.health_issues,data.today_date],
    (err,results)=>
@@ -51,9 +51,9 @@ getDetails:(username,callBack)=>
   // Api creation for updating meal detail
   updateMealDetail:(data,callBack)=>
   {
-    const query=`UPDATE ${data.user}_table SET sugar_level=?, morning_meal=?,launch=?,dinner=?, exercise_time=? WHERE id=?`
+    const query=`UPDATE ${data.user}_table SET sugar_level=?, morning_meal=?,launch=?,dinner=?, exercise_time=?, health_issues=? WHERE id=?`
     mysql.query(query,
-      [data.sugar,data.breakfast,data.lunch,data.dinner,data.etime,data.id],
+      [data.sugar,data.breakfast,data.lunch,data.dinner,data.etime, data.issues,data.id],
       (err,results)=>
       {
         if(err)

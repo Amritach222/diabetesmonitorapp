@@ -60,6 +60,7 @@ const Dashboard = () => {
   const [lunch,setLunch]=useState('')
   const [dinner,setDinner]=useState('')
   const [etime,setEtime]=useState('')
+  const [issues,setIssues]=useState('')
   useEffect( ()=>{
     let userId=localStorage.getItem('userId')
      Axios.put('http://localhost:3001/api/users/getUserdetails',
@@ -134,6 +135,9 @@ const handlleEdit=(data,e)=>{
   const chageExerciseTime=(e)=>{
     setEtime(e.target.value)
   }
+  const changeIssues=(e)=>{
+    setIssues(e.target.value)
+  }
   // update data to the database
   const submitData=()=>{
     Axios.put('http://localhost:3001/api/userDetails/updateMealInfo/',
@@ -144,6 +148,7 @@ const handlleEdit=(data,e)=>{
         lunch:lunch,
         dinner:dinner,
         etime:etime,
+        issues:issues,
         id:id
       }).then((res)=>{
         if (res.data.success===1){
@@ -162,15 +167,15 @@ const handlleEdit=(data,e)=>{
     <>
       <ToastContainer/>
       <WidgetsDropdown />
-     
-       
+
+
           <div className='prediction mb-4'>
               {/* <h4 id="traffic" className="card-title mb-0 text-center">
                 Predict Your Diabetes
               </h4> */}
-              
+
               <Prediction/>
-        
+
 </div>
       {/* <WidgetsBrand withCharts /> */}
 
@@ -226,6 +231,7 @@ const handlleEdit=(data,e)=>{
                     <CTableHeaderCell className="text-center">Lunch</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">Dinner</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">Exercise Time</CTableHeaderCell>
+                    <CTableHeaderCell className="text-center">Health Issues</CTableHeaderCell>
                     <CTableHeaderCell className="text-center">Action</CTableHeaderCell>
                   </CTableRow>
                 </CTableHead>
@@ -239,6 +245,7 @@ const handlleEdit=(data,e)=>{
                       <CTableDataCell className="text-center">{item.launch}</CTableDataCell>
                       <CTableDataCell className="text-center">{item.dinner}</CTableDataCell>
                       <CTableDataCell className="text-center">{item.exercise_time}  minutes</CTableDataCell>
+                      <CTableDataCell className="text-center">{item.health_issues}</CTableDataCell>
                       <CTableDataCell className="text-center text-primary" style={{cursor:'pointer'}} onClick={(e) =>{handlleEdit(item,e)} }><CIcon icon={cilPencil} /></CTableDataCell>
                     </CTableRow>
                   ))}
@@ -308,7 +315,7 @@ const handlleEdit=(data,e)=>{
                           />
                         </div>
                       </div>
-                      <div className="form_row d-flex">
+                      <div className="form_row d-flex justify-content-between">
                         <div className="breakfast_container">
                           <CFormInput
                             value={etime}
@@ -320,6 +327,19 @@ const handlleEdit=(data,e)=>{
                             label="Exercise time"
                             required
                             onChange={(e)=>{chageExerciseTime(e)}}
+                          />
+                        </div>
+                        <div className="breakfast_container ms-3">
+                          <CFormInput
+                            value={issues}
+                            contentEditable={true}
+                            type="text"
+                            name="username"
+                            feedbackValid="Looks good!"
+                            id="validationCustom01"
+                            label="Health Issues"
+                            required
+                            onChange={(e)=>{changeIssues(e)}}
                           />
                         </div>
                       </div>
