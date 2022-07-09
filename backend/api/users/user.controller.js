@@ -1,5 +1,5 @@
 
-const {create,login, userDetails, getUsername,getuser,update_user, getuserByemail,getUserid,getUserdetails, updatePassword,usernameValidation,deleteAccount}=require("./user.service")
+const {create,login, userDetails, getUsername,getuser,update_user, getuserByemail,getUserid,getUserdetails, updatePassword,usernameValidation,deleteAccount,updateReport}=require("./user.service.js")
 
 
 const {genSaltSync,hashSync,compareSync}=require("bcrypt");
@@ -31,7 +31,7 @@ module.exports={
 
     createUser:(req,res)=>
     {
-        const body=req.body;
+        let body=req.body;
         body.password=hashSync(body.password,salt);
         // console.log( body.password)
 
@@ -46,7 +46,6 @@ module.exports={
                         message:'Database connection error'
                     }
                 )
-
                 // return body;
             }
             return res.status(200).json({
@@ -62,6 +61,7 @@ module.exports={
         const body=req.body;
         // console.log(body.password)
         login(body,(err,results)=>
+
         {
             console.log(results)
 if(err)
@@ -84,11 +84,18 @@ if(result)
     })
 }
 else
+
 {
-    return res.json({
-        success:0,
-        data:"Invalid Email or Password"
-    })
+  return res.json({
+    success:1,
+    data:"Login Successful"
+  })
+
+}else{
+  return res.json({
+    success:0,
+    data:"Invalid Email or Password"
+  })
 }
         })
     },
@@ -315,8 +322,42 @@ else
         message:results
       })
     })
+  },
+  // Delete User account
+  updateReport:(req,res)=>
+  {
+    const id=req.body.id;
+    // const report =req.file.path
+    // const data={
+    //   id:id,
+    //   report:report
+    // }
 
+    updateReport(id,(err,results)=>
+    {
+      if(err)
+      {
+        console.log(err)
+        return res.status(500).json(
+          {
+            success:0,
+            message:'Database connection error'
+          }
+        )
+      }
+      if(results){
 
+      return res.status(200).json({
+        success:1,
+        message:results
+      })
+      }else{
+        return res.status(400).json({
+          success:0,
+          message:"Unable to insert data"
+        })
+      }
+    })
   }
 
 }
