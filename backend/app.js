@@ -10,14 +10,16 @@ var cron = require('node-cron');
 const userRouter=require('./api/users/user.router');
 const addDetailsRouter=require('./api/userDetails/userDetails.router');
 const predictionDetailsRouter=require('./././api/prediction/prediction.router');
+const forgotPasswordRouter=require('./api/recovery/recovery.router')
+const matchOTP=require('./api/recovery/recovery.router')
 // Create array of user mail ids
 const emails=[]
 const insulin_emails=[]
 let mailOptions={};
-let insulinMessage={};
 // retrieve and save to email template at just 2 min before sending mail
 cron.schedule('00 58 19 * * *', () => {
   mysql.query(`SELECT * FROM usersignup `,[],(err, result, fields)=>{
+
     if(err){
       console.log(err)
     }
@@ -59,7 +61,7 @@ cron.schedule('00 58 19 * * *', () => {
       '      <td align="center" style="padding:0;">\n' +
       '        <table role="presentation" style="width:602px;border-collapse:collapse;border:1px solid #cccccc;border-spacing:0;text-align:left;">\n' +
       '          <tr>\n' +
-      '            <td align="center" style="padding:40px 0 30px 0;background:#09ec44;">\n' +
+      '            <td align="center" style="padding:40px 0 30px 0;background:#70bbd9;">\n' +
       '              <img src="https://is3-ssl.mzstatic.com/image/thumb/Purple126/v4/3b/ed/fc/3bedfc73-9a1b-e17b-8442-117b31592d1b/AppIcon-1x_U007emarketing-0-6-0-85-220.png/512x512bb.jpg" alt="" width="300" style="height:auto;display:block;" />\n' +
       '            </td>\n' +
       '          </tr>\n' +
@@ -70,14 +72,14 @@ cron.schedule('00 58 19 * * *', () => {
       '                  <td style="padding:0 0 36px 0;color:#153643;">\n' +
       '                    <h1 style="font-size:24px;margin:0 0 20px 0;font-family:Arial,sans-serif;">Time for your daily meal entries</h1>\n' +
       '                    <p style="margin:0 0 12px 0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;">It\'s time for your daily meal entries. This entry helps you and your doctor understand your eating habits.\nWhether you’re looking to keep your gulcose level intact or simply understand your eating habits a little better, keeping a food journal can be incredibly beneficial.\nTake 5 minutes now to enter your food details.</p>\n' +
-      '                    <p style="margin:0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;"><a href="http://localhost:3000/#/addDetails" style="color:#0c39e0;text-decoration:underline;">Click here to upload your meal</a></p>\n' +
+      '                    <p style="margin:0;font-size:16px;line-height:24px;font-family:Arial,sans-serif;"><a href="http://localhost:3000/#/addDetails" style="color:#ee4c50;text-decoration:underline;">Click here to upload your meal</a></p>\n' +
       '                  </td>\n' +
       '                </tr>\n' +
       '              </table>\n' +
       '            </td>\n' +
       '          </tr>\n' +
       '          <tr>\n' +
-      '            <td style="padding:30px;background:#0c39e0;">\n' +
+      '            <td style="padding:30px;background:#ee4c50;">\n' +
       '              <table role="presentation" style="width:100%;border-collapse:collapse;border:0;border-spacing:0;font-size:9px;font-family:Arial,sans-serif;">\n' +
       '                <tr>\n' +
       '                  <td style="padding:0;width:50%;" align="left">\n' +
@@ -296,17 +298,13 @@ cron.schedule('00 58 19 * * *', () => {
   };
 })
 
-// schedule cron to send email at 8:00 pm
-cron.schedule('00 00 20 * * *', () => {
+// schedule cron to send email at 10:00 pm
+cron.schedule('00 00 22 * * *', () => {
    nodemailer.sendMail(mailOptions)
-  nodemailer.sendMail(insulinMessage)
 },);
-
-// schedule cron to send email at 10:00 am
-cron.schedule('00 00 10 * * *', () => {
-  nodemailer.sendMail(insulinMessage)
-},);
-
+// cron.schedule('* * * * *', () => {
+//   nodemailer.sendMail(mailOptions)
+// },);
 const doctorRouter=require('./api/doctors/doctor.router');
 //converts all the json to javascript object
 app.use(express.json());
@@ -317,6 +315,8 @@ app.use("/api/users",userRouter);
 app.use("/api/userDetails",addDetailsRouter);
 app.use("/api/doctors",doctorRouter);
 app.use("/api/prediction",predictionDetailsRouter);
+app.use("/api/recovery",forgotPasswordRouter)
+
 //listening to a server
 app.listen(APP_PORT,()=>
 {

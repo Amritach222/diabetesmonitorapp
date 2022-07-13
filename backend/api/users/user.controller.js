@@ -32,7 +32,7 @@ module.exports={
     {
         let body=req.body;
         body.password=hashSync(body.password,salt);
-        // console.log( body.password)
+        console.log( body.password)
 
         create(body,(err,results)=>
         {

@@ -45,7 +45,7 @@ const AddDetails = () => {
   let currentTime = new Date()
   // let time =
   //   currentTime.getHours() + ':' + currentTime.getMinutes() + ':' + currentTime.getSeconds()
-  let openingTime = Math.abs(20 - currentTime.getHours())
+  let  openingTime =Math.abs(20 - currentTime.getHours());
 
 
   useEffect(() => {
@@ -67,12 +67,12 @@ const AddDetails = () => {
               if (res.data.data) {
 
                 setdisableForm('disabled')
+                if (openingTime > 1)
 
-
-                if (openingTime )
                   setdisableFormTime(`Your form  opens in ${openingTime} hour`)
                 else {
-                  setdisableFormTime(`Your form  opens in less than ${openingTime} hour`)
+                  
+                  setdisableFormTime(`Your form  opens in less than 1 hour`)
                 }
               } else {
                 // setdisableForm('')
@@ -92,7 +92,7 @@ const AddDetails = () => {
                   // setdisableFormTime(`Your form  opens in ${openingTime}`);
                   // }
                   // setInterval(enableForm, 1000)
-
+                  
                   if (openingTime > 1)
                     setdisableFormTime(`Your form  opens in ${openingTime} hour`)
                   else {
@@ -125,7 +125,7 @@ const AddDetails = () => {
     e.preventDefault()
     const { userSugar, userMeal, userLaunch, userDinner, userExercise, healthissues } = userDetails
     let username = ''
-
+ openingTime =Math.abs(20 - currentTime.getHours())
     // console.log(id)
 
     let today = new Date().toLocaleDateString()
@@ -155,7 +155,7 @@ const AddDetails = () => {
                 //handle success
                 if (res.data.success == 1) {
                   alert('Submitted Successfully')
-
+                  // openingTime = Math.abs(8 - currentTime.getHours())
                   setdisableForm('disabled')
 
 
@@ -244,7 +244,7 @@ const AddDetails = () => {
                         autoComplete="off"
                         value={userDetails.userLaunch}
                         onChange={handleInput}
-                        label="Launch"
+                        label="Lunch"
                         type="text"
                         variant="standard"
                       />
@@ -274,7 +274,7 @@ const AddDetails = () => {
                         autoComplete="off"
                         value={userDetails.userExercise}
                         onChange={handleInput}
-                        label="Exercise time (optional)"
+                        label="Exercise time in minutes (optional)"
                         type="number"
                         variant="standard"
                       />
