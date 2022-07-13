@@ -21,6 +21,7 @@ const Page500 = React.lazy(() => import('./views/pages/page500/Page500'))
 
 function App() {
   const [user, setLoginUser] = useState({})
+  const [mode, setMode] = useState(true)
   const id= localStorage.getItem("userId");
   useEffect(() => {
     setLoginUser(JSON.parse(localStorage.getItem('userId')))
@@ -29,11 +30,8 @@ function App() {
     localStorage.setItem('userId', JSON.stringify(user))
     setLoginUser(user)
   }
-  
-  
-
   return (
-    <div className='main_container'>
+    <div className={'main_container'}>
     <HashRouter>
       <Suspense fallback={loading}>
       {
@@ -44,13 +42,10 @@ function App() {
             <Route exact path="/404" name="Page 404" element={<Page404 />} />
             <Route exact path="/500" name="Page 500" element={<Page500 />} />
             <Route path="*" name="Home" element={<DefaultLayout updateUser={updateUser} />} />
-
-
         </Routes>
 :
 <Routes>
             <Route exact path="/" name="Login Page" element={<Login updateUser={updateUser} />} />
-           
               <Route
             exact
             path="/login"
@@ -58,9 +53,8 @@ function App() {
             element={<Login updateUser={updateUser} />}
             />
             <Route exact path="/register" name="Register Page" element={<Register/>} />
-            <Route path="*" name="Login Page" element={<Login updateUser={updateUser} />} />
-
-
+  {/* eslint-disable-next-line no-restricted-globals */}
+    <Route path='*' name="Login Page" element={<Login updateUser={updateUser}/>}/>
         </Routes>
 
       }

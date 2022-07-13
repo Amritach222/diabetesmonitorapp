@@ -6,8 +6,7 @@ import TextField from '@mui/material/TextField'
 import Button from '@mui/material/Button'
 import { ToastContainer, toast } from 'react-toastify'
 import './adddetails.scss'
-import adddetails_image from '../../assets/images/diabetes/addDetails.jpg'
-
+import adddetails_image from '../../assets/images/diabetes/adddetails.jpg'
 import 'react-toastify/dist/ReactToastify.css'
 import {
   // CButton,
@@ -17,9 +16,9 @@ import {
   CCol,
   CContainer,
   CForm,
-  
+
   CInputGroup,
-  
+
   CRow,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
@@ -27,7 +26,6 @@ import { cilWarning } from '@coreui/icons'
 // import { cilLockLocked, cilUser } from '@coreui/icons'
 import { Link } from 'react-router-dom'
 import register_image from '../../../src/assets/images/diabetes/register.png'
-
 const AddDetails = () => {
   //creating a state which stores registeration information in an object
   const [displayError, setdisplayerror] = useState('')
@@ -69,7 +67,7 @@ const AddDetails = () => {
               if (res.data.data) {
 
                 setdisableForm('disabled')
-               
+
 
                 if (openingTime )
                   setdisableFormTime(`Your form  opens in ${openingTime} hour`)
@@ -78,7 +76,7 @@ const AddDetails = () => {
                 }
               } else {
                 // setdisableForm('')
-                
+
                 if (currentTime.getHours() >= 20 && currentTime.getHours() <= 24) {
                   setdisableForm('')
                   setdisableFormTime(`Your form  is available only between 8 PM to 12 AM`)
@@ -159,7 +157,7 @@ const AddDetails = () => {
                   alert('Submitted Successfully')
 
                   setdisableForm('disabled')
-                 
+
 
                   if (openingTime > 1)
                     setdisableFormTime(`Your form  opens in ${openingTime} hour`)
@@ -323,20 +321,20 @@ const AddDetails = () => {
     textAlign:'center',
     margin: '0 auto',
     color: 'black',
-  
-  
+
+
     padding: '5px 10px',
 
     animationName: 'span_animation',
     animationDuration: '0.5s',
     animationIterationCount: 'infinite',
-   
+
                 }}>
-                  <CIcon icon={cilWarning}  
+                  <CIcon icon={cilWarning}
                     /> {disableFormTime}
                 </b>
                 <CCardBody className='d-flex justify-content-center align-items-center'>
-                  <img src={adddetails_image} alt="GIF" style={{ overflow: 'hidden' , maxWidth: '100%',
+                  <img src={register_image} alt="GIF" style={{ overflow: 'hidden' , maxWidth: '100%',
         maxHeight: '100%',
         display: 'block',objectFit: 'cover'}} />
                 </CCardBody>

@@ -26,6 +26,8 @@ function CDatePicker(props) {
 CDatePicker.propTypes = {locale: PropTypes.string};
 const Activity= ()=>{
   const [userTable,setUserTable]=useState([]);
+  const [userTemptable,setUserTemptable]=useState([]);
+  const [tempopen,setTempopen]=useState(false)
   const [preview,setPreview]=useState(false)
   const [name, setName]=useState()
   useEffect(()=>{
@@ -115,8 +117,21 @@ const Activity= ()=>{
     setPreview(!preview)
   }
   const handleSearch=(e)=>{
-   const userData= userTable.filter((item)=> item.date.includes(e.target.value))
-    setUserTable(userData)
+    const date_value=e.target.value;
+    let year = date_value.slice(0, 4);
+    let month = date_value.slice(5, 7);
+    let day = date_value.slice(8, 10);
+    if(month.charAt(0)==0){
+      month=date_value.charAt(6)
+    }
+    if(day.charAt(0)==0){
+      day=date_value.charAt(9)
+    }
+    const full_date=month+'/'+day+'/'+year;
+    console.log(full_date)
+   const userData= userTable.filter((item)=> item.date.includes(full_date))
+    setUserTemptable(userData);
+    setTempopen(true);
   }
   return(
     <div className="activities">
@@ -153,8 +168,8 @@ const Activity= ()=>{
           </CTableRow>
         </CTableHead>
         <CTableBody>
-          {
-            userTable.map((item, index) => (
+          {tempopen?
+            userTemptable.map((item, index) => (
               <CTableRow v-for="item in tableItems" key={index}>
                 <CTableDataCell className="text-center">{index+1}</CTableDataCell>
                 <CTableDataCell className="text-center" >{item.sugar_level} mg/dL</CTableDataCell>
@@ -167,7 +182,22 @@ const Activity= ()=>{
                 <CTableDataCell>
                 </CTableDataCell>
               </CTableRow>
-            ))}
+            )):userTable.map((item, index) => (
+              <CTableRow v-for="item in tableItems" key={index}>
+                <CTableDataCell className="text-center">{index+1}</CTableDataCell>
+                <CTableDataCell className="text-center" >{item.sugar_level} mg/dL</CTableDataCell>
+                <CTableDataCell className="text-center">{item.morning_meal}</CTableDataCell>
+                <CTableDataCell className="text-center">{item.launch}</CTableDataCell>
+                <CTableDataCell className="text-center">{item.dinner}</CTableDataCell>
+                <CTableDataCell className="text-center">{item.exercise_time} minutes</CTableDataCell>
+                <CTableDataCell className="text-center">{item.health_issues}</CTableDataCell>
+                <CTableDataCell className="text-center text-primary" >{item.date}</CTableDataCell>
+                <CTableDataCell>
+                </CTableDataCell>
+              </CTableRow>
+            ))
+
+          }
         </CTableBody>
       </CTable>
         </CCardBody>
