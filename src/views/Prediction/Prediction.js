@@ -161,7 +161,7 @@ else
               autoComplete="off"
               value={predictionDetails.glucose}
               onChange={handleInput}
-              label="Glucose"
+              label="Glucose (mg/dL)"
               type="number"
               variant="standard"
             />
@@ -172,7 +172,7 @@ else
 <CInputGroup className="mb-1 me-1">
             <TextField
               style={{ width: '100%' }}
-              label="Bloodpressure"
+              label="Bloodpressure (mmHg)"
               type="number"
               variant="standard"
               name="bloodpressure"
@@ -186,7 +186,7 @@ else
           <CInputGroup className="mb-1 ms-1">
             <TextField
               style={{ width: '100%' }}
-              label="Skinthickness"
+              label="Skinthickness (mm) "
               type="number"
               variant="standard"
               name="skinthickness"
@@ -205,7 +205,7 @@ else
           <CInputGroup className="mb-1 me-1">
             <TextField
               style={{ width: '100%' }}
-              label="Insulin"
+              label="Insulin (IU/mL) "
               type="number"
               variant="standard"
 
@@ -219,7 +219,7 @@ else
           <CInputGroup className="mb-1 ms-1">
             <TextField
               style={{ width: '100%' }}
-              label="BMI"
+              label="BMI (kg/m²)"
               type="number"
               variant="standard"
               name="bmi"

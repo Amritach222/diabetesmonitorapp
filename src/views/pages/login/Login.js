@@ -150,7 +150,11 @@ else
                     >Log in</Button>
                       </CCol>
 
+<Link to='/forgotpassword'>
+  
                       <CCol xs={6} className="text-right">
+                   
+                        
                         <CButton color="link" className="px-0"  style={{
                       
                       color: 'blue',
@@ -160,7 +164,9 @@ else
                     }}>
                           Forgot password?
                         </CButton>
+                      
                       </CCol>
+</Link>
                     </CRow>
                   </CForm>
                 </CCardBody>

@@ -18,6 +18,9 @@ const Login = React.lazy(() => import('./views/pages/login/Login'))
 const Register = React.lazy(() => import('./views/pages/register/Register'))
 const Page404 = React.lazy(() => import('./views/pages/page404/Page404'))
 const Page500 = React.lazy(() => import('./views/pages/page500/Page500'))
+const ForgotPassword = React.lazy(() => import('./views/pages/forgotpassword/ForgotPassword'))
+const OTP = React.lazy(() => import('./views/pages/forgotpassword/OTP'))
+const RecoverPassword= React.lazy(() => import('./views/pages/forgotpassword/RecoverPassword'))
 
 function App() {
   const [user, setLoginUser] = useState({})
@@ -59,7 +62,10 @@ function App() {
             />
             <Route exact path="/register" name="Register Page" element={<Register/>} />
             <Route path="*" name="Login Page" element={<Login updateUser={updateUser} />} />
-
+            <Route path="/forgotpassword" name="forgot password" element={<ForgotPassword />} />
+            <Route path="/forgotpassword/otp" name="forgot password" element={<OTP />} />
+            <Route path="/forgotpassword/recoverpassword" name="recover password" element={<RecoverPassword />} />
+            /forgotpassword/recoverpassword
 
         </Routes>
 

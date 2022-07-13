@@ -33,7 +33,7 @@ module.exports={
     {
         let body=req.body;
         body.password=hashSync(body.password,salt);
-        // console.log( body.password)
+        console.log( body.password)
 
         create(body,(err,results)=>
         {
@@ -59,7 +59,7 @@ module.exports={
     loginUser:(req,res)=>
     {
         const body=req.body;
-        // console.log(body.password)
+        console.log(body)
         login(body,(err,results)=>
 
         {
@@ -82,14 +82,6 @@ if(result)
         success:1,
         data:"Login Successful"
     })
-}
-else
-
-{
-  return res.json({
-    success:1,
-    data:"Login Successful"
-  })
 
 }else{
   return res.json({

@@ -1,5 +1,5 @@
 
-const {createUser,loginUser, createUserDetails,creategetuser,creategetuserinfo,getusebyemail,updateuserinfo,creategetid,creategetUserdetails,createuserValidation, updatePassword, deleteAccount,updateReport}=require('./user.controller')
+const {createUser,loginUser, createUserDetails,creategetuser,creategetuserinfo,getuserbyemail,updateuserinfo,creategetid,creategetUserdetails,createuserValidation, updatePassword, deleteAccount,updateReport}=require('./user.controller')
 const router=require('express').Router();
 const multer= require("multer");
 // Careating storage to save images
