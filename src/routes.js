@@ -47,5 +47,4 @@ const routes = [
   { path: '/aboutus', name: 'About Us', element: AboutUs },
   {path:'/privacyandpolicy', name:'Privacy and Policy',element:Privacy}
 ]
-
 export default routes

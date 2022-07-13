@@ -191,7 +191,6 @@ if(doctorPhone.length < 10)
               Email:{' '+displayclass.email} <br/>
               Phone: {' '+displayclass.phone}
             </CCardText>
-            <CButton href="#">Contact</CButton>
           </CCardBody>
         </CCard>
       </div>

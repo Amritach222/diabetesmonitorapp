@@ -10,7 +10,7 @@ import {
   CHeaderToggler,
   CNavLink,
   CNavItem,
-  CButton,
+  CButton, CFormSwitch,
 } from '@coreui/react'
 import CIcon from '@coreui/icons-react'
 import { cilBell, cilMenu } from '@coreui/icons'
@@ -45,9 +45,12 @@ const AppHeader = () => {
         </CHeaderNav>
         <CHeaderNav className="d-flex justify-content-center align-items-center">
           <CNavItem>
+            <CFormSwitch size="xl"  id="formSwitchCheckDefaultXL"/>
+
             {/*<CNavLink href="">*/}
             {/*  <CIcon icon={cilBell} size="lg" />*/}
             {/*</CNavLink>*/}
+
           </CNavItem>
           {/* <CNavItem>
             <CNavLink>

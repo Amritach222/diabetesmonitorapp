@@ -71,6 +71,5 @@ router.put("/updatepassword", updatePassword);
 router.put('/userbyemail', getuserbyemail);// this is to store id to localstorage using email
 router.put('/deleteaccount', deleteAccount);
 router.put('/sendreport', updateReport);
-
 module.exports=router;
 

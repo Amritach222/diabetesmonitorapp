@@ -117,6 +117,7 @@ const handlleEdit=(data,e)=>{
   setLunch(data.launch)
   setDinner(data.dinner)
   setEtime(data.exercise_time)
+  setIssues(data.health_issues)
 }
 
 // defining  onchage handler
