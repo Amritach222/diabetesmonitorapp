@@ -1,5 +1,5 @@
 
-const {createUser,loginUser, createUserDetails,creategetuser,creategetuserinfo,getusebyemail,updateuserinfo,creategetid,creategetUserdetails,createuserValidation, updatePassword, deleteAccount,updateReport}=require('./user.controller')
+const {createUser,loginUser, createUserDetails,creategetuser,creategetuserinfo,getuserbyemail,updateuserinfo,creategetid,creategetUserdetails,createuserValidation, updatePassword, deleteAccount,updateReport}=require('./user.controller')
 const router=require('express').Router();
 const multer= require("multer");
 // Careating storage to save images
@@ -71,6 +71,5 @@ router.put("/updatepassword", updatePassword);
 router.put('/userbyemail', getuserbyemail);// this is to store id to localstorage using email
 router.put('/deleteaccount', deleteAccount);
 router.put('/sendreport', updateReport);
-
 module.exports=router;
 

@@ -62,7 +62,8 @@ const WidgetsDropdown = () => {
                user_details.reverse().map((item,index)=>{
                  if(item.sugar_level){
                    if(index<=6){
-                   s_data.push(Math.round(parseInt(item.sugar_level)/5));
+                   // s_data.push(Math.round(parseInt(item.sugar_level)/5));
+                   s_data.push(item.sugar_level);
                      entry_date_sugar.push(item.date);
                    }
                  }
@@ -127,7 +128,7 @@ const WidgetsDropdown = () => {
       <CCol style={{ width: '33.33%' }} sm={6} lg={3}>
         <CWidgetStatsA
           className="mb-4"
-          color="primary"
+          color="info"
           value={
 
             totalEntry
@@ -144,7 +145,7 @@ const WidgetsDropdown = () => {
                     label: 'My First dataset',
                     backgroundColor: 'transparent',
                     borderColor: 'rgba(255,255,255,.55)',
-                    pointBackgroundColor: getStyle('--cui-primary'),
+                    pointBackgroundColor: getStyle('--cui-info'),
                     data: [65, 59, 84, 84, 51, 55, 40],
                   },
                 ],
@@ -197,7 +198,7 @@ const WidgetsDropdown = () => {
       <CCol style={{ width: '33.33%' }} sm={6} lg={3}>
         <CWidgetStatsA
           className="mb-4"
-          color="info"
+          color="warning"
           value={
             sugarlevel
           }
@@ -213,10 +214,10 @@ const WidgetsDropdown = () => {
                 labels: s_date,
                 datasets: [
                   {
-                    label: 'Entry date',
+                    label: 'Sugar indicator',
                     backgroundColor: 'transparent',
-                    borderColor: 'rgba(255,255,255,.55)',
-                    pointBackgroundColor: getStyle('--cui-info'),
+                    borderColor: 'rgb(255,255,255, .55)',
+                    pointBackgroundColor: getStyle('--cui-warning'),
                     data:sugardata
                     // data: [1, 18, 9, 17, 34, 22, 11],
                   },
@@ -240,8 +241,8 @@ const WidgetsDropdown = () => {
                     },
                   },
                   y: {
-                    min: -9,
-                    max: 39,
+                    min: 50,
+                    max: 250,
                     display: false,
                     grid: {
                       display: false,
@@ -342,7 +343,7 @@ const WidgetsDropdown = () => {
       <CCol style={{ width: '33.33%' }} sm={6} lg={3}>
         <CWidgetStatsA
           className="mb-4"
-          color="danger"
+          color="success"
           value={
 
             exercisedays
@@ -358,7 +359,7 @@ const WidgetsDropdown = () => {
                 labels: e_date,
                 datasets: [
                   {
-                    label: 'Exercise time in minutes on date ',
+                    label: 'Exercise time in minutes',
                     backgroundColor: 'rgba(255,255,255,.2)',
                     borderColor: 'rgba(255,255,255,.55)',
                     data: exercisedata,

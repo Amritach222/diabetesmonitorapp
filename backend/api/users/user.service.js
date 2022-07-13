@@ -37,21 +37,18 @@ create:(data,callBack)=>
    })
 },
 
-login:(password,email,callBack)=>
+login:(data,callBack)=>
 {
   console.log(data.password)
-    mysql.query("select * from usersignup where email=? && password=?",[data.email,data.password],(err,results)=>
+    mysql.query("select * from usersignup where email=? || password=?",[data.email,data.password],(err,results)=>
 
     {
-
         if(err)
         {
        return callBack(err)
         } else
-       
          return callBack(null,results[0])
 })},
-
 userDetails:(data,callBack)=>
     {
       console.log(data)

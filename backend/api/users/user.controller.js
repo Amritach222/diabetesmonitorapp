@@ -2,8 +2,8 @@
 const {create,login, userDetails, getUsername,getuser,update_user, getuserByemail,getUserid,getUserdetails, updatePassword,usernameValidation,deleteAccount,updateReport}=require("./user.service.js")
 
 
-const {genSaltSync,hashSync,compareSync}=require("bcrypt");
-const salt=genSaltSync(10);
+const {hashSync,compareSync, genSaltSync}=require("bcrypt");
+const salt=genSaltSync(10)
 module.exports={
     createuserValidation:(req,res)=>
     {
@@ -27,7 +27,6 @@ module.exports={
 
 
     },
-
 
     createUser:(req,res)=>
     {
@@ -56,49 +55,41 @@ module.exports={
 
 
     },
-    loginUser:(req,res)=>
+  loginUser:(req,res)=>
+  {
+    const body=req.body;
+    console.log(body)
+    login(body,(err,results)=>
+
     {
-        const body=req.body;
-        // console.log(body.password)
-        login(body,(err,results)=>
-
-        {
-            console.log(results)
-if(err)
-{
-    console.log(err);
-}
-if(!results)
-{
-    return res.json({
-        success:0,
-        data:"Invalid Email or Password"
-    })
-}
-const result =compareSync(body.password,results.password)
-if(result)
-{
-    return res.json({
-        success:1,
-        data:"Login Successful"
-    })
-}
-else
-
-{
-  return res.json({
-    success:1,
-    data:"Login Successful"
-  })
-
-}else{
-  return res.json({
-    success:0,
-    data:"Invalid Email or Password"
-  })
-}
+      console.log(results)
+      if(err)
+      {
+        console.log(err);
+      }
+      if(!results)
+      {
+        return res.json({
+          success:0,
+          data:"Invalid Email or Password"
         })
-    },
+      }
+      const result =compareSync(body.password,results.password)
+      if(result)
+      {
+        return res.json({
+          success:1,
+          data:"Login Successful"
+        })
+
+      }else{
+        return res.json({
+          success:0,
+          data:"Invalid Email or Password"
+        })
+      }
+    })
+  },
 
 
     createUserDetails:(req,res)=>
@@ -280,6 +271,7 @@ else
   updatePassword:(req,res)=>
   {
     const data=req.body;
+    data.password=hashSync(data.password,salt);
     updatePassword(data,(err,results)=>
     {
       if(err)
