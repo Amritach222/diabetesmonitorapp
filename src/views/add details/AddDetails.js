@@ -71,7 +71,7 @@ const AddDetails = () => {
 
                   setdisableFormTime(`Your form  opens in ${openingTime} hour`)
                 else {
-                  
+
                   setdisableFormTime(`Your form  opens in less than 1 hour`)
                 }
               } else {
@@ -92,7 +92,7 @@ const AddDetails = () => {
                   // setdisableFormTime(`Your form  opens in ${openingTime}`);
                   // }
                   // setInterval(enableForm, 1000)
-                  
+
                   if (openingTime > 1)
                     setdisableFormTime(`Your form  opens in ${openingTime} hour`)
                   else {
@@ -214,7 +214,7 @@ const AddDetails = () => {
                         autoComplete="off"
                         value={userDetails.userSugar}
                         onChange={handleInput}
-                        label="Sugar Level (optional)"
+                        label="Sugar Level(mg/dL) (optional)"
                         type="number"
                         variant="standard"
                       />

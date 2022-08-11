@@ -320,5 +320,5 @@ app.use("/api/recovery",forgotPasswordRouter)
 //listening to a server
 app.listen(APP_PORT,()=>
 {
-    console.log(`Server is running at port no ${APP_PORT}`);
+  console.log(`Server is running at port no ${APP_PORT}`);
 })

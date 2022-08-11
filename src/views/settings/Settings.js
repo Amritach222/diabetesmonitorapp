@@ -133,6 +133,7 @@ const Settings=()=>{
                   setVisible(false)
                   setDeletetext(true)
                   localStorage.removeItem("userId");
+                  window.location.reload()
                 }
                 else {
                   toast("Something went wrong ")
