@@ -290,7 +290,6 @@ module.exports={
       })
     })
 
-
   },
   // Delete User account
   deleteAccount:(req,res)=>
